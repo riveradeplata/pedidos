@@ -2062,6 +2062,7 @@
     // =========================================================================
     // CONFIGURACIÓN DE SUPABASE Y ESTADO GLOBAL
     // =========================================================================
+    // ¡REEMPLAZA AQUí TUS DATOS REALES DE SUPABASE!
     const SUPABASE_URL = 'https://dmmxprnzedkscuezglct.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_WpkuzBnsnwoeQ52-2ViKzg_5JjfUTXe';
 
@@ -2081,7 +2082,7 @@
         useCloud = true;
         console.log("Supabase inicializado correctamente con modo online.");
       } else {
-        console.log("Supabase operando en modo local autónomo.");
+        console.log("Supabase operando en modo local autónomo (Faltan credenciales reales).");
       }
     } catch (e) {
       console.warn("No se pudo iniciar Supabase, usando almacenamiento local.", e);
@@ -2438,6 +2439,7 @@
       setupRealtimeSubscription();
     });
   </script>
+
 
 </body>
 </html>
