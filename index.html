@@ -2121,6 +2121,27 @@
   window.addEventListener('DOMContentLoaded', () => {
     cargarPedidosDesdeNube();
   });
+
+  // Función encargada de recibir los datos de Supabase y mostrarlos en tu app
+function actualizarInterfazPedidos(pedidos) {
+  console.log("Pedidos cargados desde la nube:", pedidos);
+  
+  // Si tienes una tabla o contenedor en tu HTML para los pedidos, 
+  // aquí es donde debes actualizar el HTML con los datos de Supabase.
+  
+  // Ejemplo básico para verificar si llegan los datos:
+  const contenedor = document.getElementById('contenedor-pedidos');
+  if (contenedor) {
+    contenedor.innerHTML = ''; // Limpiar contenedor
+    pedidos.forEach(p => {
+      contenedor.innerHTML += `
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 5px;">
+          <strong>Pedido: ${p.codigo}</strong> - Mesa: ${p.mesa} - Estado: <em>${p.estado}</em>
+        </div>
+      `;
+    });
+  }
+}
   </script>
 </body>
 </html>
