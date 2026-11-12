@@ -2055,93 +2055,148 @@
     }
   </script>
   <script>
-    // 1. Aquí pegas tu Project URL real (lo copiaste del panel de Supabase)
-    const SUPABASE_URL = 'https://dmmxprnzedkscuezglct.supabase.co';
+    <!-- ... existing code ... -->
+  // =====================================================================
+  // CONFIGURACIÓN DE SUPABASE Y SINCRONIZACIÓN EN TIEMPO REAL
+  // =====================================================================
+  const SUPABASE_URL = 'https://dmmxprnzedkscuezglct.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_WpkuzBnsnwoeQ52-2ViKzg_5JjfUTXe';
 
-    // 2. Aquí pegas tu clave 'anon public' real (la clave larga que copiaste de Supabase)
-    const SUPABASE_ANON_KEY = 'sb_publishable_WpkuzBnsnwoeQ52-2ViKzg_5JjfUTXe';
-
-    // Esto inicializa la conexión con Supabase
+  let _supabase = null;
+  if (typeof supabase !== 'undefined' && SUPABASE_URL.startsWith('https://')) {
     const { createClient } = supabase;
-    const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
 
-    // B. LEER PEDIDOS: Esta función descarga los pedidos de la nube para mostrarlos en tu pantalla
-      async function cargarPedidosDesdeNube() {
-        const { data, error } = await _supabase
-          .from('pedidos')
-          .select('*')
-          .order('fecha_hora', { ascending: false });
+  // Cargar pedidos desde la nube de Supabase
+  async function cargarPedidosDesdeNube() {
+    if (!_supabase) {
+      console.warn('Supabase no está inicializado. Usando almacenamiento local.');
+      return;
+    }
 
-        if (error) {
-          console.error('Error al cargar pedidos:', error);
-          return;
-        }
+    const { data, error } = await _supabase.from('pedidos').select('*').order('fecha_hora', { ascending: false });
+    if (error) {
+      console.error('Error al cargar pedidos desde Supabase:', error);
+      return;
+    }
 
-        // Esta función pinta los datos en tu tabla o tablero web
-        actualizarInterfazPedidos(data);
-
-        }
-
-  // C. TIEMPO REAL: Este "vigilante" detecta si alguien hace un cambio en Supabase
-  // Si un mozo registra un pedido desde su celular, esto avisa al instante a la tablet de cocina
-  _supabase
-    .channel('canal-pedidos-rt')
-    .on(
-      'postgres_changes',
-      { event: '*', schema: 'public', table: 'pedidos' },
-      (payload) => {
-        console.log('¡Alguien hizo un cambio!', payload);
-        cargarPedidosDesdeNube(); // Vuelve a cargar los pedidos automáticamente
+    console.log("Pedidos cargados desde la nube:", data);
+    if (Array.isArray(data)) {
+      orders = data.map(p => ({
+        id: p.codigo,
+        supabaseId: p.id,
+        createdAt: p.fecha_hora,
+        deliveredAt: p.hora_entrega || null,
+        modalidad: p.modalidad,
+        referencia: p.mesa,
+        responsable: p.responsable,
+        items: parseItems(p.productos),
+        observaciones: p.observaciones || '',
+        estado: p.estado
+      }));
+      if (typeof refreshAllViews === 'function') {
+        refreshAllViews();
       }
-    )
-    .subscribe();
-
-  // D. GUARDAR NUEVO PEDIDO: Se activa cuando el mozo presiona "Guardar Pedido"
-  async function registrarPedidoNube(nuevoPedido) {
-    const { error } = await _supabase.from('pedidos').insert([nuevoPedido]);
-    if (error) {
-      alert('Error al registrar el pedido en la nube.');
-      console.error(error);
     }
   }
 
-  // E. CAMBIAR ESTADO: Se activa cuando el cocinero cambia el estado a "Listo para entregar"
-  async function cambiarEstadoPedidoNube(idPedido, nuevoEstado) {
-    const { error } = await _supabase
-      .from('pedidos')
-      .update({ estado: nuevoEstado })
-      .eq('id', idPedido);
-
-    if (error) {
-      console.error('Error al actualizar estado:', error);
+  // Funciones puente requeridas para evitar errores de referencia
+  function actualizarInterfazPedidos(pedidos) {
+    if (Array.isArray(pedidos)) {
+      orders = pedidos.map(p => ({
+        id: p.codigo,
+        supabaseId: p.id,
+        createdAt: p.fecha_hora,
+        deliveredAt: p.hora_entrega || null,
+        modalidad: p.modalidad,
+        referencia: p.mesa,
+        responsable: p.responsable,
+        items: parseItems(p.productos),
+        observaciones: p.observaciones || '',
+        estado: p.estado
+      }));
+      if (typeof refreshAllViews === 'function') {
+        refreshAllViews();
+      }
     }
   }
 
-  // F. INICIO: Apenas se abre la página web, ejecuta la función para traer los pedidos
-  window.addEventListener('DOMContentLoaded', () => {
-    cargarPedidosDesdeNube();
-  });
-
-  // Función encargada de recibir los datos de Supabase y mostrarlos en tu app
-function actualizarInterfazPedidos(pedidos) {
-  console.log("Pedidos cargados desde la nube:", pedidos);
-  
-  // Si tienes una tabla o contenedor en tu HTML para los pedidos, 
-  // aquí es donde debes actualizar el HTML con los datos de Supabase.
-  
-  // Ejemplo básico para verificar si llegan los datos:
-  const contenedor = document.getElementById('contenedor-pedidos');
-  if (contenedor) {
-    contenedor.innerHTML = ''; // Limpiar contenedor
-    pedidos.forEach(p => {
-      contenedor.innerHTML += `
-        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 5px;">
-          <strong>Pedido: ${p.codigo}</strong> - Mesa: ${p.mesa} - Estado: <em>${p.estado}</em>
-        </div>
-      `;
-    });
+  function renderizarTablero(pedidos) {
+    actualizarInterfazPedidos(pedidos);
   }
-}
+
+  // Auxiliar para parsear productos almacenados en texto
+  function parseItems(productosStr) {
+    try {
+      if (typeof productosStr === 'string' && productosStr.startsWith('[')) {
+        return JSON.parse(productosStr);
+      }
+      return [{ name: productosStr || 'Plato general', qty: 1 }];
+    } catch (e) {
+      return [{ name: productosStr || 'Plato general', qty: 1 }];
+    }
+  }
+
+  // Guardar nuevo pedido en Supabase
+  async function registrarPedidoNube(nuevoPedidoObj) {
+    if (!_supabase) return false;
+
+    const rowData = {
+      codigo: nuevoPedidoObj.id,
+      modalidad: nuevoPedidoObj.modalidad,
+      mesa: nuevoPedidoObj.referencia,
+      responsable: nuevoPedidoObj.responsable,
+      productos: JSON.stringify(nuevoPedidoObj.items),
+      observaciones: nuevoPedidoObj.observaciones,
+      estado: nuevoPedidoObj.estado,
+      hora_entrega: nuevoPedidoObj.deliveredAt
+    };
+
+    const { data, error } = await _supabase.from('pedidos').insert([rowData]);
+    if (error) {
+      console.error('Error al insertar pedido en Supabase:', error);
+      showToast('Error al guardar en la nube', 'error');
+      return false;
+    }
+    return true;
+  }
+
+  // Actualizar estado de pedido en Supabase
+  async function cambiarEstadoPedidoNube(supabaseId, codigoId, nuevoEstado, deliveredTime = null) {
+    if (!_supabase) return;
+
+    let query = _supabase.from('pedidos').update({ estado: nuevoEstado });
+    if (deliveredTime) {
+      query = _supabase.from('pedidos').update({ estado: nuevoEstado, hora_entrega: deliveredTime });
+    }
+
+    let result;
+    if (supabaseId) {
+      result = await query.eq('id', supabaseId);
+    } else {
+      result = await query.eq('codigo', codigoId);
+    }
+
+    if (result.error) {
+      console.error('Error al actualizar estado en Supabase:', result.error);
+    }
+  }
+
+  // Inicializar escucha en tiempo real de Supabase
+  if (_supabase) {
+    try {
+      _supabase
+        .channel('canal-pedidos-rt')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, (payload) => {
+          console.log('Cambio detectado en tiempo real:', payload);
+          cargarPedidosDesdeNube();
+        })
+        .subscribe();
+    } catch (e) {
+      console.warn('No se pudo iniciar canal Realtime:', e);
+    }
+  }
   </script>
 </body>
 </html>
