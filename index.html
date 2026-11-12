@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
@@ -58,7 +59,6 @@
   </script>
 
   <style>
-    /* Scrollbars limpios y ocultamiento en barras de pestañas móviles */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -88,7 +88,6 @@
       from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    /* Asegurar área táctil mínima accesible en dispositivos móviles */
     .touch-target {
       min-height: 44px;
       min-width: 44px;
@@ -97,10 +96,10 @@
 </head>
 <body class="bg-stone-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col lg:flex-row overflow-x-hidden">
 
-  <!-- Contenedor de Notificaciones Toast (Reemplaza alert) -->
+  <!-- Toast Notifications Container -->
   <div id="toast-container" class="fixed top-4 right-4 left-4 sm:left-auto z-50 flex flex-col gap-2 max-w-sm sm:w-full pointer-events-none"></div>
 
-  <!-- Modal de Confirmación Personalizado (Reemplaza confirm) -->
+  <!-- Custom Confirm Modal -->
   <div id="confirm-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-stone-200 fade-in">
       <div class="flex items-center gap-3 mb-3">
@@ -111,7 +110,7 @@
       </div>
       <p id="confirm-message" class="text-sm text-slate-600 mb-6 leading-relaxed">¿Estás seguro de realizar esta acción?</p>
       <div class="flex flex-col-reverse sm:flex-row justify-end gap-2.5">
-        <button id="confirm-cancel-btn" class="touch-target px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 bg-stone-100 hover:bg-stone-200 transition">
+        <button id="confirm-cancel-btn" onclick="closeConfirmModal(false)" class="touch-target px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 bg-stone-100 hover:bg-stone-200 transition">
           Cancelar
         </button>
         <button id="confirm-ok-btn" class="touch-target px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-terracotta-600 hover:bg-terracotta-700 transition shadow-sm">
@@ -121,11 +120,8 @@
     </div>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- SIDEBAR FIJO EN ESCRITORIO (lg+)                                      -->
-  <!-- ===================================================================== -->
+  <!-- Desktop Sidebar -->
   <aside class="hidden lg:flex lg:w-72 lg:flex-col lg:fixed lg:inset-y-0 bg-slatepro-900 text-white border-r border-slate-800 z-30">
-    <!-- Marca -->
     <div class="p-6 border-b border-slate-800">
       <div class="flex items-center gap-3">
         <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-terracotta-500 to-terracotta-700 flex items-center justify-center text-gold-300 shadow-inner border border-gold-400/30 shrink-0">
@@ -143,7 +139,6 @@
       </p>
     </div>
 
-    <!-- Navegación Lateral -->
     <nav class="flex-1 px-4 py-5 space-y-1.5 overflow-y-auto" aria-label="Navegación Escritorio">
       <button onclick="switchScreen('dashboard')" data-screen="dashboard" class="desktop-nav-btn w-full touch-target flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition bg-terracotta-600 text-white shadow-md">
         <span class="flex items-center gap-3">
@@ -184,7 +179,6 @@
       </button>
     </nav>
 
-    <!-- Meta Estratégica + Acciones Rápidas en Sidebar -->
     <div class="p-4 border-t border-slate-800 space-y-3 bg-slatepro-950/50">
       <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700">
         <div class="flex items-center gap-2 text-gold-400 text-xs font-bold uppercase tracking-wider">
@@ -195,33 +189,15 @@
           <span>Tiempo máximo:</span>
           <span class="font-extrabold text-emerald-400">≤ 25 min</span>
         </div>
-        <div class="mt-1 text-xs text-slate-400 flex justify-between">
-          <span>Línea base anterior:</span>
-          <span>35 min (78% sat.)</span>
-        </div>
       </div>
-
       <button onclick="exportToCSV()" class="w-full touch-target px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
         <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-        <span>Exportar CSV (Excel / Sheets)</span>
+        <span>Exportar CSV</span>
       </button>
-
-      <div class="grid grid-cols-2 gap-2">
-        <button onclick="promptResetDemo()" class="touch-target px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center justify-center gap-1.5">
-          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-          <span>Demo</span>
-        </button>
-        <button onclick="promptClearAll()" class="touch-target px-3 py-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-200 border border-rose-800/60 text-xs font-semibold transition flex items-center justify-center gap-1.5">
-          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-          <span>Limpiar</span>
-        </button>
-      </div>
     </div>
   </aside>
 
-  <!-- ===================================================================== -->
-  <!-- BARRA SUPERIOR MÓVIL / TABLET (< lg) + DRAWER DESLIZABLE              -->
-  <!-- ===================================================================== -->
+  <!-- Mobile Header -->
   <header class="lg:hidden bg-slatepro-900 text-white sticky top-0 z-30 shadow-md border-b-2 border-gold-500">
     <div class="px-4 py-3 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5 min-w-0">
@@ -233,20 +209,19 @@
           <p class="text-[11px] text-gold-300 truncate">Chaclacayo • Meta ≤ 25 min</p>
         </div>
       </div>
-
       <div class="flex items-center gap-1.5 shrink-0">
-        <button onclick="exportToCSV()" aria-label="Exportar CSV" class="touch-target px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
+        <button onclick="exportToCSV()" class="touch-target px-3 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
           <i data-lucide="download" class="w-4 h-4"></i>
           <span class="hidden sm:inline">CSV</span>
         </button>
-        <button onclick="toggleMobileDrawer(true)" aria-label="Abrir menú" class="touch-target w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center border border-slate-700">
+        <button onclick="toggleMobileDrawer(true)" class="touch-target w-11 h-11 rounded-xl bg-slate-800 text-white flex items-center justify-center border border-slate-700">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Drawer Deslizable Móvil / Tablet -->
+  <!-- Mobile Drawer -->
   <div id="mobile-drawer-backdrop" onclick="toggleMobileDrawer(false)" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 hidden lg:hidden"></div>
   <aside id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-72 max-w-[85vw] bg-slatepro-900 text-white z-50 transform translate-x-full transition-transform duration-250 ease-out flex flex-col lg:hidden shadow-2xl">
     <div class="p-5 border-b border-slate-800 flex items-center justify-between">
@@ -254,17 +229,11 @@
         <i data-lucide="utensils" class="w-5 h-5 text-gold-400"></i>
         <span class="font-extrabold text-base">Menú Operativo</span>
       </div>
-      <button onclick="toggleMobileDrawer(false)" aria-label="Cerrar menú" class="touch-target w-10 h-10 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center">
+      <button onclick="toggleMobileDrawer(false)" class="touch-target w-10 h-10 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
-
     <div class="p-4 flex-1 overflow-y-auto space-y-2">
-      <div class="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700 mb-3">
-        <div class="text-xs font-bold text-gold-400 uppercase">Objetivo del Proyecto</div>
-        <p class="text-xs text-slate-300 mt-1">Reducir espera de 35m a <strong>≤ 25 min</strong> y elevar satisfacción al <strong>90%</strong>.</p>
-      </div>
-
       <button onclick="switchScreen('dashboard'); toggleMobileDrawer(false)" class="w-full touch-target flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-200 hover:bg-slate-800">
         <i data-lucide="layout-dashboard" class="w-4 h-4 text-terracotta-400"></i>
         <span>1. Panel Principal</span>
@@ -286,36 +255,14 @@
         <span>5. Control de Incidencias</span>
       </button>
     </div>
-
-    <div class="p-4 border-t border-slate-800 space-y-2.5 bg-slatepro-950/60">
-      <button onclick="exportToCSV(); toggleMobileDrawer(false)" class="w-full touch-target px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-2">
-        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-        <span>Exportar CSV (Excel / Sheets)</span>
-      </button>
-      <div class="grid grid-cols-2 gap-2">
-        <button onclick="toggleMobileDrawer(false); promptResetDemo()" class="touch-target px-3 py-2.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5">
-          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-          <span>Datos Demo</span>
-        </button>
-        <button onclick="toggleMobileDrawer(false); promptClearAll()" class="touch-target px-3 py-2.5 rounded-xl bg-rose-950 text-rose-200 border border-rose-800/60 text-xs font-semibold flex items-center justify-center gap-1.5">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-          <span>Limpiar</span>
-        </button>
-      </div>
-    </div>
   </aside>
 
-  <!-- ===================================================================== -->
-  <!-- CONTENIDO PRINCIPAL (ADAPTADO CON PADDING INFERIOR PARA BOTTOM NAV)   -->
-  <!-- ===================================================================== -->
+  <!-- Main Body Content -->
   <div class="flex-1 lg:pl-72 flex flex-col min-w-0 pb-24 lg:pb-8">
     <main class="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6">
 
-      <!-- =================================================================== -->
-      <!-- PANTALLA 1: PANEL PRINCIPAL (DASHBOARD)                             -->
-      <!-- =================================================================== -->
+      <!-- SCREEN 1: DASHBOARD -->
       <section id="screen-dashboard" class="screen-section fade-in space-y-5">
-        <!-- Encabezado de Sección + Accesos Rápidos Táctiles -->
         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2">
@@ -323,10 +270,9 @@
               <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Panel Principal Operativo</h2>
             </div>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              Coordinación en tiempo real entre <strong class="text-slate-800">Salón, Cocina y Caja</strong> para cumplir la meta de <strong class="text-emerald-700">≤ 25 min</strong>.
+              Coordinación en tiempo real entre <strong class="text-slate-800">Salón, Cocina y Caja</strong> (Meta: <strong class="text-emerald-700">≤ 25 min</strong>).
             </p>
           </div>
-
           <div class="grid grid-cols-2 sm:flex gap-2 shrink-0">
             <button onclick="switchScreen('registro')" class="touch-target px-4 py-2.5 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center justify-center gap-2">
               <i data-lucide="plus" class="w-4 h-4"></i>
@@ -339,129 +285,77 @@
           </div>
         </div>
 
-        <!-- Tarjetas KPIs (1 col móvil, 2 col tablet, 4 col desktop) -->
+        <!-- KPIs -->
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5 sm:gap-4">
-          <!-- KPI 1: Pedidos Totales y Activos -->
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pedidos del Turno</span>
-              <span class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-                <i data-lucide="receipt" class="w-5 h-5"></i>
-              </span>
+              <span class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center"><i data-lucide="receipt" class="w-5 h-5"></i></span>
             </div>
             <div class="mt-3 flex items-baseline gap-2.5">
               <span id="kpi-total" class="text-3xl font-extrabold text-slate-900">0</span>
               <span id="kpi-activos-sub" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">0 activos</span>
             </div>
-            <div class="text-xs text-slate-500 mt-1.5">Centralizados digitalmente</div>
           </div>
-
-          <!-- KPI 2: Listos para Verificar y Entregar -->
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Listos para Entregar</span>
-              <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                <i data-lucide="bell-ring" class="w-5 h-5"></i>
-              </span>
+              <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>
             </div>
             <div class="mt-3 flex items-baseline gap-2.5">
               <span id="kpi-listos" class="text-3xl font-extrabold text-emerald-600">0</span>
               <span id="kpi-cocina-sub" class="text-xs font-semibold text-slate-500">0 en cocina</span>
             </div>
             <button onclick="switchScreen('verificacion')" class="mt-1.5 text-left text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
-              <span>Ir a verificación</span>
-              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              <span>Ir a verificación</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </button>
           </div>
-
-          <!-- KPI 3: Tiempo Promedio vs Meta 25 min -->
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-terracotta-700">Tiempo Promedio</span>
-              <span class="w-10 h-10 rounded-xl bg-terracotta-100 text-terracotta-700 flex items-center justify-center">
-                <i data-lucide="timer" class="w-5 h-5"></i>
-              </span>
+              <span class="w-10 h-10 rounded-xl bg-terracotta-100 text-terracotta-700 flex items-center justify-center"><i data-lucide="timer" class="w-5 h-5"></i></span>
             </div>
             <div class="mt-3 flex items-baseline gap-1.5">
-              <span id="kpi-tiempo" class="text-3xl font-extrabold text-slate-900">--</span>
+              <span id="kpi-tiempo" class="text-3xl font-extrabold text-slate-900">21</span>
               <span class="text-sm font-bold text-slate-500">min</span>
             </div>
-            <div id="kpi-tiempo-status" class="text-xs font-semibold text-emerald-600 mt-1.5">Meta: ≤ 25 min (Antes: 35m)</div>
+            <div class="text-xs font-semibold text-emerald-600 mt-1.5">Meta: ≤ 25 min</div>
           </div>
-
-          <!-- KPI 4: Incidencias Pendientes -->
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-rose-700">Incidencias Abiertas</span>
-              <span class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
-                <i data-lucide="alert-circle" class="w-5 h-5"></i>
-              </span>
+              <span class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center"><i data-lucide="alert-circle" class="w-5 h-5"></i></span>
             </div>
             <div class="mt-3 flex items-baseline gap-2.5">
               <span id="kpi-incidencias" class="text-3xl font-extrabold text-rose-600">0</span>
-              <span id="kpi-inc-total-sub" class="text-xs font-semibold text-slate-500">de 0 totales</span>
             </div>
             <button onclick="switchScreen('incidencias')" class="mt-1.5 text-left text-xs font-bold text-rose-700 hover:underline flex items-center gap-1">
-              <span>Gestionar reclamos</span>
-              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              <span>Gestionar reclamos</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </button>
           </div>
         </div>
 
-        <!-- Alerta de Pedidos que Superan o Rozan los 25 min -->
-        <div id="dashboard-alerts-box" class="hidden bg-rose-50 border-l-4 border-rose-600 rounded-2xl p-4 shadow-sm">
-          <div class="flex items-start gap-3">
-            <i data-lucide="siren" class="w-5 h-5 text-rose-600 shrink-0 mt-0.5"></i>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-extrabold text-rose-900">Alerta de Tiempo de Espera (Meta: ≤ 25 minutos)</h3>
-              <ul id="dashboard-alerts-list" class="mt-1.5 text-xs sm:text-sm text-rose-800 space-y-1 list-disc list-inside"></ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contenido Inferior del Dashboard: Pedidos Activos + Distribución por Canal -->
+        <!-- Dashboard Active Orders Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <!-- Pedidos Activos -->
           <div class="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-              <div>
-                <h3 class="text-base font-bold text-slate-900">Pedidos Activos en Curso</h3>
-                <p class="text-xs text-slate-500">Semáforo: Verde (&lt;18m) • Ámbar (18-24m) • Rojo (≥25m)</p>
-              </div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-base font-bold text-slate-900">Pedidos Activos en Curso</h3>
               <button onclick="switchScreen('seguimiento')" class="touch-target px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-800 text-xs font-bold transition">
                 Ver tablero completo
               </button>
             </div>
-            <div id="dashboard-active-orders" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <!-- Dinámico -->
-            </div>
+            <div id="dashboard-active-orders" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5"></div>
           </div>
-
-          <!-- Resumen por Canal & Últimas Incidencias -->
           <div class="space-y-5">
             <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
               <h3 class="text-base font-bold text-slate-900 mb-3">Pedidos por Canal</h3>
-              <div id="dashboard-channels" class="space-y-3.5">
-                <!-- Dinámico -->
-              </div>
-            </div>
-
-            <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
-              <div class="flex items-center justify-between mb-3">
-                <h3 class="text-base font-bold text-slate-900">Últimas Incidencias</h3>
-                <button onclick="switchScreen('incidencias')" class="text-xs font-bold text-terracotta-600 hover:underline">Ver todas</button>
-              </div>
-              <div id="dashboard-recent-incidents" class="space-y-2.5">
-                <!-- Dinámico -->
-              </div>
+              <div id="dashboard-channels" class="space-y-3.5 text-xs text-slate-600"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- =================================================================== -->
-      <!-- PANTALLA 2: REGISTRO DE PEDIDOS (TÁCTIL PARA MOZOS Y CAJA)          -->
-      <!-- =================================================================== -->
+      <!-- SCREEN 2: REGISTRO DE PEDIDOS -->
       <section id="screen-registro" class="screen-section hidden fade-in">
         <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
           <div class="bg-gradient-to-r from-terracotta-700 to-terracotta-600 px-5 py-4 sm:px-6 sm:py-5 text-white">
@@ -469,1643 +363,205 @@
               <span class="px-2.5 py-0.5 rounded-md bg-white/20 text-white text-xs font-bold">Pantalla 2</span>
               <h2 class="text-lg sm:text-xl font-extrabold">Registro Uniforme de Pedidos</h2>
             </div>
-            <p class="text-xs sm:text-sm text-terracotta-100 mt-1">
-              Toma de pedido estandarizada para mozos en salón y caja (reemplaza libretas y comandas manuales).
-            </p>
+            <p class="text-xs sm:text-sm text-terracotta-100 mt-1">Toma de pedido estandarizada para salón y caja.</p>
           </div>
-
           <form id="order-form" onsubmit="handleCreateOrder(event)" class="p-4 sm:p-6 space-y-5">
-            <!-- Selector Táctil Grande de Modalidad -->
             <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">1. Selecciona Modalidad de Atención *</label>
-              <input type="hidden" id="reg-modalidad" value="Consumo en salón" />
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">1. Modalidad de Atención *</label>
               <div class="grid grid-cols-3 gap-2.5">
-                <button type="button" onclick="selectModalidad('Consumo en salón')" data-mod="Consumo en salón" class="mod-btn touch-target p-3 rounded-xl border-2 border-terracotta-600 bg-terracotta-50 text-terracotta-800 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition">
-                  <i data-lucide="utensils-crossed" class="w-4 h-4 shrink-0"></i>
-                  <span>Salón</span>
+                <button type="button" onclick="selectModalidad('Consumo en salón')" data-mod="Consumo en salón" class="mod-btn touch-target p-3 rounded-xl border-2 border-terracotta-600 bg-terracotta-50 text-terracotta-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+                  <i data-lucide="utensils-crossed" class="w-4 h-4"></i><span>Salón</span>
                 </button>
-                <button type="button" onclick="selectModalidad('Delivery')" data-mod="Delivery" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition">
-                  <i data-lucide="bike" class="w-4 h-4 shrink-0"></i>
-                  <span>Delivery</span>
+                <button type="button" onclick="selectModalidad('Delivery')" data-mod="Delivery" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+                  <i data-lucide="bike" class="w-4 h-4"></i><span>Delivery</span>
                 </button>
-                <button type="button" onclick="selectModalidad('Para recoger')" data-mod="Para recoger" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition">
-                  <i data-lucide="shopping-bag" class="w-4 h-4 shrink-0"></i>
-                  <span>Para recoger</span>
+                <button type="button" onclick="selectModalidad('Para recoger')" data-mod="Para recoger" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+                  <i data-lucide="shopping-bag" class="w-4 h-4"></i><span>Para recoger</span>
                 </button>
               </div>
             </div>
 
-            <!-- Datos de Identificación -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Código Pedido</label>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Código</label>
                 <input type="text" id="reg-codigo" readonly class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-stone-100 border border-stone-300 text-slate-900 font-extrabold text-sm" />
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Mesa o Referencia *</label>
-                <input type="text" id="reg-referencia" required placeholder="Ej. Mesa 4 (Terraza)" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500 focus:border-terracotta-500" />
+                <input type="text" id="reg-referencia" required placeholder="Ej. Mesa 4" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500" />
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Responsable *</label>
-                <select id="reg-responsable" required class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500">
+                <select id="reg-responsable" required class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm">
                   <option value="Mozo 1 (Carlos)">Mozo 1 (Carlos)</option>
                   <option value="Mozo 2 (Lucía)">Mozo 2 (Lucía)</option>
                   <option value="Cajero (Miguel)">Cajero (Miguel)</option>
-                  <option value="Anfitriona (Valeria)">Anfitriona (Valeria)</option>
                 </select>
               </div>
             </div>
 
-            <!-- Selector Táctil de Carta Peruana Fusión -->
-            <div class="bg-stone-50 p-3.5 sm:p-4 rounded-2xl border border-stone-200 space-y-3.5">
-              <div class="flex items-center justify-between">
-                <label class="text-xs font-extrabold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                  <i data-lucide="chef-hat" class="w-4 h-4 text-terracotta-600"></i>
-                  <span>2. Carta Fusión Rivera de Plata (Toque rápido)</span>
-                </label>
-              </div>
-
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">2. Selección Rápida de Platos</label>
               <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                <button type="button" onclick="quickAddProduct('Ceviche Rivera de Plata')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 active:scale-[0.98] text-slate-800 hover:text-terracotta-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between gap-1 shadow-2xs">
-                  <span class="truncate">Ceviche Rivera de Plata</span>
-                  <span class="text-terracotta-600 font-extrabold text-base leading-none">+</span>
+                <button type="button" onclick="quickAddProduct('Ceviche Rivera de Plata')" class="touch-target px-3 py-2.5 rounded-xl bg-stone-50 hover:bg-terracotta-50 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
+                  <span class="truncate">Ceviche Rivera de Plata</span><span class="text-terracotta-600 font-extrabold">+</span>
                 </button>
-                <button type="button" onclick="quickAddProduct('Lomo Saltado Fusión')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 active:scale-[0.98] text-slate-800 hover:text-terracotta-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between gap-1 shadow-2xs">
-                  <span class="truncate">Lomo Saltado Fusión</span>
-                  <span class="text-terracotta-600 font-extrabold text-base leading-none">+</span>
+                <button type="button" onclick="quickAddProduct('Lomo Saltado Fusión')" class="touch-target px-3 py-2.5 rounded-xl bg-stone-50 hover:bg-terracotta-50 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
+                  <span class="truncate">Lomo Saltado Fusión</span><span class="text-terracotta-600 font-extrabold">+</span>
                 </button>
-                <button type="button" onclick="quickAddProduct('Causa Acevichada')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 active:scale-[0.98] text-slate-800 hover:text-terracotta-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between gap-1 shadow-2xs">
-                  <span class="truncate">Causa Acevichada</span>
-                  <span class="text-terracotta-600 font-extrabold text-base leading-none">+</span>
+                <button type="button" onclick="quickAddProduct('Arroz con Mariscos Norteño')" class="touch-target px-3 py-2.5 rounded-xl bg-stone-50 hover:bg-terracotta-50 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
+                  <span class="truncate">Arroz con Mariscos</span><span class="text-terracotta-600 font-extrabold">+</span>
                 </button>
-                <button type="button" onclick="quickAddProduct('Tacu Tacu con Mariscos')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 active:scale-[0.98] text-slate-800 hover:text-terracotta-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between gap-1 shadow-2xs">
-                  <span class="truncate">Tacu Tacu con Mariscos</span>
-                  <span class="text-terracotta-600 font-extrabold text-base leading-none">+</span>
-                </button>
-                <button type="button" onclick="quickAddProduct('Chilcano de Maracuyá')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 active:scale-[0.98] text-slate-800 hover:text-terracotta-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between gap-1 shadow-2xs">
-                  <span class="truncate">Chilcano de Maracuyá</span>
-                  <span class="text-terracotta-600 font-extrabold text-base leading-none">+</span>
-                </button>
-                <button type="button" onclick="quickAddProduct('Chicha Morada 1L')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 active:scale-[0.98] text-slate-800 hover:text-terracotta-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between gap-1 shadow-2xs">
-                  <span class="truncate">Chicha Morada 1L</span>
-                  <span class="text-terracotta-600 font-extrabold text-base leading-none">+</span>
-                </button>
-              </div>
-
-              <!-- Agregar otro plato manualmente -->
-              <div class="flex flex-col sm:flex-row gap-2 pt-1">
-                <input type="text" id="custom-prod-name" placeholder="Otro plato, entrada o bebida..." class="flex-1 touch-target px-3.5 py-2 rounded-xl bg-white border border-stone-300 text-sm focus:ring-2 focus:ring-terracotta-500" />
-                <div class="flex gap-2">
-                  <input type="number" id="custom-prod-qty" min="1" max="50" value="1" aria-label="Cantidad" class="w-20 touch-target px-3 py-2 rounded-xl bg-white border border-stone-300 text-sm text-center font-bold" />
-                  <button type="button" onclick="addCustomProductItem()" class="flex-1 sm:flex-none touch-target px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold transition">
-                    Agregar
-                  </button>
-                </div>
-              </div>
-
-              <!-- Lista de productos agregados con botones +/- táctiles de 44px -->
-              <div id="reg-items-container" class="space-y-2 pt-1"></div>
-            </div>
-
-            <!-- Observaciones y Hora -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              <div class="sm:col-span-2">
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Observaciones Especiales</label>
-                <input type="text" id="reg-observaciones" placeholder="Ej. Sin ají, término medio, empaque para llevar..." class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500" />
-              </div>
-              <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Hora de Ingreso</label>
-                <input type="datetime-local" id="reg-fecha" required class="w-full touch-target px-3 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-xs sm:text-sm focus:ring-2 focus:ring-terracotta-500" />
               </div>
             </div>
 
-            <!-- Botones de Guardado -->
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-3 border-t border-stone-200">
-              <button type="button" onclick="resetOrderForm()" class="touch-target px-5 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 text-sm font-bold transition">
-                Limpiar
-              </button>
-              <button type="submit" class="touch-target px-6 py-3 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white text-sm font-extrabold shadow-md transition flex items-center justify-center gap-2">
-                <i data-lucide="send" class="w-4 h-4"></i>
-                <span>Guardar y Enviar a Cocina</span>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Productos Agregados *</label>
+              <textarea id="reg-productos" required rows="2" placeholder="Selecciona platos o escribe el pedido..." class="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-slate-900 text-sm"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Observaciones</label>
+              <input type="text" id="reg-observaciones" placeholder="Ej. Poco picante" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm" />
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-stone-200">
+              <button type="submit" class="touch-target px-6 py-3 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white font-bold text-sm shadow-md transition flex items-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i><span>Enviar a Cocina</span>
               </button>
             </div>
           </form>
         </div>
       </section>
 
-      <!-- =================================================================== -->
-      <!-- PANTALLA 3: SEGUIMIENTO OPERATIVO (TABS MÓVIL + KANBAN + TABLA)     -->
-      <!-- =================================================================== -->
+      <!-- SCREEN 3: SEGUIMIENTO / KANBAN -->
       <section id="screen-seguimiento" class="screen-section hidden fade-in space-y-4">
-        <!-- Cabecera y Controles de Vista -->
-        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col lg:flex-row lg:items-center justify-between gap-3.5">
+        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex items-center justify-between">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded-md bg-terracotta-100 text-terracotta-800 text-xs font-bold">Pantalla 3</span>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Seguimiento en Vivo</h2>
-            </div>
-            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
-              Cronómetro en vivo: <span class="text-emerald-700 font-bold">&lt;18m</span> • <span class="text-amber-700 font-bold">18-24m</span> • <span class="text-rose-700 font-bold">≥25m Alerta</span>
-            </p>
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-800 text-xs font-bold">Pantalla 3</span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">Tablero de Seguimiento (Cocina)</h2>
           </div>
+          <button onclick="cargarPedidos()" class="touch-target px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-800 text-xs font-bold transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i><span>Actualizar</span>
+          </button>
+        </div>
 
-          <div class="flex flex-wrap items-center gap-2">
-            <select id="filter-modalidad" onchange="renderSeguimiento()" aria-label="Filtrar por modalidad" class="touch-target px-3 py-2 rounded-xl bg-stone-50 border border-stone-300 text-xs sm:text-sm font-semibold text-slate-700">
-              <option value="ALL">Todas modalidades</option>
-              <option value="Consumo en salón">Salón</option>
-              <option value="Delivery">Delivery</option>
-              <option value="Para recoger">Para recoger</option>
-            </select>
-
-            <div class="inline-flex rounded-xl bg-stone-100 p-1 border border-stone-200">
-              <button id="btn-view-kanban" onclick="setSeguimientoView('kanban')" class="touch-target px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-900 shadow-xs transition flex items-center gap-1.5">
-                <i data-lucide="columns-3" class="w-4 h-4"></i>
-                <span>Tarjetas</span>
-              </button>
-              <button id="btn-view-table" onclick="setSeguimientoView('table')" class="touch-target px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
-                <i data-lucide="table" class="w-4 h-4"></i>
-                <span>Tabla</span>
-              </button>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-stone-200/70 rounded-2xl p-4 flex flex-col min-h-[400px]">
+            <div class="flex items-center justify-between mb-3 px-1">
+              <h3 class="font-extrabold text-xs uppercase tracking-wider text-slate-700">1. Recibido</h3>
+              <span id="count-recibido" class="px-2 py-0.5 rounded-full text-xs font-extrabold bg-stone-300 text-stone-800">0</span>
             </div>
+            <div id="kanban-recibido" class="space-y-3 flex-1"></div>
           </div>
-        </div>
-
-        <!-- Selector de Pestañas por Estado en Móvil (< md) -->
-        <div id="mobile-state-tabs" class="md:hidden flex overflow-x-auto no-scrollbar gap-2 pb-1">
-          <!-- Generado dinámicamente con contadores -->
-        </div>
-
-        <!-- Vista Tarjetas / Kanban Responsive -->
-        <div id="seguimiento-kanban" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
-          <!-- Dinámico -->
-        </div>
-
-        <!-- Vista Tabla con Scroll Horizontal Limpio -->
-        <div id="seguimiento-table-wrapper" class="hidden bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[780px]">
-              <thead>
-                <tr class="bg-slatepro-900 text-white text-xs uppercase tracking-wider">
-                  <th class="py-3.5 px-4">Código</th>
-                  <th class="py-3.5 px-4">Ingreso</th>
-                  <th class="py-3.5 px-4">Modalidad / Ref.</th>
-                  <th class="py-3.5 px-4">Productos</th>
-                  <th class="py-3.5 px-4">Tiempo</th>
-                  <th class="py-3.5 px-4">Estado</th>
-                  <th class="py-3.5 px-4 text-right">Acción Táctil</th>
-                </tr>
-              </thead>
-              <tbody id="seguimiento-table-body" class="divide-y divide-stone-200 text-xs sm:text-sm">
-                <!-- Dinámico -->
-              </tbody>
-            </table>
+          <div class="bg-amber-100/70 rounded-2xl p-4 flex flex-col min-h-[400px]">
+            <div class="flex items-center justify-between mb-3 px-1">
+              <h3 class="font-extrabold text-xs uppercase tracking-wider text-amber-900">2. En preparación</h3>
+              <span id="count-preparacion" class="px-2 py-0.5 rounded-full text-xs font-extrabold bg-amber-200 text-amber-900">0</span>
+            </div>
+            <div id="kanban-preparacion" class="space-y-3 flex-1"></div>
+          </div>
+          <div class="bg-emerald-100/70 rounded-2xl p-4 flex flex-col min-h-[400px]">
+            <div class="flex items-center justify-between mb-3 px-1">
+              <h3 class="font-extrabold text-xs uppercase tracking-wider text-emerald-900">3. Listo para entregar</h3>
+              <span id="count-listo" class="px-2 py-0.5 rounded-full text-xs font-extrabold bg-emerald-200 text-emerald-900">0</span>
+            </div>
+            <div id="kanban-listo" class="space-y-3 flex-1"></div>
           </div>
         </div>
       </section>
 
-      <!-- =================================================================== -->
-      <!-- PANTALLA 4: VERIFICACIÓN Y ENTREGA (CHECKLIST TÁCTIL)               -->
-      <!-- =================================================================== -->
-      <section id="screen-verificacion" class="screen-section hidden fade-in space-y-5">
+      <!-- SCREEN 4: VERIFICACIÓN Y ENTREGA -->
+      <section id="screen-verificacion" class="screen-section hidden fade-in space-y-4">
         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
-          <div class="flex items-center gap-2">
-            <span class="px-2.5 py-0.5 rounded-md bg-terracotta-100 text-terracotta-800 text-xs font-bold">Pantalla 4</span>
-            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Verificación y Entrega al Cliente</h2>
-          </div>
-          <p class="text-xs sm:text-sm text-slate-600 mt-1">
-            Control de calidad previo al despacho para reducir a cero el 15% de pedidos incompletos o incorrectos.
-          </p>
+          <span class="px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-xs font-bold">Pantalla 4</span>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">Verificación y Entrega al Cliente</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Lista de control final para asegurar calidad antes de llevar a mesa.</p>
         </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          <!-- Lista de Pedidos Listos -->
-          <div class="lg:col-span-5 bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 space-y-3.5">
-            <h3 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>Pedidos Listos en Cocina</span>
-            </h3>
-            <div id="verificacion-ready-list" class="space-y-3">
-              <!-- Dinámico -->
-            </div>
-          </div>
-
-          <!-- Panel de Checklist Interactivo -->
-          <div class="lg:col-span-7 bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-stone-200">
-            <div id="verificacion-empty-state" class="text-center py-10">
-              <div class="w-16 h-16 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center mx-auto mb-3">
-                <i data-lucide="clipboard-check" class="w-8 h-8"></i>
-              </div>
-              <h4 class="text-base font-bold text-slate-700">Selecciona un pedido listo</h4>
-              <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1">
-                Toca un pedido de la lista para verificar sus ítems antes de entregarlo al cliente o motorizado.
-              </p>
-            </div>
-
-            <div id="verificacion-checklist-panel" class="hidden space-y-4">
-              <div class="flex flex-wrap items-center justify-between gap-2 pb-3.5 border-b border-stone-200">
-                <div>
-                  <span id="chk-codigo" class="px-3 py-1 rounded-lg bg-terracotta-100 text-terracotta-800 font-extrabold text-sm">PED-000</span>
-                  <span id="chk-modalidad" class="ml-2 text-xs sm:text-sm font-bold text-slate-700">Salón</span>
-                </div>
-                <div id="chk-tiempo-badge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">
-                  18 min
-                </div>
-              </div>
-
-              <!-- Resumen del pedido -->
-              <div class="bg-stone-50 p-3.5 rounded-xl border border-stone-200 space-y-2">
-                <div class="text-xs font-extrabold uppercase text-slate-500">Contenido a comprobar:</div>
-                <ul id="chk-productos-list" class="text-sm font-semibold text-slate-800 list-disc list-inside space-y-1"></ul>
-                <div id="chk-observaciones" class="text-xs text-terracotta-800 bg-terracotta-50 p-2.5 rounded-lg border border-terracotta-200 mt-2"></div>
-              </div>
-
-              <!-- 4 Checkboxes con área táctil amplia >= 44px -->
-              <div class="space-y-2.5">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-slate-700">Marca los 4 controles obligatorios:</div>
-
-                <label class="touch-target flex items-center gap-3.5 p-3.5 rounded-xl border-2 border-stone-200 hover:border-terracotta-300 hover:bg-stone-50 cursor-pointer transition select-none">
-                  <input type="checkbox" class="chk-item w-6 h-6 rounded-md text-terracotta-600 focus:ring-terracotta-500 shrink-0" onchange="validateChecklist()" />
-                  <div>
-                    <div class="text-sm font-bold text-slate-900">1. Productos completos</div>
-                    <div class="text-xs text-slate-500">Todos los platos y bebidas están presentes.</div>
-                  </div>
-                </label>
-
-                <label class="touch-target flex items-center gap-3.5 p-3.5 rounded-xl border-2 border-stone-200 hover:border-terracotta-300 hover:bg-stone-50 cursor-pointer transition select-none">
-                  <input type="checkbox" class="chk-item w-6 h-6 rounded-md text-terracotta-600 focus:ring-terracotta-500 shrink-0" onchange="validateChecklist()" />
-                  <div>
-                    <div class="text-sm font-bold text-slate-900">2. Cantidades exactas</div>
-                    <div class="text-xs text-slate-500">Porciones y unidades coinciden con la orden.</div>
-                  </div>
-                </label>
-
-                <label class="touch-target flex items-center gap-3.5 p-3.5 rounded-xl border-2 border-stone-200 hover:border-terracotta-300 hover:bg-stone-50 cursor-pointer transition select-none">
-                  <input type="checkbox" class="chk-item w-6 h-6 rounded-md text-terracotta-600 focus:ring-terracotta-500 shrink-0" onchange="validateChecklist()" />
-                  <div>
-                    <div class="text-sm font-bold text-slate-900">3. Observaciones cumplidas</div>
-                    <div class="text-xs text-slate-500">Sin ají, términos de cocción o notas respetadas.</div>
-                  </div>
-                </label>
-
-                <label class="touch-target flex items-center gap-3.5 p-3.5 rounded-xl border-2 border-stone-200 hover:border-terracotta-300 hover:bg-stone-50 cursor-pointer transition select-none">
-                  <input type="checkbox" class="chk-item w-6 h-6 rounded-md text-terracotta-600 focus:ring-terracotta-500 shrink-0" onchange="validateChecklist()" />
-                  <div>
-                    <div class="text-sm font-bold text-slate-900">4. Presentación / empaque correcto</div>
-                    <div class="text-xs text-slate-500">Temperatura óptima, cremas, cubiertos y sellado.</div>
-                  </div>
-                </label>
-              </div>
-
-              <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-3 border-t border-stone-200">
-                <button type="button" onclick="openIncidentFromOrder()" class="touch-target px-4 py-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2">
-                  <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-                  <span>Reportar Error</span>
-                </button>
-                <button id="btn-confirmar-entrega" type="button" disabled onclick="confirmOrderDelivery()" class="touch-target px-6 py-3 rounded-xl bg-emerald-600 disabled:bg-stone-300 disabled:text-stone-500 disabled:cursor-not-allowed hover:bg-emerald-700 text-white text-sm font-extrabold shadow-md transition flex items-center justify-center gap-2">
-                  <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-                  <span>Confirmar Entrega al Cliente</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="verificacion-lista-pedidos" class="space-y-3"></div>
       </section>
 
-      <!-- =================================================================== -->
-      <!-- PANTALLA 5: REGISTRO Y CONTROL DE INCIDENCIAS                       -->
-      <!-- =================================================================== -->
-      <section id="screen-incidencias" class="screen-section hidden fade-in space-y-5">
-        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
-          <div class="flex items-center gap-2">
-            <span class="px-2.5 py-0.5 rounded-md bg-terracotta-100 text-terracotta-800 text-xs font-bold">Pantalla 5</span>
-            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Control de Incidencias y Reclamos</h2>
+      <!-- SCREEN 5: INCIDENCIAS -->
+      <section id="screen-incidencias" class="screen-section hidden fade-in space-y-4">
+        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex items-center justify-between">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">Pantalla 5</span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">Control de Incidencias</h2>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 mt-1">
-            Registro formal de inconvenientes, responsables y acciones correctivas hasta su cierre.
-          </p>
+          <button onclick="openIncidenciaModal()" class="touch-target px-4 py-2.5 rounded-xl bg-rose-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm">
+            <i data-lucide="plus" class="w-4 h-4"></i><span>Nueva Incidencia</span>
+          </button>
         </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          <!-- Formulario de Incidencia -->
-          <div class="lg:col-span-5 bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-stone-200 h-fit">
-            <h3 class="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-              <i data-lucide="file-warning" class="w-5 h-5 text-rose-600"></i>
-              <span>Registrar Incidencia</span>
-            </h3>
-
-            <form id="incident-form" onsubmit="handleCreateIncident(event)" class="space-y-3.5">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Código de Pedido *</label>
-                  <select id="inc-pedido" required class="w-full touch-target px-3 py-2.5 rounded-xl bg-white border border-stone-300 text-sm focus:ring-2 focus:ring-terracotta-500"></select>
-                </div>
-                <div>
-                  <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Fecha y Hora *</label>
-                  <input type="datetime-local" id="inc-fecha" required class="w-full touch-target px-3 py-2.5 rounded-xl bg-white border border-stone-300 text-xs sm:text-sm focus:ring-2 focus:ring-terracotta-500" />
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Tipo de Incidencia *</label>
-                  <select id="inc-tipo" required class="w-full touch-target px-3 py-2.5 rounded-xl bg-white border border-stone-300 text-sm focus:ring-2 focus:ring-terracotta-500">
-                    <option value="Retrasado">Retrasado (&gt;25 min)</option>
-                    <option value="Pedido equivocado">Pedido equivocado</option>
-                    <option value="Incompleto">Incompleto</option>
-                    <option value="Reclamo">Reclamo</option>
-                    <option value="Otro">Otro</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Responsable *</label>
-                  <select id="inc-responsable" required class="w-full touch-target px-3 py-2.5 rounded-xl bg-white border border-stone-300 text-sm focus:ring-2 focus:ring-terracotta-500">
-                    <option value="Jefe de Salón">Jefe de Salón</option>
-                    <option value="Chef Principal">Chef Principal</option>
-                    <option value="Administrador">Administrador</option>
-                    <option value="Cajero">Cajero</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Descripción de lo Sucedido *</label>
-                <textarea id="inc-descripcion" rows="2" required placeholder="Detalla brevemente el problema ocurrido..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-sm focus:ring-2 focus:ring-terracotta-500"></textarea>
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Acción Correctiva Aplicada *</label>
-                <textarea id="inc-accion" rows="2" required placeholder="Ej. Se repuso el plato con prioridad y se ofreció cortesía..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-sm focus:ring-2 focus:ring-terracotta-500"></textarea>
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Estado *</label>
-                <select id="inc-estado" required class="w-full touch-target px-3 py-2.5 rounded-xl bg-white border border-stone-300 text-sm focus:ring-2 focus:ring-terracotta-500">
-                  <option value="Pendiente">Pendiente</option>
-                  <option value="Solucionado">Solucionado</option>
-                </select>
-              </div>
-
-              <button type="submit" class="w-full touch-target py-3 px-5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-extrabold shadow-sm transition flex items-center justify-center gap-2">
-                <i data-lucide="save" class="w-4 h-4"></i>
-                <span>Guardar Incidencia</span>
-              </button>
-            </form>
-          </div>
-
-          <!-- Bitácora Responsive (Tarjetas en móvil/tablet + Tabla en desktop) -->
-          <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden flex flex-col">
-            <div class="p-4 sm:p-5 border-b border-stone-200 flex flex-wrap items-center justify-between gap-2">
-              <h3 class="text-base font-extrabold text-slate-900">Historial de Incidencias</h3>
-              <select id="filter-inc-estado" onchange="renderIncidents()" aria-label="Filtrar estado incidencia" class="touch-target px-3 py-1.5 rounded-xl bg-stone-50 border border-stone-300 text-xs font-bold text-slate-700">
-                <option value="ALL">Todas</option>
-                <option value="Pendiente">Pendientes</option>
-                <option value="Solucionado">Solucionadas</option>
-              </select>
-            </div>
-
-            <!-- Lista de Tarjetas (Móvil y Tablet < xl) -->
-            <div id="incidents-cards-container" class="xl:hidden p-4 space-y-3.5 flex-1">
-              <!-- Dinámico -->
-            </div>
-
-            <!-- Tabla Detallada (Desktop xl+) -->
-            <div id="incidents-table-container" class="hidden xl:block overflow-x-auto flex-1">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="bg-slatepro-900 text-white text-[11px] uppercase tracking-wider">
-                    <th class="py-3 px-3.5">Pedido / Fecha</th>
-                    <th class="py-3 px-3.5">Tipo</th>
-                    <th class="py-3 px-3.5">Descripción y Acción</th>
-                    <th class="py-3 px-3.5">Responsable</th>
-                    <th class="py-3 px-3.5">Estado</th>
-                    <th class="py-3 px-3.5 text-right">Acción</th>
-                  </tr>
-                </thead>
-                <tbody id="incidents-table-body" class="divide-y divide-stone-200 text-xs">
-                  <!-- Dinámico -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <div id="incidencias-lista" class="space-y-3"></div>
       </section>
 
     </main>
-
-    <!-- Footer Institucional -->
-    <footer class="bg-white border-t border-stone-200 mt-8 py-4 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 text-center sm:text-left">
-        <div>
-          <strong class="text-slate-700">Instituto IDAT — Gestión Administrativa</strong> | Metodologías Ágiles para la Innovación
-        </div>
-        <div>
-          Prototipo Responsive: <strong class="text-terracotta-700">Restaurante Rivera de Plata</strong> (Chaclacayo, Lima)
-        </div>
-      </div>
-    </footer>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- BARRA DE NAVEGACIÓN INFERIOR FIJA EN CELULARES Y TABLETS (< lg)       -->
-  <!-- ===================================================================== -->
-  <nav class="lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-stone-200 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] z-30 px-1 py-1.5" aria-label="Navegación Móvil Inferior">
-    <div class="grid grid-cols-5 gap-1 max-w-xl mx-auto">
-      <button onclick="switchScreen('dashboard')" data-screen="dashboard" class="mobile-bottom-btn touch-target flex flex-col items-center justify-center py-1 px-1 rounded-xl text-terracotta-600 bg-terracotta-50 font-bold transition">
-        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-        <span class="text-[10px] mt-0.5 leading-tight">1. Panel</span>
-      </button>
-
-      <button onclick="switchScreen('registro')" data-screen="registro" class="mobile-bottom-btn touch-target flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-500 hover:text-slate-900 font-semibold transition">
-        <i data-lucide="plus-circle" class="w-5 h-5"></i>
-        <span class="text-[10px] mt-0.5 leading-tight">2. Pedido</span>
-      </button>
-
-      <button onclick="switchScreen('seguimiento')" data-screen="seguimiento" class="mobile-bottom-btn touch-target relative flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-500 hover:text-slate-900 font-semibold transition">
-        <span class="badge-activos absolute top-0.5 right-2 sm:right-5 px-1.5 min-w-[18px] h-[18px] text-[10px] rounded-full bg-gold-500 text-slate-950 font-extrabold flex items-center justify-center">0</span>
-        <i data-lucide="list-checks" class="w-5 h-5"></i>
-        <span class="text-[10px] mt-0.5 leading-tight">3. Estado</span>
-      </button>
-
-      <button onclick="switchScreen('verificacion')" data-screen="verificacion" class="mobile-bottom-btn touch-target relative flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-500 hover:text-slate-900 font-semibold transition">
-        <span class="badge-listos absolute top-0.5 right-2 sm:right-5 px-1.5 min-w-[18px] h-[18px] text-[10px] rounded-full bg-emerald-600 text-white font-extrabold flex items-center justify-center">0</span>
-        <i data-lucide="clipboard-check" class="w-5 h-5"></i>
-        <span class="text-[10px] mt-0.5 leading-tight">4. Verificar</span>
-      </button>
-
-      <button onclick="switchScreen('incidencias')" data-screen="incidencias" class="mobile-bottom-btn touch-target relative flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-500 hover:text-slate-900 font-semibold transition">
-        <span class="badge-incidencias absolute top-0.5 right-2 sm:right-5 px-1.5 min-w-[18px] h-[18px] text-[10px] rounded-full bg-rose-600 text-white font-extrabold flex items-center justify-center">0</span>
-        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-        <span class="text-[10px] mt-0.5 leading-tight">5. Quejas</span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- ===================================================================== -->
-  <!-- LÓGICA DE APLICACIÓN JAVASCRIPT                                       -->
-  <!-- ===================================================================== -->
-  <script>
-    const STORAGE_ORDERS_KEY = 'rivera_plata_orders_v2';
-    const STORAGE_INCIDENTS_KEY = 'rivera_plata_incidents_v2';
-
-    const ORDER_STATES = [
-      'Recibido',
-      'Confirmado',
-      'En preparación',
-      'Listo para entregar',
-      'Entregado'
-    ];
-
-    let orders = [];
-    let incidents = [];
-    let currentDraftItems = [];
-    let selectedVerificationOrderId = null;
-    let seguimientoViewMode = 'kanban';
-    let mobileSelectedStateTab = 'Recibido';
-
-    // =========================================================================
-    // INICIALIZACIÓN
-    // =========================================================================
-    window.onload = function () {
-      loadFromStorage();
-      if (orders.length === 0 && incidents.length === 0) {
-        seedDemoData(false);
-      }
-      initFormsDefaults();
-      refreshAllViews();
-      lucide.createIcons();
-
-      // Actualización automática de cronómetros cada 25 segundos
-      setInterval(() => {
-        refreshAllViews();
-      }, 25000);
-    };
-
-    function seedDemoData(showNotification = true) {
-      const now = Date.now();
-      const minMs = 60 * 1000;
-
-      orders = [
-        {
-          id: 'PED-001',
-          createdAt: new Date(now - 34 * minMs).toISOString(),
-          deliveredAt: new Date(now - 13 * minMs).toISOString(),
-          durationMinutes: 21,
-          modalidad: 'Consumo en salón',
-          referencia: 'Mesa 2 (Salón Principal)',
-          responsable: 'Mozo 1 (Carlos)',
-          items: [
-            { name: 'Ceviche Rivera de Plata', qty: 2 },
-            { name: 'Chicha Morada 1L', qty: 1 }
-          ],
-          observaciones: 'Uno sin ají y el otro término medio.',
-          estado: 'Entregado'
-        },
-        {
-          id: 'PED-002',
-          createdAt: new Date(now - 26 * minMs).toISOString(), // >= 25 min -> Alerta Roja
-          deliveredAt: null,
-          durationMinutes: null,
-          modalidad: 'Delivery',
-          referencia: 'Av. Nicolás Ayllón 1420 - Sr. Mendoza (987654321)',
-          responsable: 'Cajero (Miguel)',
-          items: [
-            { name: 'Lomo Saltado Fusión', qty: 2 },
-            { name: 'Causa Acevichada', qty: 1 }
-          ],
-          observaciones: 'Incluir cubiertos descartables y crema de rocoto aparte.',
-          estado: 'Listo para entregar'
-        },
-        {
-          id: 'PED-003',
-          createdAt: new Date(now - 19 * minMs).toISOString(), // 18-24 min -> Ámbar
-          deliveredAt: null,
-          durationMinutes: null,
-          modalidad: 'Consumo en salón',
-          referencia: 'Mesa 5 (Terraza)',
-          responsable: 'Mozo 2 (Lucía)',
-          items: [
-            { name: 'Tacu Tacu con Mariscos', qty: 1 },
-            { name: 'Chilcano de Maracuyá', qty: 2 }
-          ],
-          observaciones: 'Servir los chilcanos antes del fondo.',
-          estado: 'En preparación'
-        },
-        {
-          id: 'PED-004',
-          createdAt: new Date(now - 8 * minMs).toISOString(), // <18 min -> Verde
-          deliveredAt: null,
-          durationMinutes: null,
-          modalidad: 'Para recoger',
-          referencia: 'Recojo en caja - Sra. Patricia',
-          responsable: 'Anfitriona (Valeria)',
-          items: [
-            { name: 'Lomo Saltado Fusión', qty: 1 }
-          ],
-          observaciones: 'Sin cebolla cruda.',
-          estado: 'Confirmado'
-        },
-        {
-          id: 'PED-005',
-          createdAt: new Date(now - 3 * minMs).toISOString(),
-          deliveredAt: null,
-          durationMinutes: null,
-          modalidad: 'Consumo en salón',
-          referencia: 'Mesa 1',
-          responsable: 'Mozo 1 (Carlos)',
-          items: [
-            { name: 'Causa Acevichada', qty: 2 },
-            { name: 'Ceviche Rivera de Plata', qty: 1 }
-          ],
-          observaciones: 'Ninguna.',
-          estado: 'Recibido'
-        }
-      ];
-
-      incidents = [
-        {
-          id: 'INC-001',
-          orderId: 'PED-002',
-          createdAt: new Date(now - 4 * minMs).toISOString(),
-          tipo: 'Retrasado',
-          descripcion: 'El pedido superó los 25 minutos de meta por alta demanda en cocina.',
-          responsable: 'Chef Principal',
-          accion: 'Se priorizó su salida y se notificó al motorizado para despacho inmediato.',
-          estado: 'Pendiente'
-        },
-        {
-          id: 'INC-002',
-          orderId: 'PED-001',
-          createdAt: new Date(now - 24 * minMs).toISOString(),
-          tipo: 'Reclamo',
-          descripcion: 'Cliente solicitó jarra de chicha morada más helada.',
-          responsable: 'Mozo 1 (Carlos)',
-          accion: 'Se reemplazó la bebida inmediatamente con hielo adicional.',
-          estado: 'Solucionado'
-        }
-      ];
-
-      saveToStorage();
-      initFormsDefaults();
-      refreshAllViews();
-      if (showNotification) {
-        showToast('Datos de demostración restaurados.', 'success');
-      }
-    }
-
-    function saveToStorage() {
-      try {
-        localStorage.setItem(STORAGE_ORDERS_KEY, JSON.stringify(orders));
-        localStorage.setItem(STORAGE_INCIDENTS_KEY, JSON.stringify(incidents));
-      } catch (e) {
-        console.error('Error guardando datos:', e);
-      }
-    }
-
-    function loadFromStorage() {
-      try {
-        const savedOrders = localStorage.getItem(STORAGE_ORDERS_KEY);
-        const savedIncidents = localStorage.getItem(STORAGE_INCIDENTS_KEY);
-        if (savedOrders) orders = JSON.parse(savedOrders);
-        if (savedIncidents) incidents = JSON.parse(savedIncidents);
-      } catch (e) {
-        console.error('Error cargando datos:', e);
-      }
-    }
-
-    // =========================================================================
-    // NAVEGACIÓN RESPONSIVE (SIDEBAR, DRAWER Y BOTTOM BAR)
-    // =========================================================================
-    function toggleMobileDrawer(open) {
-      const drawer = document.getElementById('mobile-drawer');
-      const backdrop = document.getElementById('mobile-drawer-backdrop');
-      if (open) {
-        backdrop.classList.remove('hidden');
-        drawer.classList.remove('translate-x-full');
-      } else {
-        backdrop.classList.add('hidden');
-        drawer.classList.add('translate-x-full');
-      }
-    }
-
-    function switchScreen(screenId) {
-      document.querySelectorAll('.screen-section').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById('screen-' + screenId).classList.remove('hidden');
-
-      // Actualizar botones Desktop Sidebar
-      document.querySelectorAll('.desktop-nav-btn').forEach(btn => {
-        const active = btn.dataset.screen === screenId;
-        if (active) {
-          btn.classList.add('bg-terracotta-600', 'text-white', 'shadow-md');
-          btn.classList.remove('text-slate-300', 'hover:bg-slate-800', 'hover:text-white');
-        } else {
-          btn.classList.remove('bg-terracotta-600', 'text-white', 'shadow-md');
-          btn.classList.add('text-slate-300', 'hover:bg-slate-800', 'hover:text-white');
-        }
-      });
-
-      // Actualizar botones Móvil Bottom Navigation
-      document.querySelectorAll('.mobile-bottom-btn').forEach(btn => {
-        const active = btn.dataset.screen === screenId;
-        if (active) {
-          btn.classList.add('text-terracotta-600', 'bg-terracotta-50', 'font-bold');
-          btn.classList.remove('text-slate-500', 'font-semibold');
-        } else {
-          btn.classList.remove('text-terracotta-600', 'bg-terracotta-50', 'font-bold');
-          btn.classList.add('text-slate-500', 'font-semibold');
-        }
-      });
-
-      if (screenId === 'registro') {
-        initFormsDefaults();
-      } else if (screenId === 'incidencias') {
-        populateIncidentOrderSelect();
-        setLocalDateTimeInput('inc-fecha');
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      refreshAllViews();
-    }
-
-    // =========================================================================
-    // UTILIDADES DE TIEMPO Y FORMATO
-    // =========================================================================
-    function getElapsedMinutes(order) {
-      const start = new Date(order.createdAt).getTime();
-      const end = order.estado === 'Entregado' && order.deliveredAt
-        ? new Date(order.deliveredAt).getTime()
-        : Date.now();
-      return Math.max(1, Math.round((end - start) / 60000));
-    }
-
-    function getSemaphoreStyles(mins, isDelivered) {
-      if (isDelivered) {
-        return {
-          badge: 'bg-stone-100 text-slate-700 border-stone-300',
-          border: 'border-l-4 border-l-slate-400',
-          label: `${mins} min`
-        };
-      }
-      if (mins >= 25) {
-        return {
-          badge: 'bg-rose-100 text-rose-800 border-rose-300 animate-pulse',
-          border: 'border-l-4 border-l-rose-600',
-          label: `${mins} min (!)`
-        };
-      }
-      if (mins >= 18) {
-        return {
-          badge: 'bg-amber-100 text-amber-800 border-amber-300',
-          border: 'border-l-4 border-l-amber-500',
-          label: `${mins} min`
-        };
-      }
-      return {
-        badge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-        border: 'border-l-4 border-l-emerald-500',
-        label: `${mins} min`
-      };
-    }
-
-    function formatTimeShort(isoString) {
-      if (!isoString) return '--:--';
-      return new Date(isoString).toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function formatDateTimeFull(isoString) {
-      if (!isoString) return '';
-      const d = new Date(isoString);
-      return d.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' }) + ' ' +
-             d.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function setLocalDateTimeInput(elementId) {
-      const el = document.getElementById(elementId);
-      if (!el) return;
-      const now = new Date();
-      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-      el.value = now.toISOString().slice(0, 16);
-    }
-
-    function generateNextOrderCode() {
-      if (orders.length === 0) return 'PED-001';
-      const nums = orders.map(o => {
-        const match = o.id.match(/\d+/);
-        return match ? parseInt(match[0], 10) : 0;
-      });
-      return 'PED-' + String(Math.max(...nums) + 1).padStart(3, '0');
-    }
-
-    // =========================================================================
-    // REFRESCO GENERAL
-    // =========================================================================
-    function refreshAllViews() {
-      updateNavBadges();
-      renderDashboard();
-      renderSeguimiento();
-      renderVerificacion();
-      renderIncidents();
-      lucide.createIcons();
-    }
-
-    function updateNavBadges() {
-      const activos = orders.filter(o => o.estado !== 'Entregado').length;
-      const listos = orders.filter(o => o.estado === 'Listo para entregar').length;
-      const incPendientes = incidents.filter(i => i.estado === 'Pendiente').length;
-
-      document.querySelectorAll('.badge-activos').forEach(el => el.textContent = activos);
-      document.querySelectorAll('.badge-listos').forEach(el => el.textContent = listos);
-      document.querySelectorAll('.badge-incidencias').forEach(el => el.textContent = incPendientes);
-    }
-
-    // =========================================================================
-    // PANTALLA 1: DASHBOARD
-    // =========================================================================
-    function renderDashboard() {
-      const total = orders.length;
-      const activeOrders = orders.filter(o => o.estado !== 'Entregado');
-      const enCocina = orders.filter(o => ['Recibido', 'Confirmado', 'En preparación'].includes(o.estado)).length;
-      const listos = orders.filter(o => o.estado === 'Listo para entregar').length;
-      const incPendientes = incidents.filter(i => i.estado === 'Pendiente').length;
-
-      document.getElementById('kpi-total').textContent = total;
-      document.getElementById('kpi-activos-sub').textContent = `${activeOrders.length} activos`;
-      document.getElementById('kpi-listos').textContent = listos;
-      document.getElementById('kpi-cocina-sub').textContent = `${enCocina} en cocina`;
-      document.getElementById('kpi-incidencias').textContent = incPendientes;
-      document.getElementById('kpi-inc-total-sub').textContent = `de ${incidents.length} totales`;
-
-      const delivered = orders.filter(o => o.estado === 'Entregado');
-      let avgTime = 0;
-      if (delivered.length > 0) {
-        avgTime = Math.round(delivered.reduce((acc, o) => acc + (o.durationMinutes || getElapsedMinutes(o)), 0) / delivered.length);
-      } else if (orders.length > 0) {
-        avgTime = Math.round(orders.reduce((acc, o) => acc + getElapsedMinutes(o), 0) / orders.length);
-      }
-
-      const kpiTiempoEl = document.getElementById('kpi-tiempo');
-      const kpiTiempoStatusEl = document.getElementById('kpi-tiempo-status');
-      kpiTiempoEl.textContent = orders.length > 0 ? avgTime : '--';
-
-      if (orders.length === 0) {
-        kpiTiempoStatusEl.textContent = 'Meta: ≤ 25 min (Antes: 35m)';
-        kpiTiempoStatusEl.className = 'text-xs font-semibold text-slate-500 mt-1.5';
-      } else if (avgTime <= 25) {
-        kpiTiempoStatusEl.textContent = `✓ Cumple meta ≤ 25 min (-${35 - avgTime}m vs antes)`;
-        kpiTiempoStatusEl.className = 'text-xs font-bold text-emerald-600 mt-1.5';
-      } else {
-        kpiTiempoStatusEl.textContent = `⚠ Supera meta de 25 min`;
-        kpiTiempoStatusEl.className = 'text-xs font-bold text-rose-600 mt-1.5';
-      }
-
-      // Alerta de pedidos >= 25 min
-      const over25Orders = activeOrders.filter(o => getElapsedMinutes(o) >= 25);
-      const alertBox = document.getElementById('dashboard-alerts-box');
-      const alertList = document.getElementById('dashboard-alerts-list');
-
-      if (over25Orders.length > 0) {
-        alertBox.classList.remove('hidden');
-        alertList.innerHTML = over25Orders.map(o =>
-          `<li><strong>${o.id}</strong> (${o.modalidad} - ${o.referencia}): lleva <strong>${getElapsedMinutes(o)} min</strong> en estado <em>"${o.estado}"</em>.</li>`
-        ).join('');
-      } else {
-        alertBox.classList.add('hidden');
-      }
-
-      // Tarjetas de pedidos activos
-      const activeContainer = document.getElementById('dashboard-active-orders');
-      if (activeOrders.length === 0) {
-        activeContainer.innerHTML = `
-          <div class="col-span-full text-center py-8 bg-stone-50 rounded-xl border border-dashed border-stone-300">
-            <p class="text-sm text-slate-500">No hay pedidos activos pendientes.</p>
-          </div>
-        `;
-      } else {
-        activeContainer.innerHTML = activeOrders.map(o => {
-          const mins = getElapsedMinutes(o);
-          const sem = getSemaphoreStyles(mins, false);
-          return `
-            <div class="p-4 rounded-xl bg-stone-50 border border-stone-200 ${sem.border} flex flex-col justify-between gap-3">
-              <div>
-                <div class="flex items-center justify-between gap-2">
-                  <span class="font-extrabold text-sm text-slate-900">${o.id}</span>
-                  <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold border ${sem.badge}">
-                    ${sem.label}
-                  </span>
-                </div>
-                <div class="text-xs font-bold text-terracotta-700 mt-1">${o.modalidad} • ${o.referencia}</div>
-                <div class="text-xs text-slate-600 mt-1.5 line-clamp-2">
-                  ${o.items.map(i => `${i.qty}x ${i.name}`).join(', ')}
-                </div>
-              </div>
-              <div class="flex items-center justify-between pt-2 border-t border-stone-200/80">
-                <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-white border border-stone-300 text-slate-700">
-                  ${o.estado}
-                </span>
-                <button onclick="goToOrderInSeguimiento('${o.estado}')" class="touch-target px-2.5 py-1 text-xs font-bold text-terracotta-700 hover:underline">
-                  Gestionar →
-                </button>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      // Canales
-      const channels = ['Consumo en salón', 'Delivery', 'Para recoger'];
-      document.getElementById('dashboard-channels').innerHTML = channels.map(ch => {
-        const count = orders.filter(o => o.modalidad === ch).length;
-        const pct = total > 0 ? Math.round((count / total) * 100) : 0;
-        return `
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1">
-              <span class="text-slate-700">${ch}</span>
-              <span class="text-slate-900">${count} (${pct}%)</span>
-            </div>
-            <div class="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
-              <div class="h-full bg-terracotta-600 rounded-full transition-all duration-300" style="width: ${pct}%"></div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      // Últimas incidencias
-      const recentIncContainer = document.getElementById('dashboard-recent-incidents');
-      if (incidents.length === 0) {
-        recentIncContainer.innerHTML = `<p class="text-xs text-slate-500 italic">Sin incidencias registradas.</p>`;
-      } else {
-        recentIncContainer.innerHTML = incidents.slice(0, 3).map(inc => {
-          const isPending = inc.estado === 'Pendiente';
-          return `
-            <div class="p-3 rounded-xl bg-stone-50 border border-stone-200 text-xs">
-              <div class="flex items-center justify-between font-bold">
-                <span class="text-slate-800">${inc.orderId} • ${inc.tipo}</span>
-                <span class="px-2 py-0.5 rounded-full ${isPending ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}">
-                  ${inc.estado}
-                </span>
-              </div>
-              <p class="text-slate-600 mt-1 line-clamp-2">${inc.descripcion}</p>
-            </div>
-          `;
-        }).join('');
-      }
-    }
-
-    function goToOrderInSeguimiento(estado) {
-      mobileSelectedStateTab = estado;
-      switchScreen('seguimiento');
-    }
-
-    // =========================================================================
-    // PANTALLA 2: REGISTRO DE PEDIDOS
-    // =========================================================================
-    function initFormsDefaults() {
-      document.getElementById('reg-codigo').value = generateNextOrderCode();
-      setLocalDateTimeInput('reg-fecha');
-      renderDraftItems();
-    }
-
-    function selectModalidad(mod) {
-      document.getElementById('reg-modalidad').value = mod;
-      document.querySelectorAll('.mod-btn').forEach(btn => {
-        const active = btn.dataset.mod === mod;
-        if (active) {
-          btn.classList.add('border-terracotta-600', 'bg-terracotta-50', 'text-terracotta-800');
-          btn.classList.remove('border-stone-200', 'bg-white', 'text-slate-600');
-        } else {
-          btn.classList.remove('border-terracotta-600', 'bg-terracotta-50', 'text-terracotta-800');
-          btn.classList.add('border-stone-200', 'bg-white', 'text-slate-600');
-        }
-      });
-
-      const refInput = document.getElementById('reg-referencia');
-      if (mod === 'Consumo en salón') {
-        refInput.placeholder = 'Ej. Mesa 4 (Terraza)';
-      } else if (mod === 'Delivery') {
-        refInput.placeholder = 'Ej. Jr. Los Sauces 245 - Juan Pérez (999111222)';
-      } else {
-        refInput.placeholder = 'Ej. Recojo en caja - Sra. Elena';
-      }
-    }
-
-    function quickAddProduct(productName) {
-      const existing = currentDraftItems.find(i => i.name === productName);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        currentDraftItems.push({ name: productName, qty: 1 });
-      }
-      renderDraftItems();
-    }
-
-    function addCustomProductItem() {
-      const nameInput = document.getElementById('custom-prod-name');
-      const qtyInput = document.getElementById('custom-prod-qty');
-      const name = nameInput.value.trim();
-      const qty = parseInt(qtyInput.value, 10) || 1;
-
-      if (!name) {
-        showToast('Escribe el nombre del plato o bebida.', 'warning');
-        return;
-      }
-
-      const existing = currentDraftItems.find(i => i.name.toLowerCase() === name.toLowerCase());
-      if (existing) {
-        existing.qty += qty;
-      } else {
-        currentDraftItems.push({ name, qty });
-      }
-
-      nameInput.value = '';
-      qtyInput.value = 1;
-      renderDraftItems();
-    }
-
-    function updateDraftItemQty(index, delta) {
-      currentDraftItems[index].qty += delta;
-      if (currentDraftItems[index].qty <= 0) {
-        currentDraftItems.splice(index, 1);
-      }
-      renderDraftItems();
-    }
-
-    function renderDraftItems() {
-      const container = document.getElementById('reg-items-container');
-      if (currentDraftItems.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400 italic py-1">Aún no se han agregado platos. Usa los botones rápidos o agrega arriba.</p>`;
-        return;
-      }
-
-      container.innerHTML = currentDraftItems.map((item, idx) => `
-        <div class="flex items-center justify-between bg-white px-3.5 py-2 rounded-xl border border-stone-200 text-sm shadow-2xs">
-          <span class="font-bold text-slate-800 pr-2">${item.name}</span>
-          <div class="flex items-center gap-2 shrink-0">
-            <button type="button" onclick="updateDraftItemQty(${idx}, -1)" aria-label="Disminuir" class="touch-target w-11 h-11 rounded-xl bg-stone-100 hover:bg-stone-200 font-extrabold text-lg text-slate-800 flex items-center justify-center">-</button>
-            <span class="w-7 text-center font-extrabold text-base text-slate-900">${item.qty}</span>
-            <button type="button" onclick="updateDraftItemQty(${idx}, 1)" aria-label="Aumentar" class="touch-target w-11 h-11 rounded-xl bg-terracotta-100 hover:bg-terracotta-200 font-extrabold text-lg text-terracotta-800 flex items-center justify-center">+</button>
-          </div>
+  <!-- Modal Registrar Incidencia -->
+  <div id="incidencia-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-stone-200 fade-in">
+      <h3 class="text-lg font-extrabold text-slate-900 mb-3">Registrar Incidencia / Reclamo</h3>
+      <form onsubmit="handleCreateIncidencia(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Código de Pedido Afectado</label>
+          <input type="text" id="inc-codigo" required placeholder="Ej. PED-101" class="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-sm" />
         </div>
-      `).join('');
-    }
-
-    function resetOrderForm() {
-      document.getElementById('order-form').reset();
-      currentDraftItems = [];
-      selectModalidad('Consumo en salón');
-      initFormsDefaults();
-    }
-
-    function handleCreateOrder(event) {
-      event.preventDefault();
-      if (currentDraftItems.length === 0) {
-        showToast('Agrega al menos un producto al pedido.', 'warning');
-        return;
-      }
-
-      const codigo = document.getElementById('reg-codigo').value;
-      const fechaInput = document.getElementById('reg-fecha').value;
-      const modalidad = document.getElementById('reg-modalidad').value;
-      const referencia = document.getElementById('reg-referencia').value.trim();
-      const responsable = document.getElementById('reg-responsable').value;
-      const observaciones = document.getElementById('reg-observaciones').value.trim() || 'Ninguna.';
-
-      orders.unshift({
-        id: codigo,
-        createdAt: fechaInput ? new Date(fechaInput).toISOString() : new Date().toISOString(),
-        deliveredAt: null,
-        durationMinutes: null,
-        modalidad,
-        referencia,
-        responsable,
-        items: [...currentDraftItems],
-        observaciones,
-        estado: 'Recibido'
-      });
-
-      saveToStorage();
-      resetOrderForm();
-      mobileSelectedStateTab = 'Recibido';
-      refreshAllViews();
-      showToast(`Pedido ${codigo} registrado y enviado a cocina.`, 'success');
-      switchScreen('seguimiento');
-    }
-
-    // =========================================================================
-    // PANTALLA 3: SEGUIMIENTO OPERATIVO (TABS MÓVIL + KANBAN + TABLA)
-    // =========================================================================
-    function setSeguimientoView(mode) {
-      seguimientoViewMode = mode;
-      const btnKanban = document.getElementById('btn-view-kanban');
-      const btnTable = document.getElementById('btn-view-table');
-      const kanbanDiv = document.getElementById('seguimiento-kanban');
-      const tableDiv = document.getElementById('seguimiento-table-wrapper');
-      const mobileTabs = document.getElementById('mobile-state-tabs');
-
-      if (mode === 'kanban') {
-        btnKanban.classList.add('bg-white', 'text-slate-900', 'shadow-xs');
-        btnKanban.classList.remove('text-slate-600');
-        btnTable.classList.remove('bg-white', 'text-slate-900', 'shadow-xs');
-        btnTable.classList.add('text-slate-600');
-        kanbanDiv.classList.remove('hidden');
-        mobileTabs.classList.remove('hidden');
-        tableDiv.classList.add('hidden');
-      } else {
-        btnTable.classList.add('bg-white', 'text-slate-900', 'shadow-xs');
-        btnTable.classList.remove('text-slate-600');
-        btnKanban.classList.remove('bg-white', 'text-slate-900', 'shadow-xs');
-        btnKanban.classList.add('text-slate-600');
-        tableDiv.classList.remove('hidden');
-        kanbanDiv.classList.add('hidden');
-        mobileTabs.classList.add('hidden');
-      }
-      renderSeguimiento();
-    }
-
-    function selectMobileStateTab(state) {
-      mobileSelectedStateTab = state;
-      renderSeguimiento();
-    }
-
-    function advanceOrderState(orderId) {
-      const order = orders.find(o => o.id === orderId);
-      if (!order) return;
-
-      const currentIdx = ORDER_STATES.indexOf(order.estado);
-      if (currentIdx === -1 || currentIdx >= ORDER_STATES.length - 1) return;
-
-      const nextState = ORDER_STATES[currentIdx + 1];
-
-      if (nextState === 'Entregado') {
-        selectedVerificationOrderId = order.id;
-        switchScreen('verificacion');
-        showToast(`Completa el checklist antes de entregar ${order.id}.`, 'info');
-        return;
-      }
-
-      order.estado = nextState;
-      mobileSelectedStateTab = nextState;
-      saveToStorage();
-      refreshAllViews();
-      showToast(`${order.id} pasó a "${nextState}".`, 'success');
-    }
-
-    function renderSeguimiento() {
-      const modFilter = document.getElementById('filter-modalidad').value;
-      const filtered = orders.filter(o => modFilter === 'ALL' || o.modalidad === modFilter);
-
-      // Pestañas móviles (< md)
-      const mobileTabsContainer = document.getElementById('mobile-state-tabs');
-      mobileTabsContainer.innerHTML = ORDER_STATES.map(state => {
-        const count = filtered.filter(o => o.estado === state).length;
-        const active = mobileSelectedStateTab === state;
-        return `
-          <button onclick="selectMobileStateTab('${state}')" class="touch-target shrink-0 px-3.5 py-2 rounded-xl text-xs font-extrabold border transition flex items-center gap-1.5 ${active ? 'bg-terracotta-600 text-white border-terracotta-600 shadow-xs' : 'bg-white text-slate-700 border-stone-200'}">
-            <span>${state}</span>
-            <span class="px-1.5 py-0.5 rounded-full text-[10px] ${active ? 'bg-white/25 text-white' : 'bg-stone-100 text-slate-700'}">${count}</span>
-          </button>
-        `;
-      }).join('');
-
-      // Kanban / Tarjetas Responsive
-      const kanbanContainer = document.getElementById('seguimiento-kanban');
-      const stateColors = {
-        'Recibido': 'border-t-4 border-t-slate-500',
-        'Confirmado': 'border-t-4 border-t-sky-500',
-        'En preparación': 'border-t-4 border-t-amber-500',
-        'Listo para entregar': 'border-t-4 border-t-emerald-500',
-        'Entregado': 'border-t-4 border-t-terracotta-600'
-      };
-
-      kanbanContainer.innerHTML = ORDER_STATES.map(state => {
-        const colOrders = filtered.filter(o => o.estado === state);
-        // En móvil (< md) solo mostramos la columna seleccionada en la pestaña; en md+ se muestran todas
-        const mobileVisibilityClass = (state === mobileSelectedStateTab) ? 'flex' : 'hidden md:flex';
-
-        return `
-          <div class="${mobileVisibilityClass} bg-stone-200/70 rounded-2xl p-3 flex-col gap-3 min-h-[300px] ${stateColors[state]}">
-            <div class="flex items-center justify-between px-1">
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-800">${state}</h3>
-              <span class="px-2.5 py-0.5 text-xs font-extrabold rounded-full bg-white text-slate-800 shadow-2xs">${colOrders.length}</span>
-            </div>
-            <div class="space-y-3 flex-1">
-              ${colOrders.length === 0 ? `<p class="text-xs text-slate-400 text-center py-8 italic">Sin pedidos en esta etapa</p>` : colOrders.map(o => {
-                const mins = getElapsedMinutes(o);
-                const sem = getSemaphoreStyles(mins, o.estado === 'Entregado');
-                const nextIdx = ORDER_STATES.indexOf(o.estado) + 1;
-                const hasNext = nextIdx < ORDER_STATES.length;
-                const nextLabel = hasNext ? ORDER_STATES[nextIdx] : '';
-
-                return `
-                  <div class="bg-white p-3.5 rounded-xl shadow-xs border border-stone-200 ${sem.border} space-y-2.5">
-                    <div class="flex items-center justify-between gap-2">
-                      <span class="font-extrabold text-sm text-slate-900">${o.id}</span>
-                      <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full border ${sem.badge}">
-                        ${sem.label}
-                      </span>
-                    </div>
-                    <div class="text-xs text-terracotta-700 font-bold">${o.modalidad} • ${o.referencia}</div>
-                    <ul class="text-xs text-slate-800 space-y-1 bg-stone-50 p-2.5 rounded-lg">
-                      ${o.items.map(i => `<li>• <strong>${i.qty}x</strong> ${i.name}</li>`).join('')}
-                    </ul>
-                    ${o.observaciones && o.observaciones !== 'Ninguna.' ? `<div class="text-[11px] text-amber-900 bg-amber-50 px-2.5 py-1.5 rounded-lg border border-amber-200 font-medium">Obs: ${o.observaciones}</div>` : ''}
-                    <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
-                      <span>Ingreso: ${formatTimeShort(o.createdAt)}</span>
-                      <span>${o.responsable.split(' ')[0]}</span>
-                    </div>
-                    ${hasNext ? `
-                      <button onclick="advanceOrderState('${o.id}')" class="w-full touch-target py-2.5 px-3 rounded-xl ${nextLabel === 'Entregado' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-slatepro-900 hover:bg-slate-800'} text-white text-xs font-extrabold transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <span>${nextLabel === 'Entregado' ? 'Verificar y Entregar' : 'Avanzar a: ' + nextLabel}</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                      </button>
-                    ` : `
-                      <div class="text-center text-xs font-extrabold text-emerald-700 bg-emerald-50 py-2 rounded-xl border border-emerald-200">
-                        ✓ Entregado (${formatTimeShort(o.deliveredAt)})
-                      </div>
-                    `}
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      // Tabla
-      const tableBody = document.getElementById('seguimiento-table-body');
-      if (filtered.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-400">No hay pedidos registrados.</td></tr>`;
-      } else {
-        tableBody.innerHTML = filtered.map(o => {
-          const mins = getElapsedMinutes(o);
-          const sem = getSemaphoreStyles(mins, o.estado === 'Entregado');
-          const nextIdx = ORDER_STATES.indexOf(o.estado) + 1;
-          const hasNext = nextIdx < ORDER_STATES.length;
-          return `
-            <tr class="hover:bg-stone-50">
-              <td class="py-3 px-4 font-extrabold text-slate-900">${o.id}</td>
-              <td class="py-3 px-4 text-slate-600">${formatTimeShort(o.createdAt)}</td>
-              <td class="py-3 px-4">
-                <div class="font-bold text-slate-800">${o.modalidad}</div>
-                <div class="text-xs text-slate-500">${o.referencia}</div>
-              </td>
-              <td class="py-3 px-4 text-slate-700">${o.items.map(i => `${i.qty}x ${i.name}`).join('<br>')}</td>
-              <td class="py-3 px-4">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold border ${sem.badge}">${sem.label}</span>
-              </td>
-              <td class="py-3 px-4">
-                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-stone-100 text-slate-800 border border-stone-300">
-                  ${o.estado}
-                </span>
-              </td>
-              <td class="py-3 px-4 text-right">
-                ${hasNext ? `
-                  <button onclick="advanceOrderState('${o.id}')" class="touch-target px-3.5 py-2 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white text-xs font-bold transition">
-                    Avanzar →
-                  </button>
-                ` : `<span class="text-xs text-emerald-700 font-extrabold">Entregado</span>`}
-              </td>
-            </tr>
-          `;
-        }).join('');
-      }
-      lucide.createIcons();
-    }
-
-    // =========================================================================
-    // PANTALLA 4: VERIFICACIÓN Y ENTREGA
-    // =========================================================================
-    function renderVerificacion() {
-      const readyOrders = orders.filter(o => o.estado === 'Listo para entregar');
-      const listContainer = document.getElementById('verificacion-ready-list');
-
-      if (readyOrders.length === 0) {
-        listContainer.innerHTML = `
-          <div class="p-6 text-center bg-stone-50 rounded-xl border border-dashed border-stone-300">
-            <p class="text-xs sm:text-sm text-slate-500">No hay pedidos pendientes en estado <strong>"Listo para entregar"</strong>.</p>
-          </div>
-        `;
-        selectedVerificationOrderId = null;
-      } else {
-        listContainer.innerHTML = readyOrders.map(o => {
-          const isSelected = o.id === selectedVerificationOrderId;
-          const mins = getElapsedMinutes(o);
-          const sem = getSemaphoreStyles(mins, false);
-          return `
-            <div onclick="selectOrderForVerification('${o.id}')" class="touch-target p-4 rounded-xl border-2 cursor-pointer transition ${isSelected ? 'bg-terracotta-50 border-terracotta-600' : 'bg-white border-stone-200 hover:bg-stone-50'}">
-              <div class="flex items-center justify-between">
-                <span class="font-extrabold text-sm text-slate-900">${o.id}</span>
-                <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full border ${sem.badge}">${sem.label}</span>
-              </div>
-              <div class="text-xs font-bold text-terracotta-700 mt-1">${o.modalidad} — ${o.referencia}</div>
-              <div class="text-xs text-slate-600 mt-1">${o.items.length} ítem(s) • Resp: ${o.responsable}</div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      const selectedOrder = readyOrders.find(o => o.id === selectedVerificationOrderId);
-      const emptyPanel = document.getElementById('verificacion-empty-state');
-      const chkPanel = document.getElementById('verificacion-checklist-panel');
-
-      if (!selectedOrder) {
-        emptyPanel.classList.remove('hidden');
-        chkPanel.classList.add('hidden');
-      } else {
-        emptyPanel.classList.add('hidden');
-        chkPanel.classList.remove('hidden');
-
-        document.getElementById('chk-codigo').textContent = selectedOrder.id;
-        document.getElementById('chk-modalidad').textContent = `${selectedOrder.modalidad} (${selectedOrder.referencia})`;
-        document.getElementById('chk-tiempo-badge').textContent = `Tiempo: ${getElapsedMinutes(selectedOrder)} min`;
-        document.getElementById('chk-productos-list').innerHTML = selectedOrder.items
-          .map(i => `<li><strong>${i.qty}x</strong> ${i.name}</li>`)
-          .join('');
-        document.getElementById('chk-observaciones').innerHTML = `<strong>Observaciones:</strong> ${selectedOrder.observaciones}`;
-      }
-    }
-
-    function selectOrderForVerification(orderId) {
-      selectedVerificationOrderId = orderId;
-      document.querySelectorAll('.chk-item').forEach(cb => cb.checked = false);
-      validateChecklist();
-      renderVerificacion();
-    }
-
-    function validateChecklist() {
-      const checkboxes = Array.from(document.querySelectorAll('.chk-item'));
-      const allChecked = checkboxes.every(cb => cb.checked);
-      document.getElementById('btn-confirmar-entrega').disabled = !allChecked;
-    }
-
-    function confirmOrderDelivery() {
-      if (!selectedVerificationOrderId) return;
-      const order = orders.find(o => o.id === selectedVerificationOrderId);
-      if (!order) return;
-
-      order.estado = 'Entregado';
-      order.deliveredAt = new Date().toISOString();
-      order.durationMinutes = getElapsedMinutes(order);
-
-      selectedVerificationOrderId = null;
-      document.querySelectorAll('.chk-item').forEach(cb => cb.checked = false);
-      saveToStorage();
-      refreshAllViews();
-      showToast(`Pedido ${order.id} verificado y entregado en ${order.durationMinutes} min.`, 'success');
-    }
-
-    function openIncidentFromOrder() {
-      const targetOrderId = selectedVerificationOrderId;
-      switchScreen('incidencias');
-      if (targetOrderId) {
-        document.getElementById('inc-pedido').value = targetOrderId;
-      }
-    }
-
-    // =========================================================================
-    // PANTALLA 5: INCIDENCIAS (TARJETAS MÓVIL + TABLA DESKTOP)
-    // =========================================================================
-    function populateIncidentOrderSelect() {
-      const select = document.getElementById('inc-pedido');
-      if (orders.length === 0) {
-        select.innerHTML = `<option value="GENERAL">Sin pedidos registrados</option>`;
-        return;
-      }
-      select.innerHTML = orders.map(o =>
-        `<option value="${o.id}">${o.id} — ${o.modalidad} (${o.referencia})</option>`
-      ).join('');
-    }
-
-    function handleCreateIncident(event) {
-      event.preventDefault();
-      const orderId = document.getElementById('inc-pedido').value;
-      const fechaInput = document.getElementById('inc-fecha').value;
-      const tipo = document.getElementById('inc-tipo').value;
-      const responsable = document.getElementById('inc-responsable').value;
-      const descripcion = document.getElementById('inc-descripcion').value.trim();
-      const accion = document.getElementById('inc-accion').value.trim();
-      const estado = document.getElementById('inc-estado').value;
-
-      const newIncident = {
-        id: 'INC-' + String(incidents.length + 1).padStart(3, '0'),
-        orderId,
-        createdAt: fechaInput ? new Date(fechaInput).toISOString() : new Date().toISOString(),
-        tipo,
-        descripcion,
-        responsable,
-        accion,
-        estado
-      };
-
-      incidents.unshift(newIncident);
-      saveToStorage();
-      document.getElementById('incident-form').reset();
-      setLocalDateTimeInput('inc-fecha');
-      populateIncidentOrderSelect();
-      refreshAllViews();
-      showToast(`Incidencia ${newIncident.id} registrada.`, 'success');
-    }
-
-    function toggleIncidentStatus(incId) {
-      const inc = incidents.find(i => i.id === incId);
-      if (!inc) return;
-      inc.estado = inc.estado === 'Pendiente' ? 'Solucionado' : 'Pendiente';
-      saveToStorage();
-      refreshAllViews();
-      showToast(`${inc.id} marcada como "${inc.estado}".`, 'info');
-    }
-
-    function renderIncidents() {
-      const filter = document.getElementById('filter-inc-estado').value;
-      const filtered = incidents.filter(i => filter === 'ALL' || i.estado === filter);
-
-      const cardsContainer = document.getElementById('incidents-cards-container');
-      const tableBody = document.getElementById('incidents-table-body');
-
-      if (filtered.length === 0) {
-        cardsContainer.innerHTML = `<p class="text-center py-8 text-sm text-slate-400">No hay incidencias registradas.</p>`;
-        tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400">No hay incidencias registradas.</td></tr>`;
-        return;
-      }
-
-      // Tarjetas Móvil/Tablet
-      cardsContainer.innerHTML = filtered.map(inc => {
-        const isPending = inc.estado === 'Pendiente';
-        return `
-          <div class="p-4 rounded-2xl border ${isPending ? 'bg-rose-50/40 border-rose-200' : 'bg-stone-50 border-stone-200'} space-y-2.5">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-1.5">
-                <span class="font-extrabold text-xs text-slate-900">${inc.id}</span>
-                <span class="px-2 py-0.5 rounded-md bg-slatepro-900 text-white text-xs font-bold">${inc.orderId}</span>
-                <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 text-xs font-bold">${inc.tipo}</span>
-              </div>
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold ${isPending ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'}">
-                ${inc.estado}
-              </span>
-            </div>
-            <p class="text-xs text-slate-800"><strong>Problema:</strong> ${inc.descripcion}</p>
-            <p class="text-xs text-slate-700 bg-white p-2.5 rounded-xl border border-stone-200">
-              <strong>Acción:</strong> ${inc.accion}
-            </p>
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] text-slate-500">
-              <span>${formatDateTimeFull(inc.createdAt)} • <strong>${inc.responsable}</strong></span>
-              <button onclick="toggleIncidentStatus('${inc.id}')" class="touch-target px-3.5 py-2 rounded-xl font-bold transition ${isPending ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-stone-200 hover:bg-stone-300 text-slate-800'}">
-                ${isPending ? '✓ Marcar Solucionado' : 'Reabrir'}
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      // Tabla Desktop (xl+)
-      tableBody.innerHTML = filtered.map(inc => {
-        const isPending = inc.estado === 'Pendiente';
-        return `
-          <tr class="hover:bg-stone-50 align-top">
-            <td class="py-3 px-3.5">
-              <div class="font-extrabold text-slate-900">${inc.orderId}</div>
-              <div class="text-[11px] text-slate-500">${formatDateTimeFull(inc.createdAt)}</div>
-            </td>
-            <td class="py-3 px-3.5">
-              <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 font-bold">${inc.tipo}</span>
-            </td>
-            <td class="py-3 px-3.5 max-w-xs space-y-1">
-              <div class="text-slate-800"><strong>Prob:</strong> ${inc.descripcion}</div>
-              <div class="text-slate-600"><strong>Acción:</strong> ${inc.accion}</div>
-            </td>
-            <td class="py-3 px-3.5 font-semibold text-slate-700">${inc.responsable}</td>
-            <td class="py-3 px-3.5">
-              <span class="px-2.5 py-1 rounded-full font-extrabold ${isPending ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}">
-                ${inc.estado}
-              </span>
-            </td>
-            <td class="py-3 px-3.5 text-right">
-              <button onclick="toggleIncidentStatus('${inc.id}')" class="touch-target px-3 py-1.5 rounded-lg font-bold transition ${isPending ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-stone-200 hover:bg-stone-300 text-slate-700'}">
-                ${isPending ? 'Solucionar' : 'Reabrir'}
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    // =========================================================================
-    // EXPORTACIÓN CSV (EXCEL / GOOGLE SHEETS)
-    // =========================================================================
-    function exportToCSV() {
-      if (orders.length === 0) {
-        showToast('No hay pedidos para exportar.', 'warning');
-        return;
-      }
-
-      const headers = [
-        'Codigo Pedido',
-        'Fecha y Hora Ingreso',
-        'Modalidad',
-        'Mesa o Referencia',
-        'Responsable',
-        'Productos',
-        'Observaciones',
-        'Estado Actual',
-        'Hora Entrega',
-        'Duracion (min)'
-      ];
-
-      const rows = orders.map(o => [
-        o.id,
-        formatDateTimeFull(o.createdAt),
-        o.modalidad,
-        `"${o.referencia.replace(/"/g, '""')}"`,
-        o.responsable,
-        `"${o.items.map(i => `${i.qty}x ${i.name}`).join('; ').replace(/"/g, '""')}"`,
-        `"${o.observaciones.replace(/"/g, '""')}"`,
-        o.estado,
-        o.deliveredAt ? formatTimeShort(o.deliveredAt) : 'Pendiente',
-        o.durationMinutes || getElapsedMinutes(o)
-      ]);
-
-      const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `Rivera_de_Plata_Pedidos_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-
-      showToast('CSV exportado para Excel / Google Sheets.', 'success');
-    }
-
-    // =========================================================================
-    // MODALES Y NOTIFICACIONES TOAST
-    // =========================================================================
-    function showConfirmModal(title, message, onConfirm) {
-      const modal = document.getElementById('confirm-modal');
-      document.getElementById('confirm-title').textContent = title;
-      document.getElementById('confirm-message').textContent = message;
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-
-      const cancelBtn = document.getElementById('confirm-cancel-btn');
-      const okBtn = document.getElementById('confirm-ok-btn');
-
-      const cleanup = () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      };
-
-      cancelBtn.onclick = cleanup;
-      okBtn.onclick = () => {
-        cleanup();
-        onConfirm();
-      };
-    }
-
-    function promptResetDemo() {
-      showConfirmModal(
-        'Reiniciar datos de demostración',
-        'Se restaurarán los 5 pedidos y 2 incidencias de ejemplo de Rivera de Plata. ¿Continuar?',
-        () => seedDemoData(true)
-      );
-    }
-
-    function promptClearAll() {
-      showConfirmModal(
-        'Limpiar registros',
-        'Se borrarán todos los pedidos e incidencias guardados localmente. ¿Deseas continuar?',
-        () => {
-          orders = [];
-          incidents = [];
-          selectedVerificationOrderId = null;
-          saveToStorage();
-          initFormsDefaults();
-          refreshAllViews();
-          showToast('Registros eliminados correctamente.', 'info');
-        }
-      );
-    }
-
-    function showToast(message, type = 'info') {
-      const container = document.getElementById('toast-container');
-      const colors = {
-        success: 'bg-emerald-700 text-white border-emerald-500',
-        warning: 'bg-amber-600 text-white border-amber-400',
-        info: 'bg-slatepro-900 text-white border-slate-700'
-      };
-      const icons = {
-        success: 'check-circle-2',
-        warning: 'alert-triangle',
-        info: 'info'
-      };
-
-      const toast = document.createElement('div');
-      toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-xs sm:text-sm font-semibold fade-in ${colors[type] || colors.info}`;
-      toast.innerHTML = `
-        <i data-lucide="${icons[type] || icons.info}" class="w-5 h-5 shrink-0"></i>
-        <span class="flex-1">${message}</span>
-      `;
-      container.appendChild(toast);
-      lucide.createIcons();
-
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.25s ease';
-        setTimeout(() => toast.remove(), 250);
-      }, 3000);
-    }
-  </script>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Tipo de Incidencia</label>
+          <select id="inc-tipo" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-sm">
+            <option value="Demora en cocina">Demora en cocina</option>
+            <option value="Error en plato">Error en plato</option>
+            <option value="Queja del cliente">Queja del cliente</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Descripción</label>
+          <textarea id="inc-desc" required rows="2" class="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-sm"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Acción Correctiva</label>
+          <input type="text" id="inc-accion" required placeholder="Ej. Cortesía de bebida" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-sm" />
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeIncidenciaModal()" class="px-4 py-2 rounded-xl bg-stone-100 text-slate-700 text-xs font-bold">Cancelar</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-rose-600 text-white text-xs font-bold">Guardar Incidencia</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script>
     // =========================================================================
     // CONFIGURACIÓN DE SUPABASE Y ESTADO GLOBAL
     // =========================================================================
-    // ¡REEMPLAZA AQUí TUS DATOS REALES DE SUPABASE!
+    // ¡REEMPLAZA AQUÍ TUS CREDENCIALES REALES DE SUPABASE!
     const SUPABASE_URL = 'https://dmmxprnzedkscuezglct.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_WpkuzBnsnwoeQ52-2ViKzg_5JjfUTXe';
 
     let _supabase = null;
     let useCloud = false;
 
+    // Estado inicial instantáneo para evitar parpadeos con ceros
+    let state = {
+      pedidos: [
+        { id: 'demo-1', codigo: 'PED-101', fecha_hora: new Date().toISOString(), modalidad: 'Consumo en salón', mesa: 'Mesa 3', responsable: 'Mozo 1 (Carlos)', productos: 'Ceviche Rivera de Plata (x1)', observaciones: 'Poco ají', estado: 'En preparación', hora_entrega: '' }
+      ],
+      incidencias: [],
+      currentScreen: 'dashboard',
+      selectedModalidad: 'Consumo en salón'
+    };
+
     try {
       if (SUPABASE_URL && SUPABASE_URL.includes('supabase.co') && !SUPABASE_URL.includes('TU-PROYECTO')) {
         const { createClient } = supabase;
-        _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-          realtime: {
-            params: {
-              eventsPerSecond: 10
-            }
-          }
-        });
+        _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         useCloud = true;
-        console.log("Supabase inicializado correctamente con modo online.");
-      } else {
-        console.log("Supabase operando en modo local autónomo (Faltan credenciales reales).");
       }
     } catch (e) {
-      console.warn("No se pudo iniciar Supabase, usando almacenamiento local.", e);
+      console.warn("Modo local activo.", e);
     }
 
-    let state = {
-      pedidos: [],
-      incidencias: [],
-      currentScreen: 'dashboard',
-      selectedModalidad: 'Consumo en salón',
-      selectedProducts: [],
-      activeFilter: 'todos'
-    };
-
-    const DEMO_PEDIDOS = [
-      { id: '1', codigo: 'PED-101', fecha_hora: new Date(Date.now() - 12*60000).toISOString(), modalidad: 'Consumo en salón', mesa: 'Mesa 3', responsable: 'Mozo 1 (Carlos)', productos: 'Ceviche Rivera de Plata (x1)', observaciones: 'Poco ají por favor', estado: 'En preparación', hora_entrega: '' }
-    ];
-
-    const DEMO_INCIDENCIAS = [];
-
-    // =========================================================================
-    // CARGAR Y SINCRONIZAR DATOS CON SUPABASE
-    // =========================================================================
     async function cargarPedidos() {
       if (useCloud && _supabase) {
         try {
@@ -2114,86 +570,33 @@
             .select('*')
             .order('fecha_hora', { ascending: false });
             
-          if (error) throw error;
-          
-          if (data) {
+          if (!error && data && data.length > 0) {
             state.pedidos = data;
-            console.log("Datos sincronizados desde la nube:", data.length, "pedidos.");
           }
         } catch (err) {
-          console.warn("Error leyendo desde Supabase, usando respaldo local:", err);
-          state.pedidos = loadLocalStorage('rp_pedidos', DEMO_PEDIDOS);
+          console.warn("Fallo lectura nube, usando local.", err);
         }
-      } else {
-        state.pedidos = loadLocalStorage('rp_pedidos', DEMO_PEDIDOS);
       }
-
-      state.incidencias = loadLocalStorage('rp_incidencias', DEMO_INCIDENCIAS);
       renderizarTodo();
     }
 
-    // Configurar canal en tiempo real + Polling automático de respaldo cada 4 segundos
-    function setupRealtimeSubscription() {
-      if (!useCloud || !_supabase) return;
-      
-      try {
-        _supabase
-          .channel('cambios-pedidos-rt-' + Math.random())
-          .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, payload => {
-            console.log('¡Cambio detectado vía WebSocket en tiempo real!', payload);
-            cargarPedidos();
-          })
-          .subscribe((status, err) => {
-            console.log("Estado de suscripción Realtime:", status, err);
-          });
-      } catch (e) {
-        console.warn("Error configurando Realtime:", e);
-      }
-
-      // Sincronización automática de respaldo cada 4 segundos (Garantiza vista cruzada instantánea)
-      setInterval(() => {
-        cargarPedidos();
-      }, 4000);
-    }
-
-    function loadLocalStorage(key, fallback) {
-      try {
-        const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) : fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
-
-    function saveLocalStorage(key, data) {
-      try {
-        localStorage.setItem(key, JSON.stringify(data));
-      } catch (e) {}
-    }
-
-    // =========================================================================
-    // CREAR Y ACTUALIZAR PEDIDOS
-    // =========================================================================
     async function registrarPedidoNube(nuevoPedido) {
       if (useCloud && _supabase) {
         try {
           const { id, ...pedidoData } = nuevoPedido;
-          const { data, error } = await _supabase.from('pedidos').insert([pedidoData]).select();
-          if (error) throw error;
-          
-          showToast('¡Pedido registrado y enviado a cocina en la nube!', 'success');
-          await cargarPedidos();
-          switchScreen('seguimiento');
-          return;
+          const { error } = await _supabase.from('pedidos').insert([pedidoData]);
+          if (!error) {
+            showToast('¡Pedido registrado en la nube!', 'success');
+            await cargarPedidos();
+            switchScreen('seguimiento');
+            return;
+          }
         } catch (err) {
-          console.error("Error crítico guardando en Supabase:", err);
-          showToast('Error al guardar en la nube. Verifique conexión.', 'error');
+          console.error("Error guardando en Supabase:", err);
         }
       }
 
-      // Respaldo local
       state.pedidos.unshift(nuevoPedido);
-      saveLocalStorage('rp_pedidos', state.pedidos);
       showToast('Pedido registrado localmente', 'success');
       renderizarTodo();
       switchScreen('seguimiento');
@@ -2209,41 +612,31 @@
             updateData.hora_entrega = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           }
           const { error } = await _supabase.from('pedidos').update(updateData).eq('id', idPedido);
-          if (error) throw error;
-          
-          showToast(`Estado actualizado a: ${nuevoEstado}`, 'info');
-          await cargarPedidos();
-          return;
+          if (!error) {
+            showToast(`Estado actualizado a: ${nuevoEstado}`, 'info');
+            await cargarPedidos();
+            return;
+          }
         } catch (err) {
-          console.error("Error actualizando en nube:", err);
+          console.error("Error actualizando:", err);
         }
       }
 
-      // Respaldo local
       const idx = state.pedidos.findIndex(p => p.id == idPedido);
       if (idx !== -1) {
         state.pedidos[idx].estado = nuevoEstado;
-        if (nuevoEstado === 'Entregado') {
-          state.pedidos[idx].hora_entrega = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        }
-        saveLocalStorage('rp_pedidos', state.pedidos);
         renderizarTodo();
         showToast(`Pedido actualizado a: ${nuevoEstado}`, 'info');
       }
     }
 
-    // =========================================================================
-    // RENDERIZADO GENERAL DE LA INTERFAZ
-    // =========================================================================
     function renderizarTodo() {
       actualizarContadoresKPIs();
       renderizarTableroPedidos();
       renderizarSeguimientoKanban();
       renderizarVerificacionEntrega();
       renderizarIncidencias();
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     function actualizarContadoresKPIs() {
@@ -2251,29 +644,17 @@
       const activos = state.pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado').length;
       const listos = state.pedidos.filter(p => p.estado === 'Listo para entregar').length;
       const enCocina = state.pedidos.filter(p => p.estado === 'Recibido' || p.estado === 'En preparación').length;
-      const incidenciasAbiertas = state.incidencias.filter(i => i.estado === 'Pendiente').length;
+      const incAbiertas = state.incidencias.filter(i => i.estado === 'Pendiente').length;
 
-      const kpiTotal = document.getElementById('kpi-total');
-      if (kpiTotal) kpiTotal.innerText = total;
-      
-      const kpiActivosSub = document.getElementById('kpi-activos-sub');
-      if (kpiActivosSub) kpiActivosSub.innerText = `${activos} activos`;
-
-      const kpiListos = document.getElementById('kpi-listos');
-      if (kpiListos) kpiListos.innerText = listos;
-
-      const kpiCocinaSub = document.getElementById('kpi-cocina-sub');
-      if (kpiCocinaSub) kpiCocinaSub.innerText = `${enCocina} en cocina`;
-
-      const kpiInc = document.getElementById('kpi-incidencias');
-      if (kpiInc) kpiInc.innerText = incidenciasAbiertas;
+      document.getElementById('kpi-total').innerText = total;
+      document.getElementById('kpi-activos-sub').innerText = `${activos} activos`;
+      document.getElementById('kpi-listos').innerText = listos;
+      document.getElementById('kpi-cocina-sub').innerText = `${enCocina} en cocina`;
+      document.getElementById('kpi-incidencias').innerText = incAbiertas;
 
       document.querySelectorAll('.badge-activos').forEach(el => el.innerText = activos);
       document.querySelectorAll('.badge-listos').forEach(el => el.innerText = listos);
-      document.querySelectorAll('.badge-incidencias').forEach(el => el.innerText = incidenciasAbiertas);
-
-      const kpiTiempo = document.getElementById('kpi-tiempo');
-      if (kpiTiempo) kpiTiempo.innerText = total > 0 ? "21" : "--";
+      document.querySelectorAll('.badge-incidencias').forEach(el => el.innerText = incAbiertas);
     }
 
     function renderizarTableroPedidos() {
@@ -2282,7 +663,7 @@
 
       const activos = state.pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado');
       if (activos.length === 0) {
-        contenedor.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-500">No hay pedidos activos en este momento.</div>`;
+        contenedor.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-500">No hay pedidos activos.</div>`;
         return;
       }
 
@@ -2292,15 +673,10 @@
             <span class="font-extrabold text-xs text-slate-900">${p.codigo}</span>
             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${getEstadoBadgeColor(p.estado)}">${p.estado}</span>
           </div>
-          <div class="text-xs text-slate-700">
-            <strong>${p.mesa}</strong> • ${p.modalidad}
-            <div class="text-[11px] text-slate-500 truncate mt-0.5">${p.productos}</div>
-          </div>
+          <div class="text-xs text-slate-700"><strong>${p.mesa}</strong> • ${p.modalidad}</div>
           <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-stone-200">
             <span>${p.responsable}</span>
-            <button onclick="cambiarEstadoPedidoNube('${p.id}', '${getSiguienteEstado(p.estado)}')" class="px-2 py-1 rounded bg-terracotta-600 text-white font-bold hover:bg-terracotta-700">
-              Avanzar &rarr;
-            </button>
+            <button onclick="cambiarEstadoPedidoNube('${p.id}', '${getSiguienteEstado(p.estado)}')" class="px-2 py-1 rounded bg-terracotta-600 text-white font-bold">Avanzar &rarr;</button>
           </div>
         </div>
       `).join('');
@@ -2310,14 +686,12 @@
       const colRecibido = document.getElementById('kanban-recibido');
       const colPreparacion = document.getElementById('kanban-preparacion');
       const colListo = document.getElementById('kanban-listo');
-
       if (!colRecibido) return;
 
       const filtrados = state.pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado');
-
       colRecibido.innerHTML = '';
       colPreparacion.innerHTML = '';
-      if (colListo) colListo.innerHTML = '';
+      colListo.innerHTML = '';
 
       filtrados.forEach(p => {
         const tarjetaHtml = `
@@ -2327,7 +701,6 @@
               <span class="text-[10px] font-bold text-slate-500">${p.modalidad}</span>
             </div>
             <p class="text-xs text-slate-700 font-medium">${p.productos}</p>
-            ${p.observaciones ? `<p class="text-[11px] text-amber-700 bg-amber-50 p-1.5 rounded">Nota: ${p.observaciones}</p>` : ''}
             <div class="flex items-center justify-between pt-2 border-t border-stone-100 text-[11px]">
               <span class="text-slate-500">${p.responsable}</span>
               <div class="flex gap-1">
@@ -2337,23 +710,24 @@
             </div>
           </div>
         `;
-
         if (p.estado === 'Recibido') colRecibido.innerHTML += tarjetaHtml;
         else if (p.estado === 'En preparación') colPreparacion.innerHTML += tarjetaHtml;
-        else if (p.estado === 'Listo para entregar' && colListo) colListo.innerHTML += tarjetaHtml;
+        else if (p.estado === 'Listo para entregar') colListo.innerHTML += tarjetaHtml;
       });
+
+      document.getElementById('count-recibido').innerText = colRecibido.children.length;
+      document.getElementById('count-preparacion').innerText = colPreparacion.children.length;
+      document.getElementById('count-listo').innerText = colListo.children.length;
     }
 
     function renderizarVerificacionEntrega() {
       const contenedor = document.getElementById('verificacion-lista-pedidos');
       if (!contenedor) return;
-
       const listos = state.pedidos.filter(p => p.estado === 'Listo para entregar');
       if (listos.length === 0) {
-        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay pedidos listos pendientes de verificación y entrega.</div>`;
+        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay pedidos listos pendientes.</div>`;
         return;
       }
-
       contenedor.innerHTML = listos.map(p => `
         <div class="p-4 rounded-xl bg-white border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -2362,11 +736,9 @@
               <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">${p.mesa}</span>
             </div>
             <p class="text-xs text-slate-700 mt-1"><strong>Productos:</strong> ${p.productos}</p>
-            <p class="text-xs text-slate-500 mt-0.5">Responsable: ${p.responsable} • Modalidad: ${p.modalidad}</p>
           </div>
-          <button onclick="cambiarEstadoPedidoNube('${p.id}', 'Entregado')" class="touch-target px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition flex items-center gap-2 shrink-0">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-            <span>Verificar y Entregar</span>
+          <button onclick="cambiarEstadoPedidoNube('${p.id}', 'Entregado')" class="touch-target px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-sm flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i><span>Verificar y Entregar</span>
           </button>
         </div>
       `).join('');
@@ -2375,23 +747,17 @@
     function renderizarIncidencias() {
       const contenedor = document.getElementById('incidencias-lista');
       if (!contenedor) return;
-
       if (state.incidencias.length === 0) {
-        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay incidencias registradas.</div>`;
+        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay incidencias.</div>`;
         return;
       }
-
       contenedor.innerHTML = state.incidencias.map(i => `
-        <div class="p-4 rounded-xl bg-white border border-stone-200 flex flex-col sm:flex-row justify-between gap-3">
+        <div class="p-4 rounded-xl bg-white border border-stone-200 flex justify-between">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="font-extrabold text-xs text-rose-700">${i.tipo}</span>
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-stone-100 text-stone-700">Pedido ${i.codigo_pedido}</span>
-            </div>
+            <span class="font-extrabold text-xs text-rose-700">${i.tipo} (Pedido ${i.codigo_pedido})</span>
             <p class="text-xs text-slate-700 mt-1">${i.descripcion}</p>
-            <p class="text-[11px] text-slate-500 mt-1">Acción correctiva: <strong>${i.accion}</strong> (${i.responsable})</p>
           </div>
-          <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold ${i.estado === 'Resuelto' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${i.estado}</span>
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">${i.estado}</span>
         </div>
       `).join('');
     }
@@ -2412,34 +778,101 @@
     }
 
     function switchScreen(screenId) {
-      state.currentScreen = screenId;
       document.querySelectorAll('.screen-section').forEach(el => el.classList.add('hidden'));
-      const activeSec = document.getElementById(`screen-${screenId}`);
-      if (activeSec) activeSec.classList.remove('hidden');
+      document.getElementById(`screen-${screenId}`).classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectModalidad(mod) {
+      document.querySelectorAll('.mod-btn').forEach(btn => {
+        btn.className = "mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition";
+      });
+      event.currentTarget.className = "mod-btn touch-target p-3 rounded-xl border-2 border-terracotta-600 bg-terracotta-50 text-terracotta-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition";
+      state.selectedModalidad = mod;
+    }
+
+    function quickAddProduct(prod) {
+      const textarea = document.getElementById('reg-productos');
+      textarea.value = textarea.value ? textarea.value + ', ' + prod : prod;
+    }
+
+    function handleCreateOrder(e) {
+      e.preventDefault();
+      const nuevoPedido = {
+        id: 'ord-' + Date.now(),
+        codigo: document.getElementById('reg-codigo').value,
+        fecha_hora: new Date().toISOString(),
+        modalidad: state.selectedModalidad,
+        mesa: document.getElementById('reg-referencia').value,
+        responsable: document.getElementById('reg-responsable').value,
+        productos: document.getElementById('reg-productos').value,
+        observaciones: document.getElementById('reg-observaciones').value,
+        estado: 'Recibido',
+        hora_entrega: ''
+      };
+      registrarPedidoNube(nuevoPedido);
+    }
+
+    function openIncidenciaModal() { document.getElementById('incidencia-modal').classList.remove('hidden'); document.getElementById('incidencia-modal').classList.add('flex'); }
+    function closeIncidenciaModal() { document.getElementById('incidencia-modal').classList.add('hidden'); document.getElementById('incidencia-modal').classList.remove('flex'); }
+
+    function handleCreateIncidencia(e) {
+      e.preventDefault();
+      state.incidencias.push({
+        codigo_pedido: document.getElementById('inc-codigo').value,
+        tipo: document.getElementById('inc-tipo').value,
+        descripcion: document.getElementById('inc-desc').value,
+        accion: document.getElementById('inc-accion').value,
+        estado: 'Pendiente'
+      });
+      closeIncidenciaModal();
+      renderizarTodo();
+      showToast('Incidencia registrada con éxito', 'success');
+    }
+
+    function toggleMobileDrawer(open) {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('mobile-drawer-backdrop');
+      if (open) {
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+      }
     }
 
     function showToast(mensaje, tipo = 'info') {
       const container = document.getElementById('toast-container');
       if (!container) return;
       const toast = document.createElement('div');
-      toast.className = `p-3.5 rounded-xl text-xs font-bold text-white shadow-lg pointer-events-auto fade-in flex items-center justify-between ${tipo === 'success' ? 'bg-emerald-600' : tipo === 'error' ? 'bg-rose-600' : 'bg-slate-900'}`;
+      toast.className = `p-3.5 rounded-xl text-xs font-bold text-white shadow-lg pointer-events-auto fade-in flex items-center justify-between ${tipo === 'success' ? 'bg-emerald-600' : 'bg-slate-900'}`;
       toast.innerHTML = `<span>${mensaje}</span>`;
       container.appendChild(toast);
       setTimeout(() => toast.remove(), 3000);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const inputCodigo = document.getElementById('reg-codigo');
-      if (inputCodigo) {
-        inputCodigo.value = 'PED-' + Math.floor(100 + Math.random() * 900);
-      }
+    function exportToCSV() {
+      let csv = 'Codigo,Modalidad,Mesa,Responsable,Productos,Estado\n';
+      state.pedidos.forEach(p => {
+        csv += `"${p.codigo}","${p.modalidad}","${p.mesa}","${p.responsable}","${p.productos}","${p.estado}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'pedidos_rivera_de_plata.csv';
+      link.click();
+    }
 
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('reg-codigo').value = 'PED-' + Math.floor(100 + Math.random() * 900);
+      renderizarTodo();
       cargarPedidos();
-      setupRealtimeSubscription();
+      // Polling de respaldo cada 5 segundos
+      setInterval(() => {
+        cargarPedidos();
+      }, 5000);
     });
   </script>
-
-
 </body>
 </html>
