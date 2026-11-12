@@ -2062,8 +2062,6 @@
     // =========================================================================
     // CONFIGURACIÓN DE SUPABASE Y ESTADO GLOBAL
     // =========================================================================
-    // Reemplaza con tus credenciales reales de Supabase o déjalas así para modo local autónomo
-
     const SUPABASE_URL = 'https://dmmxprnzedkscuezglct.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_WpkuzBnsnwoeQ52-2ViKzg_5JjfUTXe';
 
@@ -2073,17 +2071,22 @@
     try {
       if (SUPABASE_URL && SUPABASE_URL.includes('supabase.co') && !SUPABASE_URL.includes('TU-PROYECTO')) {
         const { createClient } = supabase;
-        _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          realtime: {
+            params: {
+              eventsPerSecond: 10
+            }
+          }
+        });
         useCloud = true;
-        console.log("Supabase inicializado correctamente.");
+        console.log("Supabase inicializado correctamente con modo online.");
       } else {
-        console.log("Supabase operando en modo local (sin credenciales válidas configuradas).");
+        console.log("Supabase operando en modo local autónomo.");
       }
     } catch (e) {
       console.warn("No se pudo iniciar Supabase, usando almacenamiento local.", e);
     }
 
-    // Estado local de la aplicación
     let state = {
       pedidos: [],
       incidencias: [],
@@ -2093,64 +2096,65 @@
       activeFilter: 'todos'
     };
 
-    // Datos de ejemplo iniciales (Demo)
     const DEMO_PEDIDOS = [
-      { id: '1', codigo: 'PED-101', fecha_hora: new Date(Date.now() - 12*60000).toISOString(), modalidad: 'Consumo en salón', mesa: 'Mesa 3', responsable: 'Mozo 1 (Carlos)', productos: 'Ceviche Rivera de Plata (x1)', observaciones: 'Poco ají por favor', estado: 'En preparación', hora_entrega: '' },
-      { id: '2', codigo: 'PED-102', fecha_hora: new Date(Date.now() - 28*60000).toISOString(), modalidad: 'Delivery', mesa: 'Calle Los Pinos 240, Chaclacayo', responsable: 'Cajero (Miguel)', productos: 'Lomo Saltado Fusión (x2)', observaciones: 'Llamar al llegar', estado: 'Listo para entregar', hora_entrega: '' },
-      { id: '3', codigo: 'PED-103', fecha_hora: new Date(Date.now() - 5*60000).toISOString(), modalidad: 'Para recoger', mesa: 'Recojo en Caja', responsable: 'Anfitriona (Valeria)', productos: 'Arroz con Mariscos (x1)', observaciones: 'Para llevar en táper', estado: 'Recibido', hora_entrega: '' }
+      { id: '1', codigo: 'PED-101', fecha_hora: new Date(Date.now() - 12*60000).toISOString(), modalidad: 'Consumo en salón', mesa: 'Mesa 3', responsable: 'Mozo 1 (Carlos)', productos: 'Ceviche Rivera de Plata (x1)', observaciones: 'Poco ají por favor', estado: 'En preparación', hora_entrega: '' }
     ];
 
-    const DEMO_INCIDENCIAS = [
-      { id: '1', codigo_pedido: 'PED-100', fecha: '12:30 PM', tipo: 'Demora en cocina', descripcion: 'Falta de salida oportuna en guarnición', responsable: 'Jefe de Cocina', accion: 'Refuerzo de personal en estación fría', estado: 'Resuelto' }
-    ];
+    const DEMO_INCIDENCIAS = [];
 
     // =========================================================================
-    // CARGAR Y SINCRONIZAR DATOS
+    // CARGAR Y SINCRONIZAR DATOS CON SUPABASE
     // =========================================================================
     async function cargarPedidos() {
       if (useCloud && _supabase) {
         try {
-          const { data, error } = await _supabase.from('pedidos').select('*').order('fecha_hora', { ascending: false });
+          const { data, error } = await _supabase
+            .from('pedidos')
+            .select('*')
+            .order('fecha_hora', { ascending: false });
+            
           if (error) throw error;
           
-          if (data && data.length > 0) {
+          if (data) {
             state.pedidos = data;
-          } else {
-            // Si la nube está vacía, sembramos datos demo iniciales opcionales o dejamos vacío
-            state.pedidos = loadLocalStorage('rp_pedidos', DEMO_PEDIDOS);
+            console.log("Datos sincronizados desde la nube:", data.length, "pedidos.");
           }
         } catch (err) {
-          console.warn("Error leyendo desde Supabase, cargando respaldo local:", err);
+          console.warn("Error leyendo desde Supabase, usando respaldo local:", err);
           state.pedidos = loadLocalStorage('rp_pedidos', DEMO_PEDIDOS);
         }
       } else {
         state.pedidos = loadLocalStorage('rp_pedidos', DEMO_PEDIDOS);
       }
 
-      // Cargar incidencias
       state.incidencias = loadLocalStorage('rp_incidencias', DEMO_INCIDENCIAS);
-
-      console.log("Pedidos cargados:", state.pedidos);
       renderizarTodo();
     }
 
-    // Configurar canal en tiempo real de Supabase
+    // Configurar canal en tiempo real + Polling automático de respaldo cada 4 segundos
     function setupRealtimeSubscription() {
       if (!useCloud || !_supabase) return;
+      
       try {
         _supabase
-          .channel('cambios-pedidos-rt')
+          .channel('cambios-pedidos-rt-' + Math.random())
           .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, payload => {
-            console.log('Cambio detectado en tiempo real:', payload);
+            console.log('¡Cambio detectado vía WebSocket en tiempo real!', payload);
             cargarPedidos();
           })
-          .subscribe();
+          .subscribe((status, err) => {
+            console.log("Estado de suscripción Realtime:", status, err);
+          });
       } catch (e) {
-        console.warn("No se pudo iniciar Realtime subscription:", e);
+        console.warn("Error configurando Realtime:", e);
       }
+
+      // Sincronización automática de respaldo cada 4 segundos (Garantiza vista cruzada instantánea)
+      setInterval(() => {
+        cargarPedidos();
+      }, 4000);
     }
 
-    // Funciones auxiliares de almacenamiento local
     function loadLocalStorage(key, fallback) {
       try {
         const item = localStorage.getItem(key);
@@ -2172,27 +2176,29 @@
     async function registrarPedidoNube(nuevoPedido) {
       if (useCloud && _supabase) {
         try {
-          // Remover el ID local generado para que Postgres asigne el UUID
           const { id, ...pedidoData } = nuevoPedido;
-          const { error } = await _supabase.from('pedidos').insert([pedidoData]);
+          const { data, error } = await _supabase.from('pedidos').insert([pedidoData]).select();
           if (error) throw error;
-          showToast('Pedido registrado en la nube con éxito', 'success');
+          
+          showToast('¡Pedido registrado y enviado a cocina en la nube!', 'success');
           await cargarPedidos();
+          switchScreen('seguimiento');
           return;
         } catch (err) {
-          console.warn("Fallo al guardar en nube, guardando localmente:", err);
+          console.error("Error crítico guardando en Supabase:", err);
+          showToast('Error al guardar en la nube. Verifique conexión.', 'error');
         }
       }
 
-      // Modo local
+      // Respaldo local
       state.pedidos.unshift(nuevoPedido);
       saveLocalStorage('rp_pedidos', state.pedidos);
       showToast('Pedido registrado localmente', 'success');
       renderizarTodo();
+      switchScreen('seguimiento');
     }
 
     async function cambiarEstadoPedidoNube(idPedido, nuevoEstado) {
-      // Buscar si es un ID de Supabase (UUID) o local
       const isCloudId = typeof idPedido === 'string' && idPedido.length > 15;
 
       if (useCloud && _supabase && isCloudId) {
@@ -2203,14 +2209,16 @@
           }
           const { error } = await _supabase.from('pedidos').update(updateData).eq('id', idPedido);
           if (error) throw error;
+          
+          showToast(`Estado actualizado a: ${nuevoEstado}`, 'info');
           await cargarPedidos();
           return;
         } catch (err) {
-          console.warn("Error actualizando estado en nube:", err);
+          console.error("Error actualizando en nube:", err);
         }
       }
 
-      // Modo local o fallback
+      // Respaldo local
       const idx = state.pedidos.findIndex(p => p.id == idPedido);
       if (idx !== -1) {
         state.pedidos[idx].estado = nuevoEstado;
@@ -2244,20 +2252,27 @@
       const enCocina = state.pedidos.filter(p => p.estado === 'Recibido' || p.estado === 'En preparación').length;
       const incidenciasAbiertas = state.incidencias.filter(i => i.estado === 'Pendiente').length;
 
-      document.getElementById('kpi-total').innerText = total;
-      document.getElementById('kpi-activos-sub').innerText = `${activos} activos`;
-      document.getElementById('kpi-listos').innerText = listos;
-      document.getElementById('kpi-cocina-sub').innerText = `${enCocina} en cocina`;
-      document.getElementById('kpi-incidencias').innerText = incidenciasAbiertas;
-      document.getElementById('kpi-inc-total-sub').innerText = `de ${state.incidencias.length} totales`;
+      const kpiTotal = document.getElementById('kpi-total');
+      if (kpiTotal) kpiTotal.innerText = total;
+      
+      const kpiActivosSub = document.getElementById('kpi-activos-sub');
+      if (kpiActivosSub) kpiActivosSub.innerText = `${activos} activos`;
 
-      // Actualizar badges de navegación
+      const kpiListos = document.getElementById('kpi-listos');
+      if (kpiListos) kpiListos.innerText = listos;
+
+      const kpiCocinaSub = document.getElementById('kpi-cocina-sub');
+      if (kpiCocinaSub) kpiCocinaSub.innerText = `${enCocina} en cocina`;
+
+      const kpiInc = document.getElementById('kpi-incidencias');
+      if (kpiInc) kpiInc.innerText = incidenciasAbiertas;
+
       document.querySelectorAll('.badge-activos').forEach(el => el.innerText = activos);
       document.querySelectorAll('.badge-listos').forEach(el => el.innerText = listos);
       document.querySelectorAll('.badge-incidencias').forEach(el => el.innerText = incidenciasAbiertas);
 
-      // Calcular tiempo promedio simulado
-      document.getElementById('kpi-tiempo').innerText = total > 0 ? "21" : "--";
+      const kpiTiempo = document.getElementById('kpi-tiempo');
+      if (kpiTiempo) kpiTiempo.innerText = total > 0 ? "21" : "--";
     }
 
     function renderizarTableroPedidos() {
@@ -2291,24 +2306,17 @@
     }
 
     function renderizarSeguimientoKanban() {
-      // Implementación tablero Kanban de Cocina
       const colRecibido = document.getElementById('kanban-recibido');
       const colPreparacion = document.getElementById('kanban-preparacion');
       const colListo = document.getElementById('kanban-listo');
 
       if (!colRecibido) return;
 
-      const filterMod = state.activeFilter || 'todos';
-      const filtrados = state.pedidos.filter(p => {
-        if (p.estado === 'Entregado' || p.estado === 'Cancelado') return false;
-        if (filterMod !== 'todos' && p.modalidad !== filterMod) return false;
-        return true;
-      });
+      const filtrados = state.pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado');
 
       colRecibido.innerHTML = '';
       colPreparacion.innerHTML = '';
-      colListos = document.getElementById('kanban-listo');
-      if(colListos) colListos.innerHTML = '';
+      if (colListo) colListo.innerHTML = '';
 
       filtrados.forEach(p => {
         const tarjetaHtml = `
@@ -2331,7 +2339,7 @@
 
         if (p.estado === 'Recibido') colRecibido.innerHTML += tarjetaHtml;
         else if (p.estado === 'En preparación') colPreparacion.innerHTML += tarjetaHtml;
-        else if (p.estado === 'Listo para entregar' && colListos) colListos.innerHTML += tarjetaHtml;
+        else if (p.estado === 'Listo para entregar' && colListo) colListo.innerHTML += tarjetaHtml;
       });
     }
 
@@ -2387,9 +2395,6 @@
       `).join('');
     }
 
-    // =========================================================================
-    // UTILIDADES AUXILIARES & NAVEGACIÓN
-    // =========================================================================
     function getEstadoBadgeColor(estado) {
       switch(estado) {
         case 'Recibido': return 'bg-stone-200 text-stone-800';
@@ -2423,9 +2428,7 @@
       setTimeout(() => toast.remove(), 3000);
     }
 
-    // Inicialización al cargar la ventana
     window.addEventListener('DOMContentLoaded', () => {
-      // Generar código automático para nuevo pedido si existe el input
       const inputCodigo = document.getElementById('reg-codigo');
       if (inputCodigo) {
         inputCodigo.value = 'PED-' + Math.floor(100 + Math.random() * 900);
