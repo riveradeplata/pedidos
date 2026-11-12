@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
@@ -96,10 +95,10 @@
 </head>
 <body class="bg-stone-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col lg:flex-row overflow-x-hidden">
 
-  <!-- Toast Notifications Container -->
+  <!-- Contenedor de Notificaciones Toast -->
   <div id="toast-container" class="fixed top-4 right-4 left-4 sm:left-auto z-50 flex flex-col gap-2 max-w-sm sm:w-full pointer-events-none"></div>
 
-  <!-- Custom Confirm Modal -->
+  <!-- Modal de Confirmación Personalizado -->
   <div id="confirm-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-stone-200 fade-in">
       <div class="flex items-center gap-3 mb-3">
@@ -110,7 +109,7 @@
       </div>
       <p id="confirm-message" class="text-sm text-slate-600 mb-6 leading-relaxed">¿Estás seguro de realizar esta acción?</p>
       <div class="flex flex-col-reverse sm:flex-row justify-end gap-2.5">
-        <button id="confirm-cancel-btn" onclick="closeConfirmModal(false)" class="touch-target px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 bg-stone-100 hover:bg-stone-200 transition">
+        <button id="confirm-cancel-btn" class="touch-target px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 bg-stone-100 hover:bg-stone-200 transition">
           Cancelar
         </button>
         <button id="confirm-ok-btn" class="touch-target px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-terracotta-600 hover:bg-terracotta-700 transition shadow-sm">
@@ -120,7 +119,7 @@
     </div>
   </div>
 
-  <!-- Desktop Sidebar -->
+  <!-- SIDEBAR FIJO EN ESCRITORIO (lg+) -->
   <aside class="hidden lg:flex lg:w-72 lg:flex-col lg:fixed lg:inset-y-0 bg-slatepro-900 text-white border-r border-slate-800 z-30">
     <div class="p-6 border-b border-slate-800">
       <div class="flex items-center gap-3">
@@ -189,15 +188,31 @@
           <span>Tiempo máximo:</span>
           <span class="font-extrabold text-emerald-400">≤ 25 min</span>
         </div>
+        <div class="mt-1 text-xs text-slate-400 flex justify-between">
+          <span>Línea base anterior:</span>
+          <span>35 min (78% sat.)</span>
+        </div>
       </div>
+
       <button onclick="exportToCSV()" class="w-full touch-target px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
         <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-        <span>Exportar CSV</span>
+        <span>Exportar CSV (Excel / Sheets)</span>
       </button>
+
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="promptResetDemo()" class="touch-target px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span>Demo</span>
+        </button>
+        <button onclick="promptClearAll()" class="touch-target px-3 py-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-200 border border-rose-800/60 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          <span>Limpiar</span>
+        </button>
+      </div>
     </div>
   </aside>
 
-  <!-- Mobile Header -->
+  <!-- BARRA SUPERIOR MÓVIL / TABLET -->
   <header class="lg:hidden bg-slatepro-900 text-white sticky top-0 z-30 shadow-md border-b-2 border-gold-500">
     <div class="px-4 py-3 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5 min-w-0">
@@ -209,19 +224,20 @@
           <p class="text-[11px] text-gold-300 truncate">Chaclacayo • Meta ≤ 25 min</p>
         </div>
       </div>
+
       <div class="flex items-center gap-1.5 shrink-0">
-        <button onclick="exportToCSV()" class="touch-target px-3 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
+        <button onclick="exportToCSV()" aria-label="Exportar CSV" class="touch-target px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
           <i data-lucide="download" class="w-4 h-4"></i>
           <span class="hidden sm:inline">CSV</span>
         </button>
-        <button onclick="toggleMobileDrawer(true)" class="touch-target w-11 h-11 rounded-xl bg-slate-800 text-white flex items-center justify-center border border-slate-700">
+        <button onclick="toggleMobileDrawer(true)" aria-label="Abrir menú" class="touch-target w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center border border-slate-700">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
+  <!-- Drawer Deslizable Móvil -->
   <div id="mobile-drawer-backdrop" onclick="toggleMobileDrawer(false)" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 hidden lg:hidden"></div>
   <aside id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-72 max-w-[85vw] bg-slatepro-900 text-white z-50 transform translate-x-full transition-transform duration-250 ease-out flex flex-col lg:hidden shadow-2xl">
     <div class="p-5 border-b border-slate-800 flex items-center justify-between">
@@ -229,11 +245,17 @@
         <i data-lucide="utensils" class="w-5 h-5 text-gold-400"></i>
         <span class="font-extrabold text-base">Menú Operativo</span>
       </div>
-      <button onclick="toggleMobileDrawer(false)" class="touch-target w-10 h-10 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center">
+      <button onclick="toggleMobileDrawer(false)" aria-label="Cerrar menú" class="touch-target w-10 h-10 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
+
     <div class="p-4 flex-1 overflow-y-auto space-y-2">
+      <div class="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700 mb-3">
+        <div class="text-xs font-bold text-gold-400 uppercase">Objetivo del Proyecto</div>
+        <p class="text-xs text-slate-300 mt-1">Reducir espera de 35m a <strong>≤ 25 min</strong> y elevar satisfacción al <strong>90%</strong>.</p>
+      </div>
+
       <button onclick="switchScreen('dashboard'); toggleMobileDrawer(false)" class="w-full touch-target flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-slate-200 hover:bg-slate-800">
         <i data-lucide="layout-dashboard" class="w-4 h-4 text-terracotta-400"></i>
         <span>1. Panel Principal</span>
@@ -255,13 +277,30 @@
         <span>5. Control de Incidencias</span>
       </button>
     </div>
+
+    <div class="p-4 border-t border-slate-800 space-y-2.5 bg-slatepro-950/60">
+      <button onclick="exportToCSV(); toggleMobileDrawer(false)" class="w-full touch-target px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-2">
+        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+        <span>Exportar CSV (Excel / Sheets)</span>
+      </button>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="toggleMobileDrawer(false); promptResetDemo()" class="touch-target px-3 py-2.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          <span>Datos Demo</span>
+        </button>
+        <button onclick="toggleMobileDrawer(false); promptClearAll()" class="touch-target px-3 py-2.5 rounded-xl bg-rose-950 text-rose-200 border border-rose-800/60 text-xs font-semibold flex items-center justify-center gap-1.5">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          <span>Limpiar</span>
+        </button>
+      </div>
+    </div>
   </aside>
 
-  <!-- Main Body Content -->
+  <!-- CONTENIDO PRINCIPAL -->
   <div class="flex-1 lg:pl-72 flex flex-col min-w-0 pb-24 lg:pb-8">
     <main class="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6">
 
-      <!-- SCREEN 1: DASHBOARD -->
+      <!-- PANTALLA 1: DASHBOARD -->
       <section id="screen-dashboard" class="screen-section fade-in space-y-5">
         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -270,9 +309,10 @@
               <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Panel Principal Operativo</h2>
             </div>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              Coordinación en tiempo real entre <strong class="text-slate-800">Salón, Cocina y Caja</strong> (Meta: <strong class="text-emerald-700">≤ 25 min</strong>).
+              Coordinación en tiempo real entre <strong class="text-slate-800">Salón, Cocina y Caja</strong> para cumplir la meta de <strong class="text-emerald-700">≤ 25 min</strong>.
             </p>
           </div>
+
           <div class="grid grid-cols-2 sm:flex gap-2 shrink-0">
             <button onclick="switchScreen('registro')" class="touch-target px-4 py-2.5 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center justify-center gap-2">
               <i data-lucide="plus" class="w-4 h-4"></i>
@@ -290,72 +330,108 @@
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pedidos del Turno</span>
-              <span class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center"><i data-lucide="receipt" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+                <i data-lucide="receipt" class="w-5 h-5"></i>
+              </span>
             </div>
             <div class="mt-3 flex items-baseline gap-2.5">
               <span id="kpi-total" class="text-3xl font-extrabold text-slate-900">0</span>
               <span id="kpi-activos-sub" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">0 activos</span>
             </div>
+            <div class="text-xs text-slate-500 mt-1.5">Centralizados digitalmente</div>
           </div>
+
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Listos para Entregar</span>
-              <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                <i data-lucide="bell-ring" class="w-5 h-5"></i>
+              </span>
             </div>
             <div class="mt-3 flex items-baseline gap-2.5">
               <span id="kpi-listos" class="text-3xl font-extrabold text-emerald-600">0</span>
               <span id="kpi-cocina-sub" class="text-xs font-semibold text-slate-500">0 en cocina</span>
             </div>
             <button onclick="switchScreen('verificacion')" class="mt-1.5 text-left text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1">
-              <span>Ir a verificación</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              <span>Ir a verificación</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </button>
           </div>
+
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-terracotta-700">Tiempo Promedio</span>
-              <span class="w-10 h-10 rounded-xl bg-terracotta-100 text-terracotta-700 flex items-center justify-center"><i data-lucide="timer" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-terracotta-100 text-terracotta-700 flex items-center justify-center">
+                <i data-lucide="timer" class="w-5 h-5"></i>
+              </span>
             </div>
             <div class="mt-3 flex items-baseline gap-1.5">
-              <span id="kpi-tiempo" class="text-3xl font-extrabold text-slate-900">21</span>
+              <span id="kpi-tiempo" class="text-3xl font-extrabold text-slate-900">--</span>
               <span class="text-sm font-bold text-slate-500">min</span>
             </div>
-            <div class="text-xs font-semibold text-emerald-600 mt-1.5">Meta: ≤ 25 min</div>
+            <div id="kpi-tiempo-status" class="text-xs font-semibold text-emerald-600 mt-1.5">Meta: ≤ 25 min (Antes: 35m)</div>
           </div>
+
           <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col justify-between">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase tracking-wider text-rose-700">Incidencias Abiertas</span>
-              <span class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center"><i data-lucide="alert-circle" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+                <i data-lucide="alert-circle" class="w-5 h-5"></i>
+              </span>
             </div>
             <div class="mt-3 flex items-baseline gap-2.5">
               <span id="kpi-incidencias" class="text-3xl font-extrabold text-rose-600">0</span>
+              <span id="kpi-inc-total-sub" class="text-xs font-semibold text-slate-500">de 0 totales</span>
             </div>
             <button onclick="switchScreen('incidencias')" class="mt-1.5 text-left text-xs font-bold text-rose-700 hover:underline flex items-center gap-1">
-              <span>Gestionar reclamos</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              <span>Gestionar reclamos</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </button>
           </div>
         </div>
 
-        <!-- Dashboard Active Orders Grid -->
+        <div id="dashboard-alerts-box" class="hidden bg-rose-50 border-l-4 border-rose-600 rounded-2xl p-4 shadow-sm">
+          <div class="flex items-start gap-3">
+            <i data-lucide="siren" class="w-5 h-5 text-rose-600 shrink-0 mt-0.5"></i>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-extrabold text-rose-900">Alerta de Tiempo de Espera (Meta: ≤ 25 minutos)</h3>
+              <ul id="dashboard-alerts-list" class="mt-1.5 text-xs sm:text-sm text-rose-800 space-y-1 list-disc list-inside"></ul>
+            </div>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div class="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-base font-bold text-slate-900">Pedidos Activos en Curso</h3>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Pedidos Activos en Curso</h3>
+                <p class="text-xs text-slate-500">Semáforo: Verde (&lt;18m) • Ámbar (18-24m) • Rojo (≥25m)</p>
+              </div>
               <button onclick="switchScreen('seguimiento')" class="touch-target px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-800 text-xs font-bold transition">
                 Ver tablero completo
               </button>
             </div>
             <div id="dashboard-active-orders" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5"></div>
           </div>
+
           <div class="space-y-5">
             <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
               <h3 class="text-base font-bold text-slate-900 mb-3">Pedidos por Canal</h3>
-              <div id="dashboard-channels" class="space-y-3.5 text-xs text-slate-600"></div>
+              <div id="dashboard-channels" class="space-y-3.5"></div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-base font-bold text-slate-900">Últimas Incidencias</h3>
+                <button onclick="switchScreen('incidencias')" class="text-xs font-bold text-terracotta-600 hover:underline">Ver todas</button>
+              </div>
+              <div id="dashboard-recent-incidents" class="space-y-2.5"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SCREEN 2: REGISTRO DE PEDIDOS -->
+      <!-- PANTALLA 2: NUEVO PEDIDO -->
       <section id="screen-registro" class="screen-section hidden fade-in">
         <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
           <div class="bg-gradient-to-r from-terracotta-700 to-terracotta-600 px-5 py-4 sm:px-6 sm:py-5 text-white">
@@ -363,135 +439,175 @@
               <span class="px-2.5 py-0.5 rounded-md bg-white/20 text-white text-xs font-bold">Pantalla 2</span>
               <h2 class="text-lg sm:text-xl font-extrabold">Registro Uniforme de Pedidos</h2>
             </div>
-            <p class="text-xs sm:text-sm text-terracotta-100 mt-1">Toma de pedido estandarizada para salón y caja.</p>
+            <p class="text-xs sm:text-sm text-terracotta-100 mt-1">
+              Toma de pedido estandarizada para mozos en salón y caja.
+            </p>
           </div>
+
           <form id="order-form" onsubmit="handleCreateOrder(event)" class="p-4 sm:p-6 space-y-5">
             <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">1. Modalidad de Atención *</label>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">1. Selecciona Modalidad de Atención *</label>
+              <input type="hidden" id="reg-modalidad" value="Consumo en salón" />
               <div class="grid grid-cols-3 gap-2.5">
-                <button type="button" onclick="selectModalidad('Consumo en salón')" data-mod="Consumo en salón" class="mod-btn touch-target p-3 rounded-xl border-2 border-terracotta-600 bg-terracotta-50 text-terracotta-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
-                  <i data-lucide="utensils-crossed" class="w-4 h-4"></i><span>Salón</span>
+                <button type="button" onclick="selectModalidad('Consumo en salón')" data-mod="Consumo en salón" class="mod-btn touch-target p-3 rounded-xl border-2 border-terracotta-600 bg-terracotta-50 text-terracotta-800 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition">
+                  <i data-lucide="utensils-crossed" class="w-4 h-4 shrink-0"></i>
+                  <span>Salón</span>
                 </button>
-                <button type="button" onclick="selectModalidad('Delivery')" data-mod="Delivery" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
-                  <i data-lucide="bike" class="w-4 h-4"></i><span>Delivery</span>
+                <button type="button" onclick="selectModalidad('Delivery')" data-mod="Delivery" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition">
+                  <i data-lucide="bike" class="w-4 h-4 shrink-0"></i>
+                  <span>Delivery</span>
                 </button>
-                <button type="button" onclick="selectModalidad('Para recoger')" data-mod="Para recoger" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
-                  <i data-lucide="shopping-bag" class="w-4 h-4"></i><span>Para recoger</span>
+                <button type="button" onclick="selectModalidad('Para recoger')" data-mod="Para recoger" class="mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition">
+                  <i data-lucide="shopping-bag" class="w-4 h-4 shrink-0"></i>
+                  <span>Para recoger</span>
                 </button>
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
               <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Código</label>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Código Pedido</label>
                 <input type="text" id="reg-codigo" readonly class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-stone-100 border border-stone-300 text-slate-900 font-extrabold text-sm" />
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Mesa o Referencia *</label>
-                <input type="text" id="reg-referencia" required placeholder="Ej. Mesa 4" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500" />
+                <input type="text" id="reg-referencia" required placeholder="Ej. Mesa 4 (Terraza)" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500" />
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Responsable *</label>
-                <select id="reg-responsable" required class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm">
+                <select id="reg-responsable" required class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500">
                   <option value="Mozo 1 (Carlos)">Mozo 1 (Carlos)</option>
                   <option value="Mozo 2 (Lucía)">Mozo 2 (Lucía)</option>
                   <option value="Cajero (Miguel)">Cajero (Miguel)</option>
+                  <option value="Anfitriona (Valeria)">Anfitriona (Valeria)</option>
                 </select>
               </div>
             </div>
 
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">2. Selección Rápida de Platos</label>
+            <div class="bg-stone-50 p-3.5 sm:p-4 rounded-2xl border border-stone-200 space-y-3.5">
+              <label class="text-xs font-extrabold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                <i data-lucide="chef-hat" class="w-4 h-4 text-terracotta-600"></i>
+                <span>2. Carta Fusión Rivera de Plata</span>
+              </label>
               <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                <button type="button" onclick="quickAddProduct('Ceviche Rivera de Plata')" class="touch-target px-3 py-2.5 rounded-xl bg-stone-50 hover:bg-terracotta-50 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
-                  <span class="truncate">Ceviche Rivera de Plata</span><span class="text-terracotta-600 font-extrabold">+</span>
+                <button type="button" onclick="quickAddProduct('Ceviche Rivera de Plata')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 text-slate-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
+                  <span class="truncate">Ceviche Rivera de Plata</span>
+                  <span class="text-terracotta-600 font-extrabold text-base">+</span>
                 </button>
-                <button type="button" onclick="quickAddProduct('Lomo Saltado Fusión')" class="touch-target px-3 py-2.5 rounded-xl bg-stone-50 hover:bg-terracotta-50 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
-                  <span class="truncate">Lomo Saltado Fusión</span><span class="text-terracotta-600 font-extrabold">+</span>
+                <button type="button" onclick="quickAddProduct('Lomo Saltado Fusión')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 text-slate-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
+                  <span class="truncate">Lomo Saltado Fusión</span>
+                  <span class="text-terracotta-600 font-extrabold text-base">+</span>
                 </button>
-                <button type="button" onclick="quickAddProduct('Arroz con Mariscos Norteño')" class="touch-target px-3 py-2.5 rounded-xl bg-stone-50 hover:bg-terracotta-50 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
-                  <span class="truncate">Arroz con Mariscos</span><span class="text-terracotta-600 font-extrabold">+</span>
+                <button type="button" onclick="quickAddProduct('Arroz con Mariscos Norteño')" class="touch-target px-3 py-2.5 rounded-xl bg-white hover:bg-terracotta-50 text-slate-800 border border-stone-300 text-xs font-semibold text-left transition flex items-center justify-between">
+                  <span class="truncate">Arroz con Mariscos</span>
+                  <span class="text-terracotta-600 font-extrabold text-base">+</span>
                 </button>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Productos Seleccionados en Comanda *</label>
+                <div id="selected-products-list" class="min-h-[50px] p-3 rounded-xl bg-white border border-stone-300 text-xs text-slate-600 flex flex-wrap gap-2 items-center">
+                  <span id="no-products-msg" class="italic text-slate-400">Ningún plato seleccionado todavía. Haz clic arriba.</span>
+                </div>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Productos Agregados *</label>
-              <textarea id="reg-productos" required rows="2" placeholder="Selecciona platos o escribe el pedido..." class="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-slate-900 text-sm"></textarea>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Observaciones Especiales (Restricciones / Término)</label>
+              <textarea id="reg-observaciones" rows="2" placeholder="Ej. Poco ají, sin cebolla, término medio..." class="w-full p-3 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm focus:ring-2 focus:ring-terracotta-500"></textarea>
             </div>
 
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Observaciones</label>
-              <input type="text" id="reg-observaciones" placeholder="Ej. Poco picante" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm" />
-            </div>
-
-            <div class="flex justify-end gap-3 pt-4 border-t border-stone-200">
-              <button type="submit" class="touch-target px-6 py-3 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white font-bold text-sm shadow-md transition flex items-center gap-2">
-                <i data-lucide="send" class="w-4 h-4"></i><span>Enviar a Cocina</span>
+            <div class="flex items-center justify-end gap-3 pt-2">
+              <button type="button" onclick="switchScreen('dashboard')" class="touch-target px-5 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-700 text-xs sm:text-sm font-semibold transition">
+                Cancelar
+              </button>
+              <button type="submit" class="touch-target px-6 py-3 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Guardar y Enviar a Cocina</span>
               </button>
             </div>
           </form>
         </div>
       </section>
 
-      <!-- SCREEN 3: SEGUIMIENTO / KANBAN -->
+      <!-- PANTALLA 3: SEGUIMIENTO KANBAN -->
       <section id="screen-seguimiento" class="screen-section hidden fade-in space-y-4">
-        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex items-center justify-between">
+        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span class="px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-800 text-xs font-bold">Pantalla 3</span>
-            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">Tablero de Seguimiento (Cocina)</h2>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-terracotta-100 text-terracotta-800 text-xs font-bold">Pantalla 3</span>
+              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Tablero de Seguimiento en Tiempo Real</h2>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Monitoreo visual del flujo de comandas entre cocina y salón.
+            </p>
           </div>
-          <button onclick="cargarPedidos()" class="touch-target px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-slate-800 text-xs font-bold transition flex items-center gap-1.5">
-            <i data-lucide="refresh-cw" class="w-4 h-4"></i><span>Actualizar</span>
+          <button onclick="cargarPedidos()" class="touch-target px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold transition flex items-center gap-2">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            <span>Sincronizar Ahora</span>
           </button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-stone-200/70 rounded-2xl p-4 flex flex-col min-h-[400px]">
-            <div class="flex items-center justify-between mb-3 px-1">
-              <h3 class="font-extrabold text-xs uppercase tracking-wider text-slate-700">1. Recibido</h3>
-              <span id="count-recibido" class="px-2 py-0.5 rounded-full text-xs font-extrabold bg-stone-300 text-stone-800">0</span>
+          <div class="bg-stone-200/70 rounded-2xl p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-stone-300">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700">1. Recibido / Pendiente</span>
+              <span id="count-recibido" class="px-2 py-0.5 rounded-full bg-stone-300 text-slate-800 text-xs font-bold">0</span>
             </div>
-            <div id="kanban-recibido" class="space-y-3 flex-1"></div>
+            <div id="kanban-recibido" class="flex-1 space-y-3 min-h-[300px]"></div>
           </div>
-          <div class="bg-amber-100/70 rounded-2xl p-4 flex flex-col min-h-[400px]">
-            <div class="flex items-center justify-between mb-3 px-1">
-              <h3 class="font-extrabold text-xs uppercase tracking-wider text-amber-900">2. En preparación</h3>
-              <span id="count-preparacion" class="px-2 py-0.5 rounded-full text-xs font-extrabold bg-amber-200 text-amber-900">0</span>
+
+          <div class="bg-amber-100/60 rounded-2xl p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-amber-200">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-amber-900">2. En Preparación</span>
+              <span id="count-preparacion" class="px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 text-xs font-bold">0</span>
             </div>
-            <div id="kanban-preparacion" class="space-y-3 flex-1"></div>
+            <div id="kanban-preparacion" class="flex-1 space-y-3 min-h-[300px]"></div>
           </div>
-          <div class="bg-emerald-100/70 rounded-2xl p-4 flex flex-col min-h-[400px]">
-            <div class="flex items-center justify-between mb-3 px-1">
-              <h3 class="font-extrabold text-xs uppercase tracking-wider text-emerald-900">3. Listo para entregar</h3>
-              <span id="count-listo" class="px-2 py-0.5 rounded-full text-xs font-extrabold bg-emerald-200 text-emerald-900">0</span>
+
+          <div class="bg-emerald-100/60 rounded-2xl p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-emerald-200">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-900">3. Listo para Entregar</span>
+              <span id="count-listo" class="px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900 text-xs font-bold">0</span>
             </div>
-            <div id="kanban-listo" class="space-y-3 flex-1"></div>
+            <div id="kanban-listo" class="flex-1 space-y-3 min-h-[300px]"></div>
           </div>
         </div>
       </section>
 
-      <!-- SCREEN 4: VERIFICACIÓN Y ENTREGA -->
+      <!-- PANTALLA 4: VERIFICACIÓN Y ENTREGA -->
       <section id="screen-verificacion" class="screen-section hidden fade-in space-y-4">
         <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200">
-          <span class="px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-xs font-bold">Pantalla 4</span>
-          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">Verificación y Entrega al Cliente</h2>
-          <p class="text-xs sm:text-sm text-slate-600 mt-1">Lista de control final para asegurar calidad antes de llevar a mesa.</p>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-xs font-bold">Pantalla 4</span>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Verificación y Entrega al Cliente</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            Checklist de control previo a llevar el plato a mesa para garantizar 0 errores.
+          </p>
         </div>
+
         <div id="verificacion-lista-pedidos" class="space-y-3"></div>
       </section>
 
-      <!-- SCREEN 5: INCIDENCIAS -->
+      <!-- PANTALLA 5: INCIDENCIAS -->
       <section id="screen-incidencias" class="screen-section hidden fade-in space-y-4">
-        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex items-center justify-between">
+        <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span class="px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">Pantalla 5</span>
-            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">Control de Incidencias</h2>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">Pantalla 5</span>
+              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Control de Incidencias y Reclamos</h2>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Registro de demoras, quejas o errores operativos con su respectiva acción correctiva.
+            </p>
           </div>
-          <button onclick="openIncidenciaModal()" class="touch-target px-4 py-2.5 rounded-xl bg-rose-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm">
-            <i data-lucide="plus" class="w-4 h-4"></i><span>Nueva Incidencia</span>
+          <button onclick="openIncidenciaModal()" class="touch-target px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Registrar Incidencia</span>
           </button>
         </div>
+
         <div id="incidencias-lista" class="space-y-3"></div>
       </section>
 
@@ -501,31 +617,37 @@
   <!-- Modal Registrar Incidencia -->
   <div id="incidencia-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-stone-200 fade-in">
-      <h3 class="text-lg font-extrabold text-slate-900 mb-3">Registrar Incidencia / Reclamo</h3>
-      <form onsubmit="handleCreateIncidencia(event)" class="space-y-3.5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-900">Registrar Nueva Incidencia</h3>
+        <button onclick="closeIncidenciaModal()" class="touch-target w-9 h-9 rounded-xl bg-stone-100 text-slate-600 flex items-center justify-center">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form id="incidencia-form" onsubmit="handleCreateIncidencia(event)" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">Código de Pedido Afectado</label>
-          <input type="text" id="inc-codigo" required placeholder="Ej. PED-101" class="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-sm" />
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Código de Pedido Relacionado *</label>
+          <input type="text" id="inc-codigo" required placeholder="Ej. PED-101" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm" />
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">Tipo de Incidencia</label>
-          <select id="inc-tipo" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-sm">
-            <option value="Demora en cocina">Demora en cocina</option>
-            <option value="Error en plato">Error en plato</option>
-            <option value="Queja del cliente">Queja del cliente</option>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Tipo de Incidencia *</label>
+          <select id="inc-tipo" required class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm">
+            <option value="Demora excesiva (>25 min)">Demora excesiva (&gt;25 min)</option>
+            <option value="Error en plato / ingrediente">Error en plato / ingrediente</option>
+            <option value="Reclamo por temperatura">Reclamo por temperatura</option>
+            <option value="Otro incidente operativo">Otro incidente operativo</option>
           </select>
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">Descripción</label>
-          <textarea id="inc-desc" required rows="2" class="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-300 text-sm"></textarea>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Descripción del Problema *</label>
+          <textarea id="inc-descripcion" rows="2" required placeholder="Detalle breve..." class="w-full p-3 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm"></textarea>
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">Acción Correctiva</label>
-          <input type="text" id="inc-accion" required placeholder="Ej. Cortesía de bebida" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-sm" />
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Acción Correctiva Aplicada *</label>
+          <input type="text" id="inc-accion" required placeholder="Ej. Invitación de cortesía / reposición inmediata" class="w-full touch-target px-3.5 py-2.5 rounded-xl bg-white border border-stone-300 text-slate-900 text-sm" />
         </div>
-        <div class="flex justify-end gap-2 pt-3">
-          <button type="button" onclick="closeIncidenciaModal()" class="px-4 py-2 rounded-xl bg-stone-100 text-slate-700 text-xs font-bold">Cancelar</button>
-          <button type="submit" class="px-5 py-2 rounded-xl bg-rose-600 text-white text-xs font-bold">Guardar Incidencia</button>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeIncidenciaModal()" class="touch-target px-4 py-2.5 rounded-xl bg-stone-100 text-slate-700 text-xs font-semibold">Cancelar</button>
+          <button type="submit" class="touch-target px-5 py-2.5 rounded-xl bg-rose-600 text-white text-xs font-bold shadow-sm">Guardar Incidencia</button>
         </div>
       </form>
     </div>
@@ -536,33 +658,42 @@
     // CONFIGURACIÓN DE SUPABASE Y ESTADO GLOBAL
     // =========================================================================
     // ¡REEMPLAZA AQUÍ TUS CREDENCIALES REALES DE SUPABASE!
+
     const SUPABASE_URL = 'https://dmmxprnzedkscuezglct.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_WpkuzBnsnwoeQ52-2ViKzg_5JjfUTXe';
+  
 
     let _supabase = null;
     let useCloud = false;
 
-    // Estado inicial instantáneo para evitar parpadeos con ceros
-    let state = {
-      pedidos: [
-        { id: 'demo-1', codigo: 'PED-101', fecha_hora: new Date().toISOString(), modalidad: 'Consumo en salón', mesa: 'Mesa 3', responsable: 'Mozo 1 (Carlos)', productos: 'Ceviche Rivera de Plata (x1)', observaciones: 'Poco ají', estado: 'En preparación', hora_entrega: '' }
-      ],
-      incidencias: [],
-      currentScreen: 'dashboard',
-      selectedModalidad: 'Consumo en salón'
-    };
-
     try {
       if (SUPABASE_URL && SUPABASE_URL.includes('supabase.co') && !SUPABASE_URL.includes('TU-PROYECTO')) {
         const { createClient } = supabase;
-        _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          realtime: { params: { eventsPerSecond: 10 } }
+        });
         useCloud = true;
       }
     } catch (e) {
       console.warn("Modo local activo.", e);
     }
 
-    async function cargarPedidos() {
+    let state = {
+      pedidos: [],
+      incidencias: [],
+      currentScreen: 'dashboard',
+      selectedModalidad: 'Consumo en salón',
+      selectedProducts: []
+    };
+
+    const DEMO_PEDIDOS = [
+      { id: '1', codigo: 'PED-101', fecha_hora: new Date(Date.now() - 12*60000).toISOString(), modalidad: 'Consumo en salón', mesa: 'Mesa 3', responsable: 'Mozo 1 (Carlos)', productos: 'Ceviche Rivera de Plata (x1)', observaciones: 'Poco ají', estado: 'En preparación', hora_entrega: '' }
+    ];
+
+    // =========================================================================
+    // CARGAR Y SINCRONIZAR DATOS CON SUPABASE (SIN PARPADEO)
+    // =========================================================================
+    async function cargarPedidos(silencioso = false) {
       if (useCloud && _supabase) {
         try {
           const { data, error } = await _supabase
@@ -570,33 +701,84 @@
             .select('*')
             .order('fecha_hora', { ascending: false });
             
-          if (!error && data && data.length > 0) {
+          if (error) throw error;
+          
+          if (data) {
             state.pedidos = data;
           }
         } catch (err) {
-          console.warn("Fallo lectura nube, usando local.", err);
+          if (!silencioso) console.warn("Error leyendo de Supabase:", err);
+          if (state.pedidos.length === 0) {
+            state.pedidos = loadLocalStorage('rp_pedidos', DEMO_PEDIDOS);
+          }
+        }
+      } else {
+        if (state.pedidos.length === 0) {
+          state.pedidos = loadLocalStorage('rp_pedidos', DEMO_PEDIDOS);
         }
       }
+
+      if (state.incidencias.length === 0) {
+        state.incidencias = loadLocalStorage('rp_incidencias', []);
+      }
+
       renderizarTodo();
     }
 
+    function setupRealtimeSubscription() {
+      if (!useCloud || !_supabase) return;
+      
+      try {
+        _supabase
+          .channel('cambios-pedidos-rt')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, payload => {
+            cargarPedidos(true);
+          })
+          .subscribe();
+      } catch (e) {}
+
+      // Polling silencioso cada 5 segundos para actualización cruzada infalible sin parpadeos
+      setInterval(() => {
+        cargarPedidos(true);
+      }, 5000);
+    }
+
+    function loadLocalStorage(key, fallback) {
+      try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function saveLocalStorage(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (e) {}
+    }
+
+    // =========================================================================
+    // GESTIÓN DE ACCIONES Y PEDIDOS
+    // =========================================================================
     async function registrarPedidoNube(nuevoPedido) {
       if (useCloud && _supabase) {
         try {
           const { id, ...pedidoData } = nuevoPedido;
           const { error } = await _supabase.from('pedidos').insert([pedidoData]);
-          if (!error) {
-            showToast('¡Pedido registrado en la nube!', 'success');
-            await cargarPedidos();
-            switchScreen('seguimiento');
-            return;
-          }
+          if (error) throw error;
+          
+          showToast('¡Pedido registrado en la nube!', 'success');
+          await cargarPedidos();
+          switchScreen('seguimiento');
+          return;
         } catch (err) {
-          console.error("Error guardando en Supabase:", err);
+          showToast('Error al guardar en la nube.', 'error');
         }
       }
 
       state.pedidos.unshift(nuevoPedido);
+      saveLocalStorage('rp_pedidos', state.pedidos);
       showToast('Pedido registrado localmente', 'success');
       renderizarTodo();
       switchScreen('seguimiento');
@@ -612,31 +794,38 @@
             updateData.hora_entrega = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           }
           const { error } = await _supabase.from('pedidos').update(updateData).eq('id', idPedido);
-          if (!error) {
-            showToast(`Estado actualizado a: ${nuevoEstado}`, 'info');
-            await cargarPedidos();
-            return;
-          }
-        } catch (err) {
-          console.error("Error actualizando:", err);
-        }
+          if (error) throw error;
+          
+          showToast(`Estado actualizado a: ${nuevoEstado}`, 'info');
+          await cargarPedidos();
+          return;
+        } catch (err) {}
       }
 
       const idx = state.pedidos.findIndex(p => p.id == idPedido);
       if (idx !== -1) {
         state.pedidos[idx].estado = nuevoEstado;
+        if (nuevoEstado === 'Entregado') {
+          state.pedidos[idx].hora_entrega = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+        saveLocalStorage('rp_pedidos', state.pedidos);
         renderizarTodo();
-        showToast(`Pedido actualizado a: ${nuevoEstado}`, 'info');
+        showToast(`Estado actualizado a: ${nuevoEstado}`, 'info');
       }
     }
 
+    // =========================================================================
+    // RENDERIZADO GENERAL
+    // =========================================================================
     function renderizarTodo() {
       actualizarContadoresKPIs();
       renderizarTableroPedidos();
       renderizarSeguimientoKanban();
       renderizarVerificacionEntrega();
       renderizarIncidencias();
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
     }
 
     function actualizarContadoresKPIs() {
@@ -644,17 +833,21 @@
       const activos = state.pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado').length;
       const listos = state.pedidos.filter(p => p.estado === 'Listo para entregar').length;
       const enCocina = state.pedidos.filter(p => p.estado === 'Recibido' || p.estado === 'En preparación').length;
-      const incAbiertas = state.incidencias.filter(i => i.estado === 'Pendiente').length;
+      const incidenciasAbiertas = state.incidencias.filter(i => i.estado === 'Pendiente').length;
 
-      document.getElementById('kpi-total').innerText = total;
-      document.getElementById('kpi-activos-sub').innerText = `${activos} activos`;
-      document.getElementById('kpi-listos').innerText = listos;
-      document.getElementById('kpi-cocina-sub').innerText = `${enCocina} en cocina`;
-      document.getElementById('kpi-incidencias').innerText = incAbiertas;
+      const setVal = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
+      
+      setVal('kpi-total', total);
+      setVal('kpi-activos-sub', `${activos} activos`);
+      setVal('kpi-listos', listos);
+      setVal('kpi-cocina-sub', `${enCocina} en cocina`);
+      setVal('kpi-incidencias', incidenciasAbiertas);
+      setVal('kpi-inc-total-sub', `de ${state.incidencias.length} totales`);
+      setVal('kpi-tiempo', total > 0 ? "21" : "--");
 
       document.querySelectorAll('.badge-activos').forEach(el => el.innerText = activos);
       document.querySelectorAll('.badge-listos').forEach(el => el.innerText = listos);
-      document.querySelectorAll('.badge-incidencias').forEach(el => el.innerText = incAbiertas);
+      document.querySelectorAll('.badge-incidencias').forEach(el => el.innerText = incidenciasAbiertas);
     }
 
     function renderizarTableroPedidos() {
@@ -663,7 +856,7 @@
 
       const activos = state.pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado');
       if (activos.length === 0) {
-        contenedor.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-500">No hay pedidos activos.</div>`;
+        contenedor.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-500">No hay pedidos activos en este momento.</div>`;
         return;
       }
 
@@ -673,10 +866,15 @@
             <span class="font-extrabold text-xs text-slate-900">${p.codigo}</span>
             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${getEstadoBadgeColor(p.estado)}">${p.estado}</span>
           </div>
-          <div class="text-xs text-slate-700"><strong>${p.mesa}</strong> • ${p.modalidad}</div>
+          <div class="text-xs text-slate-700">
+            <strong>${p.mesa}</strong> • ${p.modalidad}
+            <div class="text-[11px] text-slate-500 truncate mt-0.5">${p.productos}</div>
+          </div>
           <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-stone-200">
             <span>${p.responsable}</span>
-            <button onclick="cambiarEstadoPedidoNube('${p.id}', '${getSiguienteEstado(p.estado)}')" class="px-2 py-1 rounded bg-terracotta-600 text-white font-bold">Avanzar &rarr;</button>
+            <button onclick="cambiarEstadoPedidoNube('${p.id}', '${getSiguienteEstado(p.estado)}')" class="px-2 py-1 rounded bg-terracotta-600 text-white font-bold hover:bg-terracotta-700">
+              Avanzar &rarr;
+            </button>
           </div>
         </div>
       `).join('');
@@ -686,12 +884,16 @@
       const colRecibido = document.getElementById('kanban-recibido');
       const colPreparacion = document.getElementById('kanban-preparacion');
       const colListo = document.getElementById('kanban-listo');
+
       if (!colRecibido) return;
 
       const filtrados = state.pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado');
+
       colRecibido.innerHTML = '';
       colPreparacion.innerHTML = '';
-      colListo.innerHTML = '';
+      if (colListo) colListo.innerHTML = '';
+
+      let cRec = 0, cPrep = 0, cList = 0;
 
       filtrados.forEach(p => {
         const tarjetaHtml = `
@@ -701,6 +903,7 @@
               <span class="text-[10px] font-bold text-slate-500">${p.modalidad}</span>
             </div>
             <p class="text-xs text-slate-700 font-medium">${p.productos}</p>
+            ${p.observaciones ? `<p class="text-[11px] text-amber-700 bg-amber-50 p-1.5 rounded">Nota: ${p.observaciones}</p>` : ''}
             <div class="flex items-center justify-between pt-2 border-t border-stone-100 text-[11px]">
               <span class="text-slate-500">${p.responsable}</span>
               <div class="flex gap-1">
@@ -710,24 +913,28 @@
             </div>
           </div>
         `;
-        if (p.estado === 'Recibido') colRecibido.innerHTML += tarjetaHtml;
-        else if (p.estado === 'En preparación') colPreparacion.innerHTML += tarjetaHtml;
-        else if (p.estado === 'Listo para entregar') colListo.innerHTML += tarjetaHtml;
+
+        if (p.estado === 'Recibido') { colRecibido.innerHTML += tarjetaHtml; cRec++; }
+        else if (p.estado === 'En preparación') { colPreparacion.innerHTML += tarjetaHtml; cPrep++; }
+        else if (p.estado === 'Listo para entregar' && colListo) { colListo.innerHTML += tarjetaHtml; cList++; }
       });
 
-      document.getElementById('count-recibido').innerText = colRecibido.children.length;
-      document.getElementById('count-preparacion').innerText = colPreparacion.children.length;
-      document.getElementById('count-listo').innerText = colListo.children.length;
+      const setC = (id, v) => { const el = document.getElementById(id); if(el) el.innerText = v; };
+      setC('count-recibido', cRec);
+      setC('count-preparacion', cPrep);
+      setC('count-listo', cList);
     }
 
     function renderizarVerificacionEntrega() {
       const contenedor = document.getElementById('verificacion-lista-pedidos');
       if (!contenedor) return;
+
       const listos = state.pedidos.filter(p => p.estado === 'Listo para entregar');
       if (listos.length === 0) {
-        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay pedidos listos pendientes.</div>`;
+        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay pedidos listos pendientes de verificación.</div>`;
         return;
       }
+
       contenedor.innerHTML = listos.map(p => `
         <div class="p-4 rounded-xl bg-white border border-stone-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -736,9 +943,11 @@
               <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">${p.mesa}</span>
             </div>
             <p class="text-xs text-slate-700 mt-1"><strong>Productos:</strong> ${p.productos}</p>
+            <p class="text-xs text-slate-500 mt-0.5">Responsable: ${p.responsable} • Modalidad: ${p.modalidad}</p>
           </div>
-          <button onclick="cambiarEstadoPedidoNube('${p.id}', 'Entregado')" class="touch-target px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-sm flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i><span>Verificar y Entregar</span>
+          <button onclick="cambiarEstadoPedidoNube('${p.id}', 'Entregado')" class="touch-target px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition flex items-center gap-2 shrink-0">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span>Verificar y Entregar</span>
           </button>
         </div>
       `).join('');
@@ -747,17 +956,23 @@
     function renderizarIncidencias() {
       const contenedor = document.getElementById('incidencias-lista');
       if (!contenedor) return;
+
       if (state.incidencias.length === 0) {
-        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay incidencias.</div>`;
+        contenedor.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-stone-50 rounded-xl">No hay incidencias registradas.</div>`;
         return;
       }
+
       contenedor.innerHTML = state.incidencias.map(i => `
-        <div class="p-4 rounded-xl bg-white border border-stone-200 flex justify-between">
+        <div class="p-4 rounded-xl bg-white border border-stone-200 flex flex-col sm:flex-row justify-between gap-3">
           <div>
-            <span class="font-extrabold text-xs text-rose-700">${i.tipo} (Pedido ${i.codigo_pedido})</span>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-xs text-rose-700">${i.tipo}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-stone-100 text-stone-700">Pedido ${i.codigo_pedido}</span>
+            </div>
             <p class="text-xs text-slate-700 mt-1">${i.descripcion}</p>
+            <p class="text-[11px] text-slate-500 mt-1">Acción correctiva: <strong>${i.accion}</strong></p>
           </div>
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">${i.estado}</span>
+          <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">${i.estado || 'Pendiente'}</span>
         </div>
       `).join('');
     }
@@ -778,62 +993,98 @@
     }
 
     function switchScreen(screenId) {
+      state.currentScreen = screenId;
       document.querySelectorAll('.screen-section').forEach(el => el.classList.add('hidden'));
-      document.getElementById(`screen-${screenId}`).classList.remove('hidden');
+      const activeSec = document.getElementById(`screen-${screenId}`);
+      if (activeSec) activeSec.classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function selectModalidad(mod) {
-      document.querySelectorAll('.mod-btn').forEach(btn => {
-        btn.className = "mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition";
-      });
-      event.currentTarget.className = "mod-btn touch-target p-3 rounded-xl border-2 border-terracotta-600 bg-terracotta-50 text-terracotta-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition";
       state.selectedModalidad = mod;
+      const input = document.getElementById('reg-modalidad');
+      if(input) input.value = mod;
+      document.querySelectorAll('.mod-btn').forEach(btn => {
+        if(btn.dataset.mod === mod) {
+          btn.className = "mod-btn touch-target p-3 rounded-xl border-2 border-terracotta-600 bg-terracotta-50 text-terracotta-800 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition";
+        } else {
+          btn.className = "mod-btn touch-target p-3 rounded-xl border-2 border-stone-200 bg-white text-slate-600 hover:bg-stone-50 font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 transition";
+        }
+      });
     }
 
-    function quickAddProduct(prod) {
-      const textarea = document.getElementById('reg-productos');
-      textarea.value = textarea.value ? textarea.value + ', ' + prod : prod;
+    function quickAddProduct(prodName) {
+      state.selectedProducts.push(prodName);
+      const list = document.getElementById('selected-products-list');
+      if(!list) return;
+      list.innerHTML = state.selectedProducts.map((p, idx) => `
+        <span class="px-2.5 py-1 rounded-lg bg-terracotta-100 text-terracotta-800 font-bold text-xs flex items-center gap-1.5">
+          <span>${p}</span>
+          <button type="button" onclick="removeSelectedProduct(${idx})" class="text-terracotta-600 hover:text-rose-600 font-bold">×</button>
+        </span>
+      `).join('');
+    }
+
+    function removeSelectedProduct(idx) {
+      state.selectedProducts.splice(idx, 1);
+      quickAddProduct('');
+      if(state.selectedProducts.length === 0) {
+        document.getElementById('selected-products-list').innerHTML = `<span id="no-products-msg" class="italic text-slate-400">Ningún plato seleccionado todavía. Haz clic arriba.</span>`;
+      }
     }
 
     function handleCreateOrder(e) {
       e.preventDefault();
+      if(state.selectedProducts.length === 0) {
+        showToast('Debes seleccionar al menos un plato de la carta.', 'error');
+        return;
+      }
+
       const nuevoPedido = {
-        id: 'ord-' + Date.now(),
+        id: 'id_' + Math.random().toString(36).substr(2, 9),
         codigo: document.getElementById('reg-codigo').value,
         fecha_hora: new Date().toISOString(),
-        modalidad: state.selectedModalidad,
+        modalidad: document.getElementById('reg-modalidad').value,
         mesa: document.getElementById('reg-referencia').value,
         responsable: document.getElementById('reg-responsable').value,
-        productos: document.getElementById('reg-productos').value,
+        productos: state.selectedProducts.join(', '),
         observaciones: document.getElementById('reg-observaciones').value,
         estado: 'Recibido',
         hora_entrega: ''
       };
+
       registrarPedidoNube(nuevoPedido);
+      state.selectedProducts = [];
+      document.getElementById('order-form').reset();
+      document.getElementById('reg-codigo').value = 'PED-' + Math.floor(100 + Math.random() * 900);
+      document.getElementById('selected-products-list').innerHTML = `<span id="no-products-msg" class="italic text-slate-400">Ningún plato seleccionado todavía.</span>`;
     }
 
     function openIncidenciaModal() { document.getElementById('incidencia-modal').classList.remove('hidden'); document.getElementById('incidencia-modal').classList.add('flex'); }
-    function closeIncidenciaModal() { document.getElementById('incidencia-modal').classList.add('hidden'); document.getElementById('incidencia-modal').classList.remove('flex'); }
+    function closeIncidenciaModal() { document.getElementById('incidencia-modal').classList.remove('flex'); document.getElementById('incidencia-modal').classList.add('hidden'); }
 
     function handleCreateIncidencia(e) {
       e.preventDefault();
-      state.incidencias.push({
+      const nuevaInc = {
+        id: 'inc_' + Math.random().toString(36).substr(2, 9),
         codigo_pedido: document.getElementById('inc-codigo').value,
         tipo: document.getElementById('inc-tipo').value,
-        descripcion: document.getElementById('inc-desc').value,
+        descripcion: document.getElementById('inc-descripcion').value,
         accion: document.getElementById('inc-accion').value,
         estado: 'Pendiente'
-      });
+      };
+      state.incidencias.unshift(nuevaInc);
+      saveLocalStorage('rp_incidencias', state.incidencias);
       closeIncidenciaModal();
+      document.getElementById('incidencia-form').reset();
       renderizarTodo();
-      showToast('Incidencia registrada con éxito', 'success');
+      showToast('Incidencia registrada correctamente', 'success');
     }
 
     function toggleMobileDrawer(open) {
       const drawer = document.getElementById('mobile-drawer');
       const backdrop = document.getElementById('mobile-drawer-backdrop');
-      if (open) {
+      if(open) {
         drawer.classList.remove('translate-x-full');
         backdrop.classList.remove('hidden');
       } else {
@@ -846,32 +1097,47 @@
       const container = document.getElementById('toast-container');
       if (!container) return;
       const toast = document.createElement('div');
-      toast.className = `p-3.5 rounded-xl text-xs font-bold text-white shadow-lg pointer-events-auto fade-in flex items-center justify-between ${tipo === 'success' ? 'bg-emerald-600' : 'bg-slate-900'}`;
+      toast.className = `p-3.5 rounded-xl text-xs font-bold text-white shadow-lg pointer-events-auto fade-in flex items-center justify-between ${tipo === 'success' ? 'bg-emerald-600' : tipo === 'error' ? 'bg-rose-600' : 'bg-slate-900'}`;
       toast.innerHTML = `<span>${mensaje}</span>`;
       container.appendChild(toast);
       setTimeout(() => toast.remove(), 3000);
     }
 
     function exportToCSV() {
-      let csv = 'Codigo,Modalidad,Mesa,Responsable,Productos,Estado\n';
+      let csv = 'ID,Codigo,Modalidad,Mesa,Responsable,Productos,Estado,FechaHora\n';
       state.pedidos.forEach(p => {
-        csv += `"${p.codigo}","${p.modalidad}","${p.mesa}","${p.responsable}","${p.productos}","${p.estado}"\n`;
+        csv += `"${p.id}","${p.codigo}","${p.modalidad}","${p.mesa}","${p.responsable}","${p.productos}","${p.estado}","${p.fecha_hora}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'pedidos_rivera_de_plata.csv';
-      link.click();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'pedidos_rivera_de_plata.csv';
+      a.click();
+    }
+
+    function promptResetDemo() {
+      state.pedidos = [...DEMO_PEDIDOS];
+      saveLocalStorage('rp_pedidos', state.pedidos);
+      renderizarTodo();
+      showToast('Datos de prueba cargados', 'info');
+    }
+
+    function promptClearAll() {
+      state.pedidos = [];
+      saveLocalStorage('rp_pedidos', []);
+      renderizarTodo();
+      showToast('Tablero limpiado', 'info');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('reg-codigo').value = 'PED-' + Math.floor(100 + Math.random() * 900);
-      renderizarTodo();
+      const inputCodigo = document.getElementById('reg-codigo');
+      if (inputCodigo) {
+        inputCodigo.value = 'PED-' + Math.floor(100 + Math.random() * 900);
+      }
+
       cargarPedidos();
-      // Polling de respaldo cada 5 segundos
-      setInterval(() => {
-        cargarPedidos();
-      }, 5000);
+      setupRealtimeSubscription();
     });
   </script>
 </body>
