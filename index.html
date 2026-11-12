@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
     tailwind.config = {
@@ -2052,6 +2053,74 @@
         setTimeout(() => toast.remove(), 250);
       }, 3000);
     }
+  </script>
+  <script>
+    // 1. Aquí pegas tu Project URL real (lo copiaste del panel de Supabase)
+    const SUPABASE_URL = 'https://dmmxprnzedkscuezglct.supabase.co';
+
+    // 2. Aquí pegas tu clave 'anon public' real (la clave larga que copiaste de Supabase)
+    const SUPABASE_ANON_KEY = 'sb_publishable_WpkuzBnsnwoeQ52-2ViKzg_5JjfUTXe';
+
+    // Esto inicializa la conexión con Supabase
+    const { createClient } = supabase;
+    const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // B. LEER PEDIDOS: Esta función descarga los pedidos de la nube para mostrarlos en tu pantalla
+      async function cargarPedidosDesdeNube() {
+        const { data, error } = await _supabase
+          .from('pedidos')
+          .select('*')
+          .order('fecha_hora', { ascending: false });
+
+        if (error) {
+          console.error('Error al cargar pedidos:', error);
+          return;
+        }
+
+        // Esta función pinta los datos en tu tabla o tablero web
+        actualizarInterfazPedidos(data);
+
+        }
+
+  // C. TIEMPO REAL: Este "vigilante" detecta si alguien hace un cambio en Supabase
+  // Si un mozo registra un pedido desde su celular, esto avisa al instante a la tablet de cocina
+  _supabase
+    .channel('canal-pedidos-rt')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'pedidos' },
+      (payload) => {
+        console.log('¡Alguien hizo un cambio!', payload);
+        cargarPedidosDesdeNube(); // Vuelve a cargar los pedidos automáticamente
+      }
+    )
+    .subscribe();
+
+  // D. GUARDAR NUEVO PEDIDO: Se activa cuando el mozo presiona "Guardar Pedido"
+  async function registrarPedidoNube(nuevoPedido) {
+    const { error } = await _supabase.from('pedidos').insert([nuevoPedido]);
+    if (error) {
+      alert('Error al registrar el pedido en la nube.');
+      console.error(error);
+    }
+  }
+
+  // E. CAMBIAR ESTADO: Se activa cuando el cocinero cambia el estado a "Listo para entregar"
+  async function cambiarEstadoPedidoNube(idPedido, nuevoEstado) {
+    const { error } = await _supabase
+      .from('pedidos')
+      .update({ estado: nuevoEstado })
+      .eq('id', idPedido);
+
+    if (error) {
+      console.error('Error al actualizar estado:', error);
+    }
+  }
+
+  // F. INICIO: Apenas se abre la página web, ejecuta la función para traer los pedidos
+  window.addEventListener('DOMContentLoaded', () => {
+    cargarPedidosDesdeNube();
+  });
   </script>
 </body>
 </html>
