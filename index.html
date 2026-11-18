@@ -1136,6 +1136,16 @@
     let state = { orders: [], incidents: [], currentModule: 'dashboard', newOrderItems: [], trackingStatusFilter: 'Todos', selectedVerifyOrderId: null };
     function saveData() { updateSidebarBadges(); }
 
+    window.refreshCurrentView = function() {
+      if (state.currentModule === 'dashboard') renderDashboard();
+      else if (state.currentModule === 'nuevo-pedido') prepareNewOrderForm();
+      else if (state.currentModule === 'seguimiento') window.renderTrackingModule();
+      else if (state.currentModule === 'verificacion') renderVerificationModule();
+      else if (state.currentModule === 'incidencias') window.renderIncidentsModule();
+      else if (state.currentModule === 'historial') window.renderHistoryModule();
+      updateSidebarBadges();
+    };
+
     const MODULE_META = {
       'dashboard': { title: 'Panel Principal', subtitle: 'Resumen operativo' },
       'nuevo-pedido': { title: 'Registro de Pedidos', subtitle: 'Ingreso de comandas' },
