@@ -1029,6 +1029,8 @@
 
     function startRealtimeListeners() {
       if (!currentUser || !db) return;
+      
+      // STRICT PATH: /artifacts/{appId}/public/data/{collectionName}
       const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'rivera_orders');
       const incidentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'rivera_incidents');
 
@@ -1040,7 +1042,9 @@
         if (!initialLoadDone.orders && fetchedOrders.length === 0) {
           initialLoadDone.orders = true;
           const demos = buildDemoOrders();
-          for (const d of demos) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_orders', d.id), d);
+          for (const d of demos) {
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_orders', d.id), d);
+          }
           return;
         }
 
@@ -1051,8 +1055,12 @@
 
         initialLoadDone.orders = true;
         state.orders = fetchedOrders;
+        saveLocalFallback();
         updateSidebarBadges();
         refreshCurrentView();
+      }, (error) => {
+        console.warn("Firestore orders listener warning, falling back to local:", error);
+        loadLocalFallback();
       });
 
       onSnapshot(incidentsCol, async (snapshot) => {
@@ -1061,8 +1069,11 @@
         fetchedIncidents.sort((a, b) => String(a.id).localeCompare(String(b.id)));
         initialLoadDone.incidents = true;
         state.incidents = fetchedIncidents;
+        saveLocalFallback();
         updateSidebarBadges();
         refreshCurrentView();
+      }, (error) => {
+        console.warn("Firestore incidents listener warning:", error);
       });
     }
 
@@ -1081,7 +1092,9 @@
       if (!isCloudReady || !currentUser || !db) return;
       try {
         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_orders', orderObj.id), orderObj);
-      } catch (e) {}
+      } catch (e) {
+        console.error("Error saving order to cloud:", e);
+      }
     }
 
     async function saveIncidentToCloud(incObj) {
@@ -1089,7 +1102,9 @@
       if (!isCloudReady || !currentUser || !db) return;
       try {
         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_incidents', incObj.id), incObj);
-      } catch (e) {}
+      } catch (e) {
+        console.error("Error saving incident to cloud:", e);
+      }
     }
 
     const ORDER_STATES = ['Recibido', 'Confirmado', 'En preparación', 'Listo', 'Entregado'];
