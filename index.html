@@ -919,15 +919,21 @@
       }
 
       loggedUserSession = { role: currentSelectedRole, name: userData.staffName };
-      document.getElementById('current-user-badge').textContent = `${currentSelectedRole}: ${userData.name.split(' ')[0]}`;
+      const badgeEl = document.getElementById('current-user-badge');
+      if (badgeEl) {
+        const staffStr = userData.staffName || currentSelectedRole;
+        const firstName = staffStr.includes(' ') ? staffStr.split(' ')[0] : staffStr;
+        badgeEl.textContent = `${currentSelectedRole}: ${firstName}`;
+      }
+      
       const staffInput = document.getElementById('order-staff');
-      if (staffInput) staffInput.value = userData.name;
+      if (staffInput) staffInput.value = userData.staffName;
 
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('main-app-wrapper').classList.remove('hidden');
       document.getElementById('mobile-bottom-bar').classList.remove('hidden');
 
-      showToast('Bienvenido', `Sesión iniciada como ${userData.name}`, 'success');
+      showToast('Bienvenido', `Sesión iniciada como ${userData.staffName}`, 'success');
       window.navigateTo('dashboard');
       await initCloudSync();
     };
