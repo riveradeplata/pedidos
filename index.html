@@ -141,6 +141,7 @@
 
       <div class="pt-2 border-t border-slate-800/80 text-center">
         <p class="text-[11px] text-slate-400">Sincronización en la Nube y Modo Local Automático</p>
+        <p id="login-cloud-status" class="text-[10px] text-amber-400 font-semibold mt-1">⏳ Verificando conexión a Firebase...</p>
       </div>
     </div>
   </div>
@@ -1019,19 +1020,28 @@
     function updateCloudStatusUI(connected) {
       const statusText = document.getElementById('cloud-status-text');
       const pillText = document.getElementById('realtime-pill-text');
+      const loginStatus = document.getElementById('login-cloud-status');
       if (connected) {
         if (statusText) statusText.textContent = 'Conectado · Tiempo Real';
         if (pillText) pillText.textContent = 'En Vivo (Nube)';
+        if (loginStatus) {
+          loginStatus.textContent = '🟢 Nube Conectada Correctamente';
+          loginStatus.className = 'text-[10px] text-emerald-400 font-semibold mt-1';
+        }
       } else {
         if (statusText) statusText.textContent = 'Modo Local (Offline)';
         if (pillText) pillText.textContent = 'Modo Local';
+        if (loginStatus) {
+          loginStatus.textContent = '🟡 Modo Local (Sin Conexión Cloud)';
+          loginStatus.className = 'text-[10px] text-amber-400 font-semibold mt-1';
+        }
       }
     }
 
     function startRealtimeListeners() {
       if (!currentUser || !db) return;
       
-      // STRICT PATH: /artifacts/{appId}/public/data/{collectionName}
+      // CORRECTED FIRESTORE PATH: artifacts/{appId}/public/data/rivera_orders
       const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'rivera_orders');
       const incidentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'rivera_incidents');
 
@@ -1060,7 +1070,7 @@
         updateSidebarBadges();
         refreshCurrentView();
       }, (error) => {
-        console.warn("Firestore orders listener warning, falling back to local:", error);
+        console.warn("Firestore orders listener warning:", error);
         loadLocalFallback();
       });
 
@@ -1078,21 +1088,11 @@
       });
     }
 
-    function refreshCurrentView() {
-      const mod = state.currentModule;
-      if (mod === 'dashboard') renderDashboard();
-      if (mod === 'nuevo-pedido') prepareNewOrderForm();
-      if (mod === 'seguimiento') renderTrackingModule();
-      if (mod === 'verificacion') renderVerificationModule(state.selectedVerifyOrderId);
-      if (mod === 'incidencias') renderIncidentsModule();
-      if (mod === 'historial') renderHistoryModule();
-    }
-
     async function saveOrderToCloud(orderObj) {
       saveLocalFallback();
       if (!isCloudReady || !currentUser || !db) return;
       try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_orders', orderObj.id), orderObj);
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_orders', String(orderObj.id)), orderObj);
       } catch (e) {
         console.error("Error saving order to cloud:", e);
       }
@@ -1102,7 +1102,7 @@
       saveLocalFallback();
       if (!isCloudReady || !currentUser || !db) return;
       try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_incidents', incObj.id), incObj);
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'rivera_incidents', String(incObj.id)), incObj);
       } catch (e) {
         console.error("Error saving incident to cloud:", e);
       }
