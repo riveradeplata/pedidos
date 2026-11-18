@@ -995,6 +995,7 @@
         updateCloudStatusUI(true);
         startRealtimeListeners();
       } catch (err) {
+        console.warn("Cloud connection error, using local storage fallback:", err);
         updateCloudStatusUI(false);
         loadLocalFallback();
       }
