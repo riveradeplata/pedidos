@@ -981,17 +981,22 @@
 
         const app = initializeApp(firebaseConfig);
         db = getFirestore(app);
-        auth = getAuth(app);
-
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          const cred = await signInWithCustomToken(auth, __initial_auth_token);
-          currentUser = cred.user;
-        } else {
-          const cred = await signInAnonymously(auth);
-          currentUser = cred.user;
+        
+        // Safely attempt initialization without forcing auth if not configured in console
+        try {
+          auth = getAuth(app);
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            const cred = await signInWithCustomToken(auth, __initial_auth_token);
+            currentUser = cred.user;
+          } else {
+            const cred = await signInAnonymously(auth);
+            currentUser = cred.user;
+          }
+        } catch (authErr) {
+          console.warn("Auth service bypass activated (Firestore direct mode):", authErr.message);
+          currentUser = { uid: "open-mode-user" };
         }
 
-        if (!currentUser) return;
         isCloudReady = true;
         updateCloudStatusUI(true);
         startRealtimeListeners();
