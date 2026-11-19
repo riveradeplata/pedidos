@@ -41,11 +41,9 @@
   </script>
 
   <style>
-    /* Estilos base y scrollbar elegante */
     body {
       background-color: #F8FAFC;
       color: #0F172A;
-      /* Padding inferior en móviles para evitar que el bottom bar tape contenido */
       padding-bottom: 4.5rem;
     }
     @media (min-width: 1024px) {
@@ -92,7 +90,7 @@
 <body class="antialiased selection:bg-amber-500/20 selection:text-amber-900">
 
   <!-- ================================================================= -->
-  <!-- 1. PANTALLA DE ACCESO POR PIN / ROLES (NUEVO - SUPERPUESTO)       -->
+  <!-- 1. PANTALLA DE ACCESO POR PIN / ROLES (INICIAL)                  -->
   <!-- ================================================================= -->
   <div id="pin-auth-screen" class="fixed inset-0 z-50 bg-navy-950 flex flex-col justify-between p-4 sm:p-8">
     <div class="max-w-4xl w-full mx-auto flex items-center justify-between pt-2">
@@ -105,7 +103,7 @@
           <p class="text-[10px] text-amber-400 uppercase tracking-widest font-semibold">Sistema de Control Operativo</p>
         </div>
       </div>
-      <!-- BOTÓN SOLICITADO: Ver Sitio Web Público -->
+      <!-- BOTÓN: Ver Sitio Web Público -->
       <button onclick="openPublicWebsite()" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
         <i class="fa-solid fa-globe"></i>
         <span>Ver Sitio Web Público</span>
@@ -173,119 +171,466 @@
 
 
   <!-- ================================================================= -->
-  <!-- 2. SITIO WEB PÚBLICO INSTITUCIONAL COMPLETO (VISTA DUAL)           -->
+  <!-- 2. SITIO WEB PÚBLICO INSTITUCIONAL MODERNO (IMPLEMENTADO)         -->
   <!-- ================================================================= -->
-  <div id="public-website-modal" class="fixed inset-0 z-50 bg-slate-50 overflow-y-auto hidden flex flex-col">
-    <!-- Header del Sitio Público con Acceso Dual Instantáneo -->
-    <header class="sticky top-0 z-40 bg-navy-950 text-white px-6 py-4 flex items-center justify-between shadow-lg">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-navy-950 font-extrabold">
+  <div id="public-website-modal" class="fixed inset-0 z-50 bg-slate-950 text-slate-100 overflow-y-auto hidden flex flex-col scroll-smooth">
+    
+    <!-- BARRA DE NAVEGACIÓN GLASSMORPHISM -->
+    <header class="sticky top-0 z-40 bg-navy-950/85 backdrop-blur-xl border-b border-white/10 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-2xl">
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-navy-950 font-extrabold shadow-lg shadow-amber-500/20">
           <i class="fa-solid fa-utensils"></i>
         </div>
         <div>
-          <h2 class="font-display font-extrabold text-base tracking-tight">RIVERA DE PLATA</h2>
-          <p class="text-[10px] uppercase tracking-widest text-amber-400">Sitio Oficial del Cliente</p>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-tight text-white">RIVERA DE PLATA</h2>
+          <p class="text-[10px] uppercase tracking-widest text-amber-400 font-semibold">Alta Cocina Peruana &amp; Fusión Nikkei</p>
         </div>
       </div>
 
+      <!-- Enlaces rápidos en escritorio -->
+      <nav class="hidden lg:flex items-center gap-7 text-xs font-semibold text-slate-300">
+        <a href="#pub-historia" class="hover:text-amber-400 transition-colors">Nuestra Esencia</a>
+        <a href="#pub-carta" class="hover:text-amber-400 transition-colors">Carta Estrella</a>
+        <a href="#pub-galeria" class="hover:text-amber-400 transition-colors">Experiencia</a>
+        <a href="#pub-reservas" class="hover:text-amber-400 transition-colors">Reservas</a>
+      </nav>
+
       <!-- BOTÓN DUAL: Volver al Sistema Operativo por PIN -->
-      <button onclick="closePublicWebsite()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
+      <button onclick="closePublicWebsite()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-navy-950 text-xs font-extrabold shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2">
         <i class="fa-solid fa-lock"></i>
-        <span>Volver al Sistema Operativo (PIN)</span>
+        <span>Sistema Operativo (PIN)</span>
       </button>
     </header>
 
-    <!-- Contenido Institucional Completo -->
-    <main class="flex-1 space-y-16 pb-20">
-      <section class="bg-navy-900 text-white py-20 px-6 text-center space-y-6">
-        <span class="px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase">Alta Cocina Peruana & Fusión Nikkei</span>
-        <h1 class="font-display font-extrabold text-4xl sm:text-5xl text-white tracking-tight">Tradición y Vanguardia en Cada Plato</h1>
-        <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">Disfrute de una experiencia culinaria única con insumos frescos del mar y técnicas de vanguardia.</p>
-      </section>
+    <main class="flex-1">
+      
+      <!-- 1. HERO PRINCIPAL CON IMAGEN FULL-SCREEN Y OVERLAY -->
+      <section class="relative min-h-[82vh] flex items-center justify-center px-6 py-20 overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1920&q=80" 
+          alt="Ambiente gastronómico Rivera de Plata" 
+          class="absolute inset-0 w-full h-full object-cover object-center scale-105 opacity-45"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-navy-950/75 to-navy-950/50"></div>
 
-      <section class="max-w-4xl mx-auto px-6">
-        <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div class="space-y-3">
-            <span class="text-xs font-bold uppercase text-amber-600">Nuestra Historia</span>
-            <h2 class="font-display font-bold text-2xl text-navy-900">Pasión por la sazón peruana</h2>
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Fundado para enaltecer los sabores tradicionales del Perú fusionados con matices internacionales, Rivera de Plata ofrece excelencia gastronómica en cada visita.</p>
+        <div class="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/30 backdrop-blur-md text-amber-300 text-xs font-bold uppercase tracking-widest">
+            <i class="fa-solid fa-award text-amber-400"></i>
+            <span>Tradición Marina · Fuego al Wok · Autor</span>
           </div>
-          <div class="bg-navy-900 rounded-2xl p-6 text-white space-y-3 shadow-lg">
-            <i class="fa-solid fa-quote-left text-amber-400 text-2xl"></i>
-            <p class="text-xs italic text-slate-200">"Cada plato cuenta una historia de respeto por la tradición culinaria y la constante innovación."</p>
-            <p class="text-[11px] text-amber-400 font-bold">— Chef Ejecutivo</p>
-          </div>
-        </div>
-      </section>
 
-      <section class="max-w-5xl mx-auto px-6 space-y-6">
-        <div class="text-center space-y-1">
-          <span class="text-xs font-bold uppercase text-amber-600">Gastronomía Fusión</span>
-          <h2 class="font-display font-extrabold text-2xl text-navy-900">Platos Estrella y Precios</h2>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-navy-900 text-sm">Ceviche Nikkei</h3>
-                <span class="font-extrabold text-amber-600 text-sm">S/ 46.00</span>
-              </div>
-              <p class="text-xs text-slate-500">Atún fresco marinado en leche de tigre al sillao, palta y chifles.</p>
-            </div>
+          <h1 class="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-[1.1]">
+            El Arte de la <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-600">Cocina Peruana</span> Contemporánea
+          </h1>
+
+          <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-lg leading-relaxed font-normal">
+            En <strong>Rivera de Plata</strong> celebramos la riqueza del mar peruano y la técnica Nikkei, transformando insumos frescos de estación en experiencias memorables.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
+            <a href="#pub-reservas" class="px-7 py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-navy-950 font-extrabold text-xs sm:text-sm shadow-xl shadow-amber-500/25 transition-all flex items-center gap-2">
+              <i class="fa-regular fa-calendar-check"></i>
+              <span>Reservar Mesa Ahora</span>
+            </a>
+            <a href="#pub-carta" class="px-7 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md text-white font-bold text-xs sm:text-sm transition-all flex items-center gap-2">
+              <i class="fa-solid fa-book-open text-amber-400"></i>
+              <span>Explorar Carta</span>
+            </a>
           </div>
-          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
+
+          <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto pt-8 border-t border-white/10 text-center">
             <div>
-              <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-navy-900 text-sm">Lomo Saltado al Wok</h3>
-                <span class="font-extrabold text-amber-600 text-sm">S/ 52.00</span>
-              </div>
-              <p class="text-xs text-slate-500">Lomo fino salteado al fuego vivo con papas nativas doradas.</p>
+              <p class="font-display font-extrabold text-xl sm:text-2xl text-amber-400">+12 Años</p>
+              <p class="text-[11px] text-slate-400">De tradición culinaria</p>
             </div>
-          </div>
-          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
             <div>
-              <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-navy-900 text-sm">Causa Acevichada</h3>
-                <span class="font-extrabold text-amber-600 text-sm">S/ 38.00</span>
-              </div>
-              <p class="text-xs text-slate-500">Papa amarilla perfumada con langostinos crocantes.</p>
+              <p class="font-display font-extrabold text-xl sm:text-2xl text-white">4.9 <i class="fa-solid fa-star text-amber-400 text-sm"></i></p>
+              <p class="text-[11px] text-slate-400">Valoración de comensales</p>
+            </div>
+            <div>
+              <p class="font-display font-extrabold text-xl sm:text-2xl text-amber-400">100% Fresco</p>
+              <p class="text-[11px] text-slate-400">Pesca artesanal diaria</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="max-w-2xl mx-auto px-6">
-        <div class="bg-navy-900 text-white rounded-3xl p-8 shadow-xl space-y-4">
-          <h3 class="font-display font-bold text-xl text-center">Formulario de Reservas</h3>
-          <form onsubmit="handlePublicReservation(event)" class="space-y-3">
-            <input type="text" id="pub-name" required placeholder="Nombre y Apellido" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none" />
-            <div class="grid grid-cols-2 gap-3">
-              <input type="date" id="pub-date" required class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none" />
-              <select id="pub-time" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none">
-                <option value="13:00 PM">13:00 PM (Almuerzo)</option>
-                <option value="20:00 PM">20:00 PM (Cena)</option>
-              </select>
+      <!-- 2. NUESTRA HISTORIA Y FILOSOFÍA -->
+      <section id="pub-historia" class="max-w-6xl mx-auto px-6 py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+            <div class="space-y-4">
+              <img 
+                src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=800&q=80" 
+                alt="Chef preparando plato en Rivera de Plata" 
+                class="w-full h-64 object-cover rounded-3xl shadow-xl border border-white/10"
+              />
+              <div class="bg-navy-900/90 border border-amber-500/20 rounded-2xl p-4 text-center">
+                <p class="font-display font-extrabold text-amber-400 text-lg">Insumos de Origen</p>
+                <p class="text-xs text-slate-400 mt-1">Ajíes nativos, pesca del día y productos orgánicos</p>
+              </div>
             </div>
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 font-bold text-xs">Confirmar Reserva</button>
-          </form>
+            <div class="space-y-4 pt-8">
+              <div class="bg-gradient-to-br from-amber-500 to-amber-600 text-navy-950 rounded-2xl p-5 shadow-lg">
+                <i class="fa-solid fa-quote-left text-2xl opacity-60"></i>
+                <p class="text-xs font-bold italic mt-1 leading-relaxed">
+                  "Respetamos la raíz criolla y marina del Perú, elevándola con técnicas de vanguardia."
+                </p>
+              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" 
+                alt="Salón principal Rivera de Plata" 
+                class="w-full h-64 object-cover rounded-3xl shadow-xl border border-white/10"
+              />
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 space-y-5">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400">Nuestra Identidad</span>
+            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white leading-tight">
+              Pasión por la sazón peruana y hospitalidad impecable
+            </h2>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+              Nacimos con el propósito de honrar la herencia gastronómica de nuestra costa y sierra, integrando matices orientales Nikkei y cocción al wok a fuego vivo.
+            </p>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Cada visita a <strong>Rivera de Plata</strong> está diseñada para cautivar los sentidos: desde la frescura de nuestras barras cevicheras hasta la calidez de nuestro salón principal y terraza.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3">
+              <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-fish-fins"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-white">Barra Marina &amp; Nikkei</h4>
+                  <p class="text-[11px] text-slate-400 mt-0.5">Cortes frescos preparados al instante frente al comensal.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-wine-glass"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-white">Coctelería de Autor</h4>
+                  <p class="text-[11px] text-slate-400 mt-0.5">Macerados de pisco artesanal y botánicos peruanos.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      <!-- 3. CARTA ESTRELLA CON FOTOGRAFÍAS Y PRECIOS -->
+      <section id="pub-carta" class="bg-navy-950/90 border-y border-white/10 py-20 px-6">
+        <div class="max-w-6xl mx-auto space-y-10">
+          <div class="text-center max-w-2xl mx-auto space-y-2">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400">Selección del Chef</span>
+            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white">Platos Emblemáticos de la Casa</h2>
+            <p class="text-xs sm:text-sm text-slate-400">Sabores icónicos disponibles en salón, terraza y servicio delivery.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Plato 1 -->
+            <div class="group bg-navy-900 rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/50 transition-all shadow-xl flex flex-col">
+              <div class="relative h-52 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?auto=format&fit=crop&w=800&q=80" 
+                  alt="Ceviche Nikkei Rivera de Plata" 
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-navy-950/80 backdrop-blur-md text-amber-400 text-[10px] font-bold uppercase border border-amber-500/30">Favorito</span>
+                <span class="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-amber-500 text-navy-950 font-extrabold text-sm shadow-lg">S/ 46.00</span>
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white">Ceviche Nikkei</h3>
+                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Láminas de atún fresco marinadas en leche de tigre al sillao y aceite de ajonjolí, palta cremosa y chifles crocantes.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-amber-400 font-semibold">
+                  <span><i class="fa-solid fa-fire text-amber-500 mr-1"></i> Fresco al momento</span>
+                  <span>Porción Individual</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plato 2 -->
+            <div class="group bg-navy-900 rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/50 transition-all shadow-xl flex flex-col">
+              <div class="relative h-52 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" 
+                  alt="Lomo Saltado al Wok" 
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-navy-950/80 backdrop-blur-md text-amber-400 text-[10px] font-bold uppercase border border-amber-500/30">Clásico Criollo</span>
+                <span class="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-amber-500 text-navy-950 font-extrabold text-sm shadow-lg">S/ 52.00</span>
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white">Lomo Saltado al Wok</h3>
+                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Medallones de lomo fino flameados al wok con cebolla morada, tomate orgánico, papas nativas doradas y arroz con choclo.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-amber-400 font-semibold">
+                  <span><i class="fa-solid fa-fire-burner text-amber-500 mr-1"></i> Fuego vivo</span>
+                  <span>Término a elección</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plato 3 -->
+            <div class="group bg-navy-900 rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/50 transition-all shadow-xl flex flex-col">
+              <div class="relative h-52 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80" 
+                  alt="Causa Acevichada" 
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-navy-950/80 backdrop-blur-md text-emerald-400 text-[10px] font-bold uppercase border border-emerald-500/30">Entrada Estrella</span>
+                <span class="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-amber-500 text-navy-950 font-extrabold text-sm shadow-lg">S/ 38.00</span>
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white">Causa Acevichada</h3>
+                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Suave masa de papa amarilla prensada con ají amarillo y limón, coronada con langostinos crocantes y salsa acevichada.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-amber-400 font-semibold">
+                  <span><i class="fa-solid fa-leaf text-emerald-400 mr-1"></i> Papa amarilla orgánica</span>
+                  <span>Entrada / Compartir</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plato 4 -->
+            <div class="group bg-navy-900 rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/50 transition-all shadow-xl flex flex-col">
+              <div class="relative h-52 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=800&q=80" 
+                  alt="Risotto de Ají de Gallina" 
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <span class="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-amber-500 text-navy-950 font-extrabold text-sm shadow-lg">S/ 44.00</span>
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white">Risotto de Ají de Gallina</h3>
+                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Arroz arbóreo cremoso en reducción de ají amarillo y queso parmesano, acompañado de pechuga deshilachada y pecanas tostadas.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-amber-400 font-semibold">
+                  <span>Fusión Ítalo-Peruana</span>
+                  <span>Fondo de Autor</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plato 5 -->
+            <div class="group bg-navy-900 rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/50 transition-all shadow-xl flex flex-col">
+              <div class="relative h-52 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80" 
+                  alt="Pulpo Anticuchero" 
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <span class="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-amber-500 text-navy-950 font-extrabold text-sm shadow-lg">S/ 56.00</span>
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white">Pulpo Anticuchero</h3>
+                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Tentáculos de pulpo tierno sellados a la parrilla en adobo tradicional de ají panca, con papas doradas y chimichurri andino.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-amber-400 font-semibold">
+                  <span>A las Brasas</span>
+                  <span>Especialidad Marina</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bebida / Postre -->
+            <div class="group bg-navy-900 rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/50 transition-all shadow-xl flex flex-col">
+              <div class="relative h-52 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" 
+                  alt="Coctelería de Pisco y Postres" 
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <span class="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-amber-500 text-navy-950 font-extrabold text-sm shadow-lg">S/ 22.00</span>
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                <div>
+                  <h3 class="font-display font-bold text-lg text-white">Suspiro de Chirimoya &amp; Pisco</h3>
+                  <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Manjar blanco sedoso perfumado con pulpa de chirimoya fresca y merengue al oporto, ideal para acompañar nuestros macerados.</p>
+                </div>
+                <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-amber-400 font-semibold">
+                  <span>Repostería Peruana</span>
+                  <span>Postre de la Casa</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. GALERÍA DE AMBIENTES Y EXPERIENCIA -->
+      <section id="pub-galeria" class="max-w-6xl mx-auto px-6 py-20 space-y-8">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400">Nuestros Espacios</span>
+            <h2 class="font-display font-extrabold text-3xl text-white mt-1">Ambientes Diseñados para Disfrutar</h2>
+          </div>
+          <p class="text-xs text-slate-400 max-w-md">Salón principal climatizado, barra de coctelería y zona privada para celebraciones corporativas o familiares.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="relative h-72 rounded-3xl overflow-hidden group border border-white/10">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Salón Principal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-5">
+              <h4 class="font-bold text-white text-base">Salón Principal</h4>
+              <p class="text-xs text-slate-300">Elegancia contemporánea y atención personalizada</p>
+            </div>
+          </div>
+
+          <div class="relative h-72 rounded-3xl overflow-hidden group border border-white/10">
+            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80" alt="Barra de Coctelería" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-5">
+              <h4 class="font-bold text-white text-base">Barra de Pisco &amp; Autor</h4>
+              <p class="text-xs text-slate-300">Macerados exclusivos y maridaje de vanguardia</p>
+            </div>
+          </div>
+
+          <div class="relative h-72 rounded-3xl overflow-hidden group border border-white/10">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80" alt="Eventos Privados" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-5">
+              <h4 class="font-bold text-white text-base">Cenas &amp; Eventos</h4>
+              <p class="text-xs text-slate-300">Menús degustación para ocasiones especiales</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. RESERVAS Y DATOS DE CONTACTO DEL NEGOCIO -->
+      <section id="pub-reservas" class="max-w-6xl mx-auto px-6 pb-24">
+        <div class="bg-gradient-to-br from-navy-900 to-slate-900 rounded-3xl border border-white/10 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+          
+          <div class="lg:col-span-5 p-8 sm:p-10 bg-navy-950/60 flex flex-col justify-between space-y-8 border-b lg:border-b-0 lg:border-r border-white/10">
+            <div class="space-y-3">
+              <span class="text-xs font-extrabold uppercase tracking-widest text-amber-400">Visítanos</span>
+              <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Reserva tu Experiencia</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Asegura tu mesa en nuestro salón o realiza tu consulta para eventos especiales y pedidos corporativos.
+              </p>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm">
+              <div class="flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                  <p class="font-bold text-white">Dirección Principal</p>
+                  <p class="text-slate-400">Av. La Mar 1245, Miraflores · Lima, Perú</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-regular fa-clock"></i>
+                </div>
+                <div>
+                  <p class="font-bold text-white">Horarios de Atención</p>
+                  <p class="text-slate-400">Martes a Domingo: 12:30 PM – 11:00 PM</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <p class="font-bold text-white">Central de Reservas &amp; Delivery</p>
+                  <p class="text-slate-400">+51 (01) 445-8920 · reservas@riveradeplata.pe</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 p-8 sm:p-10">
+            <form onsubmit="handlePublicReservation(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nombre Completo *</label>
+                  <input type="text" id="pub-name" required placeholder="Ej. Alejandro Mendoza" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 focus:border-amber-400 text-xs sm:text-sm text-white outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Teléfono / WhatsApp *</label>
+                  <input type="tel" required placeholder="Ej. 987 654 321" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 focus:border-amber-400 text-xs sm:text-sm text-white outline-none" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Fecha *</label>
+                  <input type="date" id="pub-date" required class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 focus:border-amber-400 text-xs sm:text-sm text-white outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Turno / Hora *</label>
+                  <select id="pub-time" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 focus:border-amber-400 text-xs sm:text-sm text-white outline-none">
+                    <option value="13:00 PM">13:00 PM (Almuerzo)</option>
+                    <option value="14:30 PM">14:30 PM (Almuerzo)</option>
+                    <option value="20:00 PM">20:00 PM (Cena)</option>
+                    <option value="21:30 PM">21:30 PM (Cena)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Comensales *</label>
+                  <select class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 focus:border-amber-400 text-xs sm:text-sm text-white outline-none">
+                    <option>2 Personas</option>
+                    <option>4 Personas</option>
+                    <option>6 Personas</option>
+                    <option>Grupo (+8 Personas)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">Preferencia de Mesa o Solicitud Especial</label>
+                <textarea rows="2" placeholder="Ej. Mesa cerca a terraza, celebración de aniversario, alergias..." class="w-full px-4 py-2.5 rounded-xl bg-navy-950 border border-slate-700 focus:border-amber-400 text-xs sm:text-sm text-white outline-none"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-navy-950 font-extrabold text-xs sm:text-sm shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Confirmar Reserva en Rivera de Plata</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </section>
+
     </main>
+
+    <!-- FOOTER INSTITUCIONAL -->
+    <footer class="bg-navy-950 border-t border-white/10 py-8 px-6 text-center text-xs text-slate-400 space-y-2">
+      <p class="font-display font-bold text-white tracking-wide">RIVERA DE PLATA · ALTA COCINA PERUANA &amp; FUSIÓN NIKKEI</p>
+      <p>Av. La Mar 1245, Miraflores, Lima · Todos los derechos reservados.</p>
+    </footer>
   </div>
 
 
   <!-- ================================================================= -->
-  <!-- 3. TU SISTEMA OPERATIVO ORIGINAL (100% INALTERADO)                -->
+  <!-- 3. SISTEMA OPERATIVO ORIGINAL (100% INALTERADO)                   -->
   <!-- ================================================================= -->
   <div class="min-h-screen flex flex-col lg:flex-row">
 
     <!-- BACKDROP MÓVIL -->
     <div id="mobile-backdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-30 hidden lg:hidden"></div>
 
-    <!-- BARRA LATERAL DE NAVEGACIÓN (SIDEBAR - Escritorio y Drawer móvil) -->
+    <!-- BARRA LATERAL DE NAVEGACIÓN (SIDEBAR) -->
     <aside id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 h-screen w-72 bg-navy-900 text-white flex flex-col justify-between transition-transform duration-300 -translate-x-full lg:translate-x-0 shadow-2xl border-r border-slate-800">
       <div>
-        <!-- Marca / Logo -->
         <div class="p-6 border-b border-slate-800/90 flex items-center justify-between">
           <div class="flex items-center gap-3.5">
             <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-navy-950 font-extrabold text-lg">
@@ -301,15 +646,13 @@
           </button>
         </div>
 
-        <!-- Etiqueta de Sistema Interno -->
         <div class="px-6 pt-4 pb-2 flex items-center justify-between">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Operaciones & Control</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Operaciones &amp; Control</span>
           <button onclick="openPublicWebsite()" class="text-[10px] text-amber-400 hover:underline flex items-center gap-1">
             <i class="fa-solid fa-globe"></i> Ver Web
           </button>
         </div>
 
-        <!-- Menú de Navegación (6 Módulos) -->
         <nav class="px-3 space-y-1.5 mt-1" id="sidebar-nav">
           <button onclick="navigateTo('dashboard')" data-nav="dashboard" class="nav-btn nav-item-active w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all">
             <span class="flex items-center gap-3">
@@ -328,7 +671,7 @@
           <button onclick="navigateTo('seguimiento')" data-nav="seguimiento" class="nav-btn nav-item-inactive w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all">
             <span class="flex items-center gap-3">
               <i class="fa-solid fa-fire-burner w-5 text-center"></i>
-              <span>3. Seguimiento & Cocina</span>
+              <span>3. Seguimiento &amp; Cocina</span>
             </span>
             <span id="badge-activos" class="px-2 py-0.5 text-xs font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">0</span>
           </button>
@@ -358,7 +701,7 @@
         </nav>
       </div>
 
-      <!-- Pie de Sidebar: Controles de Prototipo / Bloqueo -->
+      <!-- Pie de Sidebar -->
       <div class="p-3 m-3 rounded-2xl bg-navy-800/80 border border-slate-700/70 space-y-2.5">
         <div class="flex items-center justify-between">
           <span id="session-user-label" class="text-xs font-semibold text-white">Sesión Activa</span>
@@ -401,23 +744,19 @@
         </div>
 
         <div class="flex items-center gap-3">
-          <!-- BOTÓN SOLICITADO: Ver Sitio Web Público en Header -->
           <button onclick="openPublicWebsite()" class="hidden md:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200 transition-all">
             <i class="fa-solid fa-globe text-amber-600"></i>
             <span>Ver Sitio Web Público</span>
           </button>
 
-          <!-- Indicador de Sincronización en Vivo -->
           <div id="sync-badge" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-200">
             <span id="sync-dot" class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
             <span id="sync-label">Sincronizando...</span>
           </div>
-          <!-- Reloj en tiempo real -->
           <div class="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-medium border border-slate-200/80">
             <i class="fa-regular fa-clock text-amber-600"></i>
             <span id="live-clock">--:--:--</span>
           </div>
-          <!-- Acceso rápido a Nuevo Pedido -->
           <button onclick="navigateTo('nuevo-pedido')" class="px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all flex items-center gap-2">
             <i class="fa-solid fa-plus text-amber-400"></i>
             <span>Nuevo Pedido</span>
@@ -425,7 +764,6 @@
         </div>
       </header>
 
-      <!-- BANNER MÓVIL DE IDENTIFICACIÓN DE PROTOTIPO -->
       <div class="sm:hidden bg-amber-50 border-b border-amber-200 px-4 py-2 text-[11px] text-amber-900 flex items-center justify-between">
         <span><i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Prototipo con Datos Demo</span>
         <button onclick="confirmarAccionDemo('restaurar')" class="underline font-semibold text-amber-800">Restaurar</button>
@@ -434,9 +772,7 @@
       <!-- CONTENEDOR DINÁMICO DE MÓDULOS -->
       <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 1: PANEL PRINCIPAL (DASHBOARD)                     -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 1: PANEL PRINCIPAL (DASHBOARD) -->
         <section id="module-dashboard" class="module-view space-y-6">
           <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div class="flex items-center gap-3">
@@ -604,9 +940,7 @@
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 2: REGISTRO DE NUEVOS PEDIDOS                      -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 2: REGISTRO DE NUEVOS PEDIDOS -->
         <section id="module-nuevo-pedido" class="module-view hidden space-y-6">
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-6">
@@ -767,9 +1101,7 @@
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 3: SEGUIMIENTO DE PEDIDOS                          -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 3: SEGUIMIENTO DE PEDIDOS -->
         <section id="module-seguimiento" class="module-view hidden space-y-6">
           <div class="bg-white rounded-2xl p-5 border shadow-xs space-y-4">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -822,9 +1154,7 @@
           <div id="tracking-orders-container" class="space-y-4"></div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 4: VERIFICACIÓN Y ENTREGA                          -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 4: VERIFICACIÓN Y ENTREGA -->
         <section id="module-verificacion" class="module-view hidden space-y-6">
           <div class="bg-white rounded-2xl p-6 border shadow-xs">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4">
@@ -841,9 +1171,7 @@
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 5: CONTROL DE INCIDENCIAS                         -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 5: CONTROL DE INCIDENCIAS -->
         <section id="module-incidencias" class="module-view hidden space-y-6">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-5 bg-white rounded-2xl p-6 border shadow-xs space-y-4 h-fit">
@@ -855,6 +1183,16 @@
                 <div><label class="block text-xs font-semibold mb-1">Código</label><input type="text" id="inc-code" readonly class="w-full px-3 py-2 rounded-xl bg-slate-100 border text-xs font-bold" /></div>
                 <div><label class="block text-xs font-semibold mb-1">Pedido *</label><select id="inc-order-code" class="w-full px-3 py-2 rounded-xl bg-white border text-xs"></select></div>
               </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-xs font-semibold mb-1">Fecha / Hora</label><input type="text" id="inc-datetime" readonly class="w-full px-3 py-2 rounded-xl bg-slate-100 border text-xs" /></div>
+                <div><label class="block text-xs font-semibold mb-1">Responsable</label>
+                  <select id="inc-staff" class="w-full px-3 py-2 rounded-xl bg-white border text-xs">
+                    <option value="Andrea Rojas">Andrea Rojas</option>
+                    <option value="Carlos Mendoza">Carlos Mendoza</option>
+                    <option value="Sofía Paredes">Sofía Paredes</option>
+                  </select>
+                </div>
+              </div>
               <div><label class="block text-xs font-semibold mb-1">Tipo *</label>
                 <select id="inc-type" class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-xs">
                   <option value="Demora en la preparación">Demora en la preparación</option>
@@ -865,6 +1203,13 @@
               </div>
               <div><label class="block text-xs font-semibold mb-1">Descripción *</label><textarea id="inc-description" rows="3" placeholder="Detalle qué ocurrió..." class="w-full px-3 py-2 rounded-xl bg-white border text-xs outline-none"></textarea></div>
               <div><label class="block text-xs font-semibold mb-1">Acción Correctiva</label><textarea id="inc-action" rows="2" placeholder="Solución aplicada..." class="w-full px-3 py-2 rounded-xl bg-white border text-xs outline-none"></textarea></div>
+              <div><label class="block text-xs font-semibold mb-1">Estado Inicial</label>
+                <select id="inc-status" class="w-full px-3 py-2 rounded-xl bg-white border text-xs">
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="En proceso">En proceso</option>
+                  <option value="Resuelta">Resuelta</option>
+                </select>
+              </div>
               <button type="button" onclick="submitNewIncident()" class="w-full py-3 rounded-xl bg-navy-900 text-white font-semibold text-sm">Registrar Incidencia</button>
             </div>
 
@@ -874,6 +1219,7 @@
                 <select id="filter-inc-status" onchange="renderIncidentsModule()" class="px-3 py-2 rounded-xl bg-slate-50 border text-xs font-semibold">
                   <option value="Todas">Todos</option>
                   <option value="Pendiente">Pendientes</option>
+                  <option value="En proceso">En proceso</option>
                   <option value="Resuelta">Resueltas</option>
                 </select>
               </div>
@@ -882,9 +1228,7 @@
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 6: HISTORIAL COMPLETO                              -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 6: HISTORIAL COMPLETO -->
         <section id="module-historial" class="module-view hidden space-y-6">
           <div class="bg-white rounded-2xl p-6 border shadow-xs space-y-6">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4">
@@ -994,13 +1338,43 @@
     };
   </script>
 
-  <!-- LÓGICA DE CONTROL DE PIN Y ACCESO DUAL (AÑADIDO LIMPIAMENTE) -->
+  <!-- LÓGICA DE CONTROL DE PIN, TOAST Y ACCESO DUAL -->
   <script>
     let pinAuthState = {
       selectedRole: 'Mozo',
       enteredPin: '',
       pins: { 'Mozo': '1234', 'Cocina': '5678', 'Admin': '9999' }
     };
+
+    function showToast(title, message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const colors = {
+        success: 'bg-navy-900 border-emerald-500 text-white',
+        warning: 'bg-navy-900 border-amber-500 text-white',
+        error: 'bg-rose-950 border-rose-500 text-white'
+      };
+      const icons = {
+        success: 'fa-circle-check text-emerald-400',
+        warning: 'fa-triangle-exclamation text-amber-400',
+        error: 'fa-circle-xmark text-rose-400'
+      };
+      const toast = document.createElement('div');
+      toast.className = `toast-enter pointer-events-auto rounded-2xl border-l-4 p-4 shadow-xl flex items-start gap-3 ${colors[type] || colors.success}`;
+      toast.innerHTML = `
+        <i class="fa-solid ${icons[type] || icons.success} mt-0.5"></i>
+        <div class="flex-1">
+          <p class="text-xs font-bold tracking-wide">${title}</p>
+          <p class="text-xs text-slate-300 mt-0.5">${message}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.25s ease';
+        setTimeout(() => toast.remove(), 260);
+      }, 3600);
+    }
 
     function selectPinRole(role) {
       pinAuthState.selectedRole = role;
@@ -1081,7 +1455,7 @@
     }
   </script>
 
-  <!-- LÓGICA ORIGINAL DE TU SISTEMA Y FIREBASE (INALTERADA) -->
+  <!-- LÓGICA ORIGINAL DE TU SISTEMA Y FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -1174,21 +1548,15 @@
 
     function updateSyncIndicators(connected) {
       isCloudConnected = connected;
-      const sideIcon = document.getElementById('cloud-status-icon');
-      const sideText = document.getElementById('cloud-status-text');
       const badge = document.getElementById('sync-badge');
       const dot = document.getElementById('sync-dot');
       const label = document.getElementById('sync-label');
 
       if (connected) {
-        if (sideIcon) sideIcon.className = 'fa-solid fa-cloud text-emerald-400 mt-0.5 text-xs';
-        if (sideText) sideText.textContent = 'En vivo · Multi-dispositivo';
         if (badge) badge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200';
         if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
         if (label) label.textContent = 'Sincronizado en Vivo';
       } else {
-        if (sideIcon) sideIcon.className = 'fa-solid fa-database text-amber-400 mt-0.5 text-xs';
-        if (sideText) sideText.textContent = 'Respaldo Local Activo';
         if (badge) badge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-200';
         if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-500';
         if (label) label.textContent = 'Modo Local';
@@ -1427,7 +1795,7 @@
 
       if (tipo === 'restaurar') {
         title.textContent = 'Restaurar Datos de Demostración';
-        msg.textContent = 'Se reemplazarán los registros actuales por los 5 pedidos de ejemplo y las 3 incidencias iniciales de Rivera de Plata en todos los dispositivos.';
+        msg.textContent = 'Se reemplazarán los registros actuales por los pedidos de ejemplo e incidencias iniciales de Rivera de Plata en todos los dispositivos.';
         btn.className = 'px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-semibold';
         btn.textContent = 'Sí, restaurar demo';
         btn.onclick = async () => {
@@ -2250,12 +2618,6 @@
           </tr>
         `;
       }).join('');
-    };
-
-    window.resetHistoryFilters = function() {
-      document.getElementById('history-date-filter').value = '';
-      document.getElementById('history-modality-filter').value = 'Todas';
-      window.renderHistoryModule();
     };
 
     window.openOrderDetailModal = function(orderId) {
