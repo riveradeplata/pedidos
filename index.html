@@ -2701,89 +2701,135 @@
       await initCloudSync();
     });
   </script>
-  <!-- ================================================================= -->
-  <!-- SCRIPT EXTERNO: NOTIFICACIONES DE SONIDO CONDICIONALES POR DISPOSITIVO -->
-  <!-- ================================================================= -->
-  <script>
-    (function() {
-      // 1. Asignar un ID único a este navegador/dispositivo si no lo tiene
-      let myDeviceId = localStorage.getItem('rdp_device_uuid');
-      if (!myDeviceId) {
-        myDeviceId = 'device_' + Math.random().toString(36).substring(2, 9);
-        localStorage.setItem('rdp_device_uuid', myDeviceId);
-      }
-
-      // 2. Sintetizador de audio web nativo (No requiere archivos externos .mp3)
-      function playNotificationSound() {
-        try {
-          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          const oscillator = audioCtx.createOscillator();
-          const gainNode = audioCtx.createGain();
-          
-          oscillator.type = 'sine';
-          oscillator.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nota D5 (Tono agradable de comanda)
-          oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
-          
-          gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-          
-          oscillator.connect(gainNode);
-          gainNode.connect(audioCtx.destination);
-          
-          oscillator.start();
-          oscillator.stop(audioCtx.currentTime + 0.4);
-        } catch (e) {
-          console.log("Audio bloqueado por políticas del navegador hasta interactuar con la página.");
-        }
-      }
-
-      // 3. Interceptar las funciones originales de guardado para estampar el Device ID
-      window.addEventListener('DOMContentLoaded', () => {
-        // Monitorear cuando se envía un nuevo pedido
-        const originalSubmitOrder = window.submitNewOrder;
-        if (typeof originalSubmitOrder === 'function') {
-          window.submitNewOrder = async function() {
-            // Asignar temporalmente el deviceId al último objeto creado o en memoria
-            if (window.state && window.state.orders && window.state.orders.length > 0) {
-              // El pedido se añadirá con este sello
-              window.lastActionDeviceId = myDeviceId;
-            }
-            return originalSubmitOrder.apply(this, arguments);
-          };
-        }
-
-        // Escuchar cambios de Firestore de manera pasiva mediante un observer independiente
-        // Esto vigila la base de datos en tiempo real sin interferir con tus onSnapshot existentes
-        const checkCloudInterval = setInterval(() => {
-          if (window.db && window.appId && window.currentUser) {
-            clearInterval(checkCloudInterval);
-            
-            // Importar dinámicamente o engancharse a la colección si ya está activa
-            // Como ya usas onSnapshot en tu app, podemos detectar nuevos ingresos comparando longitudes previas
-            let previousOrderCount = -1;
-            let previousIncidentCount = -1;
-
-            // Observador secundario para sonido
-            const { collection, onSnapshot } = window.FirebaseFirestore || {};
-            // Nota: Si prefieres no re-declarar firestore, el almacenamiento local reactivo nos ayuda:
-            
-            window.addEventListener('storage', (e) => {
-              if (e.key === 'rdp_prototipo_pedidos_v1' || e.key === 'rdp_prototipo_incidencias_v1') {
-                // Si otro dispositivo actualizó el localStorage vía sincronización, evaluamos
-                // Pero para mayor precisión en tiempo real con Firebase, basta con que tu app reciba el dato.
-              }
-            });
-          }
-        }, 1000);
-      });
-
-      // 4. Método seguro para que los modales o eventos disparen el sonido si el creador es externo
-      window.notifyExternalAction = function(originDeviceId) {
-        if (originDeviceId && originDeviceId !== myDeviceId) {
-          playNotificationSound();
-        }
-      };
-    })();
-  </script>
 </body>
+<!-- ================================================================= -->
+<!-- SCRIPT MEJORADO: ALERTAS VISUALES Y SONORAS EXCLUSIVAS PARA OTROS EQUIPOS -->
+<!-- ================================================================= -->
+<script>
+  (function() {
+    let myDeviceId = localStorage.getItem('rdp_device_uuid');
+    if (!myDeviceId) {
+      myDeviceId = 'device_' + Math.random().toString(36).substring(2, 9);
+      localStorage.setItem('rdp_device_uuid', myDeviceId);
+    }
+
+    let audioUnlocked = false;
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, () => { audioUnlocked = true; }, { once: true });
+    });
+
+    function playBeepSound() {
+      if (!audioUnlocked) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); 
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
+        
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    function showNotificationAlert(title, message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const colors = {
+        success: 'bg-navy-900 border-amber-500 text-white',
+        warning: 'bg-navy-900 border-rose-500 text-white'
+      };
+      const icons = {
+        success: 'fa-bell text-amber-400',
+        warning: 'fa-triangle-exclamation text-rose-400'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `toast-enter pointer-events-auto rounded-2xl border-l-4 p-4 shadow-2xl flex items-start gap-3 ${colors[type] || colors.success}`;
+      toast.innerHTML = `
+        <i class="fa-solid ${icons[type] || icons.success} mt-0.5 text-lg"></i>
+        <div class="flex-1">
+          <p class="text-xs font-bold tracking-wide uppercase">${title}</p>
+          <p class="text-xs text-slate-200 mt-0.5">${message}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 5000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Interceptar el guardado del pedido original para estampar la marca de origen
+      const originalSubmitOrder = window.submitNewOrder;
+      if (typeof originalSubmitOrder === 'function') {
+        window.submitNewOrder = async function() {
+          window.isCreatingActionLocally = true;
+          const res = await originalSubmitOrder.apply(this, arguments);
+          setTimeout(() => { window.isCreatingActionLocally = false; }, 1000);
+          return res;
+        };
+      }
+
+      // Interceptar el guardado de incidencias
+      const originalSubmitIncident = window.submitNewIncident;
+      if (typeof originalSubmitIncident === 'function') {
+        window.submitNewIncident = async function() {
+          window.isCreatingActionLocally = true;
+          const res = await originalSubmitIncident.apply(this, arguments);
+          setTimeout(() => { window.isCreatingActionLocally = false; }, 1000);
+          return res;
+        };
+      }
+
+      let lastOrderCount = -1;
+      let lastIncidentCount = -1;
+
+      setInterval(() => {
+        try {
+          const orders = JSON.parse(localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]');
+          const incidents = JSON.parse(localStorage.getItem('rdp_prototipo_incidencias_v1') || '[]');
+
+          if (lastOrderCount === -1) {
+            lastOrderCount = orders.length;
+            lastIncidentCount = incidents.length;
+            return;
+          }
+
+          if (orders.length > lastOrderCount) {
+            const latestOrder = orders[orders.length - 1];
+            // Solo avisa y suena si NO fue creado en este mismo dispositivo en este instante
+            if (!window.isCreatingActionLocally) {
+              playBeepSound();
+              showNotificationAlert('¡Nuevo Pedido!', `Se registró la comanda ${latestOrder.id} para ${latestOrder.cliente}.`, 'success');
+            }
+            lastOrderCount = orders.length;
+          }
+
+          if (incidents.length > lastIncidentCount) {
+            const latestInc = incidents[incidents.length - 1];
+            if (!window.isCreatingActionLocally) {
+              playBeepSound();
+              showNotificationAlert('¡Incidencia Reportada!', `Alerta en ${latestInc.pedidoId}: ${latestInc.tipo}.`, 'warning');
+            }
+            lastIncidentCount = incidents.length;
+          }
+        } catch (err) {}
+      }, 700);
+    });
+  })();
+</script>
 </html>
