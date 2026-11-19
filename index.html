@@ -2835,7 +2835,7 @@
 <!-- ================================================================= -->
 <!-- SCRIPT DEFINITIVO: NOTIFICACIONES, SONIDO, EDICIÓN Y ELIMINACIÓN  -->
 <!-- ================================================================= -->
-<script>
+<!--<script>
   (function() {
     let myDeviceId = localStorage.getItem('rdp_device_uuid');
     if (!myDeviceId) {
@@ -2979,6 +2979,182 @@
       }, 800);
 
       // Notificaciones de sonido en tiempo real para otros equipos
+      let lastOrderCount = -1;
+      let lastIncidentCount = -1;
+      setInterval(() => {
+        try {
+          const orders = JSON.parse(localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]');
+          const incidents = JSON.parse(localStorage.getItem('rdp_prototipo_incidencias_v1') || '[]');
+          if (lastOrderCount === -1) { lastOrderCount = orders.length; lastIncidentCount = incidents.length; return; }
+          
+          if (orders.length > lastOrderCount) {
+            const latest = orders[orders.length - 1];
+            playBeepSound();
+            showNotificationAlert('¡Nuevo Pedido!', `Se registró la comanda ${latest.id} para ${latest.cliente}.`, 'success');
+            lastOrderCount = orders.length;
+          }
+          if (incidents.length > lastIncidentCount) {
+            const latestInc = incidents[incidents.length - 1];
+            playBeepSound();
+            showNotificationAlert('¡Incidencia Reportada!', `Alerta en ${latestInc.pedidoId}: ${latestInc.tipo}.`, 'warning');
+            lastIncidentCount = incidents.length;
+          }
+        } catch (e) {}
+      }, 800);
+    });
+  })();
+</script>-->
+<!-- ================================================================= -->
+<!-- SCRIPT DEFINITIVO Y BLINDADO: NOTIFICACIONES, SONIDO, EDITAR Y ELIMINAR -->
+<!-- ================================================================= -->
+<script>
+  (function() {
+    let myDeviceId = localStorage.getItem('rdp_device_uuid');
+    if (!myDeviceId) {
+      myDeviceId = 'device_' + Math.random().toString(36).substring(2, 9);
+      localStorage.setItem('rdp_device_uuid', myDeviceId);
+    }
+
+    let audioUnlocked = false;
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, () => { audioUnlocked = true; }, { once: true });
+    });
+
+    function playBeepSound() {
+      if (!audioUnlocked) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); 
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    function showNotificationAlert(title, message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const colors = { success: 'bg-navy-900 border-amber-500 text-white', warning: 'bg-navy-900 border-rose-500 text-white' };
+      const icons = { success: 'fa-bell text-amber-400', warning: 'fa-triangle-exclamation text-rose-400' };
+      const toast = document.createElement('div');
+      toast.className = `toast-enter pointer-events-auto rounded-2xl border-l-4 p-4 shadow-2xl flex items-start gap-3 ${colors[type] || colors.success}`;
+      toast.innerHTML = `
+        <i class="fa-solid ${icons[type] || icons.success} mt-0.5 text-lg"></i>
+        <div class="flex-1">
+          <p class="text-xs font-bold tracking-wide uppercase">${title}</p>
+          <p class="text-xs text-slate-200 mt-0.5">${message}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 5000);
+    }
+
+    // Funciones lógicas de edición y eliminación
+    function eliminarPedidoSistema(orderId) {
+      if (!confirm(`¿Estás seguro de eliminar el pedido ${orderId}?`)) return;
+      try {
+        let orders = JSON.parse(localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]');
+        orders = orders.filter(o => o.id !== orderId);
+        localStorage.setItem('rdp_prototipo_pedidos_v1', JSON.stringify(orders));
+
+        if (window.db && window.currentUser && window.appId) {
+          import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js").then(({ doc, deleteDoc }) => {
+            deleteDoc(doc(window.db, 'artifacts', window.appId, 'public', 'data', 'orders', String(orderId)));
+          });
+        }
+
+        showNotificationAlert('Pedido Eliminado', `El registro ${orderId} fue borrado correctamente.`, 'warning');
+        setTimeout(() => location.reload(), 500);
+      } catch (err) {
+        alert('Error al eliminar el pedido.');
+      }
+    }
+
+    function editarPedidoSistema(orderId) {
+      try {
+        let orders = JSON.parse(localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]');
+        const order = orders.find(o => o.id === orderId);
+        if (!order) { alert('Pedido no encontrado.'); return; }
+
+        const nuevoCliente = prompt("Modificar nombre del cliente:", order.cliente);
+        if (nuevoCliente === null) return;
+        const nuevaUbicacion = prompt("Modificar mesa o dirección:", order.ubicacion);
+        if (nuevaUbicacion === null) return;
+
+        order.cliente = nuevoCliente.trim() || order.cliente;
+        order.ubicacion = nuevaUbicacion.trim() || order.ubicacion;
+
+        localStorage.setItem('rdp_prototipo_pedidos_v1', JSON.stringify(orders));
+
+        if (window.db && window.currentUser && window.appId) {
+          import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js").then(({ doc, setDoc }) => {
+            setDoc(doc(window.db, 'artifacts', window.appId, 'public', 'data', 'orders', String(orderId)), order);
+          });
+        }
+
+        showNotificationAlert('Pedido Actualizado', `Se modificó la información de ${order.id}.`, 'success');
+        setTimeout(() => location.reload(), 500);
+      } catch (err) {
+        alert('Error al editar el pedido.');
+      }
+    }
+
+    // Delegación global de clics para evitar pérdida de eventos al renderizar
+    document.addEventListener('click', function(e) {
+      const editBtn = e.target.closest('.btn-edit-order');
+      if (editBtn) {
+        const orderId = editBtn.dataset.id;
+        if (orderId) editarPedidoSistema(orderId);
+      }
+
+      const deleteBtn = e.target.closest('.btn-delete-order');
+      if (deleteBtn) {
+        const orderId = deleteBtn.dataset.id;
+        if (orderId) eliminarPedidoSistema(orderId);
+      }
+    });
+
+    // Inyector visual constante en el módulo de seguimiento
+    window.addEventListener('DOMContentLoaded', () => {
+      setInterval(() => {
+        const tarjetas = document.querySelectorAll('#tracking-orders-container > div');
+        tarjetas.forEach(tarjeta => {
+          if (tarjeta.querySelector('.btn-accion-extra')) return;
+
+          const codigoEl = tarjeta.querySelector('.font-mono');
+          if (!codigoEl) return;
+          const orderId = codigoEl.textContent.trim();
+
+          const headerAcciones = tarjeta.querySelector('.flex.flex-wrap.items-center.gap-2\\.5') || tarjeta.querySelector('.flex.items-center.gap-2\\.5');
+          if (headerAcciones && !headerAcciones.querySelector('.btn-accion-extra')) {
+            const btnGroup = document.createElement('div');
+            btnGroup.className = 'btn-accion-extra flex items-center gap-1.5 ml-2';
+            btnGroup.innerHTML = `
+              <button type="button" data-id="${orderId}" class="btn-edit-order px-2.5 py-1.5 rounded-xl bg-slate-200 hover:bg-amber-500 hover:text-white text-slate-700 text-xs font-semibold transition-all shadow-xs cursor-pointer" title="Editar datos">
+                <i class="fa-solid fa-pen"></i> Editar
+              </button>
+              <button type="button" data-id="${orderId}" class="btn-delete-order px-2.5 py-1.5 rounded-xl bg-slate-200 hover:bg-rose-600 hover:text-white text-slate-700 text-xs font-semibold transition-all shadow-xs cursor-pointer" title="Eliminar pedido">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            `;
+            headerAcciones.appendChild(btnGroup);
+          }
+        });
+      }, 500);
+
+      // Notificaciones de sonido en tiempo real
       let lastOrderCount = -1;
       let lastIncidentCount = -1;
       setInterval(() => {
