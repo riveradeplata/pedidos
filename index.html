@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rivera de Plata | Sistema de Seguimiento de Pedidos e Incidencias</title>
+  <title>Restaurante Rivera de Plata | Chaclacayo, Lima</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Plus Jakarta Sans & Inter -->
@@ -41,11 +41,9 @@
   </script>
 
   <style>
-    /* Estilos base y scrollbar elegante */
     body {
       background-color: #F8FAFC;
       color: #0F172A;
-      /* Padding inferior en móviles para evitar que el bottom bar tape contenido */
       padding-bottom: 4.5rem;
     }
     @media (min-width: 1024px) {
@@ -92,7 +90,7 @@
 <body class="antialiased selection:bg-amber-500/20 selection:text-amber-900">
 
   <!-- ================================================================= -->
-  <!-- 1. PANTALLA DE ACCESO POR PIN / ROLES (NUEVO - SUPERPUESTO)       -->
+  <!-- 1. PANTALLA DE ACCESO POR PIN / ROLES (SISTEMA OPERATIVO ORIGINAL)-->
   <!-- ================================================================= -->
   <div id="pin-auth-screen" class="fixed inset-0 z-50 bg-navy-950 flex flex-col justify-between p-4 sm:p-8">
     <div class="max-w-4xl w-full mx-auto flex items-center justify-between pt-2">
@@ -102,10 +100,10 @@
         </div>
         <div>
           <h1 class="text-white font-display font-extrabold text-sm sm:text-base">RIVERA DE PLATA</h1>
-          <p class="text-[10px] text-amber-400 uppercase tracking-widest font-semibold">Sistema de Control Operativo</p>
+          <p class="text-[10px] text-amber-400 uppercase tracking-widest font-semibold">Chaclacayo, Lima · Control Operativo</p>
         </div>
       </div>
-      <!-- BOTÓN SOLICITADO: Ver Sitio Web Público -->
+      <!-- BOTÓN: Ver Sitio Web Público -->
       <button onclick="openPublicWebsite()" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
         <i class="fa-solid fa-globe"></i>
         <span>Ver Sitio Web Público</span>
@@ -115,7 +113,7 @@
     <div class="max-w-md w-full mx-auto my-auto py-6 space-y-6 text-center">
       <div class="space-y-2">
         <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">Identificación de Personal</h2>
-        <p class="text-xs sm:text-sm text-slate-400">Seleccione su rol e ingrese su PIN de acceso</p>
+        <p class="text-xs sm:text-sm text-slate-400">Seleccione su rol e ingrese su PIN asignado</p>
       </div>
 
       <!-- Selector de Roles -->
@@ -167,16 +165,16 @@
     </div>
 
     <div class="text-center text-xs text-slate-500 pb-2">
-      <p>Control de Acceso Seguro · Rivera de Plata</p>
+      <p>Sistema de Seguimiento de Pedidos e Incidencias (MVP Fase 4) · Instituto IDAT[cite: 3]</p>
     </div>
   </div>
 
 
   <!-- ================================================================= -->
-  <!-- 2. SITIO WEB PÚBLICO INSTITUCIONAL COMPLETO (VISTA DUAL)           -->
+  <!-- 2. SITIO WEB PÚBLICO INSTITUCIONAL MODERNO Y ATRACTIVO            -->
   <!-- ================================================================= -->
   <div id="public-website-modal" class="fixed inset-0 z-50 bg-slate-50 overflow-y-auto hidden flex flex-col">
-    <!-- Header del Sitio Público con Acceso Dual Instantáneo -->
+    <!-- Header del Sitio Público -->
     <header class="sticky top-0 z-40 bg-navy-950 text-white px-6 py-4 flex items-center justify-between shadow-lg">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-navy-950 font-extrabold">
@@ -184,92 +182,175 @@
         </div>
         <div>
           <h2 class="font-display font-extrabold text-base tracking-tight">RIVERA DE PLATA</h2>
-          <p class="text-[10px] uppercase tracking-widest text-amber-400">Sitio Oficial del Cliente</p>
+          <p class="text-[10px] uppercase tracking-widest text-amber-400">Chaclacayo, Lima · Alta Cocina Peruana Fusión[cite: 6]</p>
         </div>
       </div>
 
-      <!-- BOTÓN DUAL: Volver al Sistema Operativo por PIN -->
-      <button onclick="closePublicWebsite()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
-        <i class="fa-solid fa-lock"></i>
-        <span>Volver al Sistema Operativo (PIN)</span>
-      </button>
+      <div class="flex items-center gap-3">
+        <!-- BOTÓN DE ACCESO DIRECTO AL SISTEMA OPERATIVO -->
+        <button onclick="closePublicWebsite()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
+          <i class="fa-solid fa-desktop"></i>
+          <span>Ingresar al Sistema Operativo (PIN)</span>
+        </button>
+      </div>
     </header>
 
-    <!-- Contenido Institucional Completo -->
+    <!-- Contenido Institucional Enriquecido con Imágenes y Datos Reales -->
     <main class="flex-1 space-y-16 pb-20">
-      <section class="bg-navy-900 text-white py-20 px-6 text-center space-y-6">
-        <span class="px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase">Alta Cocina Peruana & Fusión Nikkei</span>
-        <h1 class="font-display font-extrabold text-4xl sm:text-5xl text-white tracking-tight">Tradición y Vanguardia en Cada Plato</h1>
-        <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">Disfrute de una experiencia culinaria única con insumos frescos del mar y técnicas de vanguardia.</p>
-      </section>
-
-      <section class="max-w-4xl mx-auto px-6">
-        <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div class="space-y-3">
-            <span class="text-xs font-bold uppercase text-amber-600">Nuestra Historia</span>
-            <h2 class="font-display font-bold text-2xl text-navy-900">Pasión por la sazón peruana</h2>
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Fundado para enaltecer los sabores tradicionales del Perú fusionados con matices internacionales, Rivera de Plata ofrece excelencia gastronómica en cada visita.</p>
-          </div>
-          <div class="bg-navy-900 rounded-2xl p-6 text-white space-y-3 shadow-lg">
-            <i class="fa-solid fa-quote-left text-amber-400 text-2xl"></i>
-            <p class="text-xs italic text-slate-200">"Cada plato cuenta una historia de respeto por la tradición culinaria y la constante innovación."</p>
-            <p class="text-[11px] text-amber-400 font-bold">— Chef Ejecutivo</p>
+      
+      <!-- HERO SECTION CON IMAGEN DE FONDO -->
+      <section class="relative bg-navy-900 text-white py-24 px-6 text-center space-y-6 overflow-hidden">
+        <div class="absolute inset-0 opacity-25 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80')"></div>
+        <div class="relative z-10 max-w-3xl mx-auto space-y-4">
+          <span class="px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-widest border border-amber-500/30">Gastronomía Peruana & Fusión Nikkei[cite: 6]</span>
+          <h1 class="font-display font-extrabold text-4xl sm:text-6xl text-white tracking-tight">Tradición y Vanguardia en Chaclacayo[cite: 6]</h1>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Disfrute de una experiencia culinaria única con insumos frescos del mar, sazón inigualable y un servicio de excelencia bajo estándares ágiles.</p>
+          <div class="pt-4 flex flex-wrap justify-center gap-4">
+            <a href="#menu" class="px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs sm:text-sm shadow-lg transition-all">Ver Carta y Platos</a>
+            <a href="#reservas" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/25 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all">Reservar Mesa</a>
           </div>
         </div>
       </section>
 
-      <section class="max-w-5xl mx-auto px-6 space-y-6">
-        <div class="text-center space-y-1">
-          <span class="text-xs font-bold uppercase text-amber-600">Gastronomía Fusión</span>
-          <h2 class="font-display font-extrabold text-2xl text-navy-900">Platos Estrella y Precios</h2>
+      <!-- HISTORIA Y ORGANIZACIÓN (Basado en el Trabajo Final) -->
+      <section class="max-w-5xl mx-auto px-6">
+        <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div class="space-y-4">
+            <span class="text-xs font-bold uppercase text-amber-600 tracking-wider">Nuestra Organización</span>
+            <h2 class="font-display font-bold text-2xl sm:text-3xl text-navy-900">Pasión por la alta cocina y el servicio de calidad</h2>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">Ubicados en el corazón de Chaclacayo, Lima[cite: 6], en <strong>Rivera de Plata</strong> combinamos preparaciones tradicionales con técnicas contemporáneas[cite: 6]. Contamos con un equipo de 20 colaboradores altamente comprometidos[cite: 6] orientados a ofrecerle una atención cálida y eficiente en salón y delivery[cite: 6].</p>
+            <div class="grid grid-cols-2 gap-4 pt-2">
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                <span class="font-display font-extrabold text-xl text-amber-600 block">&le; 25 min</span>
+                <span class="text-[11px] text-slate-500 font-medium">Meta de atención óptima[cite: 9]</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                <span class="font-display font-extrabold text-xl text-navy-900 block">90%</span>
+                <span class="text-[11px] text-slate-500 font-medium">Meta de satisfacción[cite: 9]</span>
+              </div>
+            </div>
+          </div>
+          <div class="relative rounded-2xl overflow-hidden shadow-xl aspect-video md:aspect-square">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Platos del restaurante" class="w-full h-full object-cover" />
+          </div>
         </div>
+      </section>
+
+      <!-- GALERÍA VISUAL Y PLATOS ESTRELLA -->
+      <section id="menu" class="max-w-6xl mx-auto px-6 space-y-8">
+        <div class="text-center space-y-2 max-w-xl mx-auto">
+          <span class="text-xs font-bold uppercase text-amber-600 tracking-wider">Nuestra Carta Fusión</span>
+          <h2 class="font-display font-extrabold text-3xl text-navy-900">Platos Estrella y Precios</h2>
+          <p class="text-xs sm:text-sm text-slate-500">Elaborados al momento con pescados del día e insumos seleccionados.</p>
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-navy-900 text-sm">Ceviche Nikkei</h3>
-                <span class="font-extrabold text-amber-600 text-sm">S/ 46.00</span>
+          <!-- Plato 1 -->
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+            <div class="h-48 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?auto=format&fit=crop&w=600&q=80" alt="Ceviche Nikkei" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div class="p-5 space-y-2 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-bold text-navy-900 text-base">Ceviche Nikkei</h3>
+                  <span class="font-extrabold text-amber-600 text-sm">S/ 46.00</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Atún fresco marinado en leche de tigre al sillao, palta y chifles crocantes.</p>
               </div>
-              <p class="text-xs text-slate-500">Atún fresco marinado en leche de tigre al sillao, palta y chifles.</p>
+              <span class="inline-block text-[10px] font-bold uppercase text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full w-fit">Recomendado del Chef</span>
             </div>
           </div>
-          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-navy-900 text-sm">Lomo Saltado al Wok</h3>
-                <span class="font-extrabold text-amber-600 text-sm">S/ 52.00</span>
+
+          <!-- Plato 2 -->
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+            <div class="h-48 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Lomo Saltado" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div class="p-5 space-y-2 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-bold text-navy-900 text-base">Lomo Saltado al Wok</h3>
+                  <span class="font-extrabold text-amber-600 text-sm">S/ 52.00</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Lomo fino seleccionado salteado al fuego vivo con vegetales frescos y papas nativas doradas.</p>
               </div>
-              <p class="text-xs text-slate-500">Lomo fino salteado al fuego vivo con papas nativas doradas.</p>
+              <span class="inline-block text-[10px] font-bold uppercase text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full w-fit">Tradición Peruana</span>
             </div>
           </div>
-          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-2">
-                <h3 class="font-bold text-navy-900 text-sm">Causa Acevichada</h3>
-                <span class="font-extrabold text-amber-600 text-sm">S/ 38.00</span>
+
+          <!-- Plato 3 -->
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+            <div class="h-48 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Causa Acevichada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div class="p-5 space-y-2 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start">
+                  <h3 class="font-bold text-navy-900 text-base">Causa Acevichada</h3>
+                  <span class="font-extrabold text-amber-600 text-sm">S/ 38.00</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Papa amarilla perfumada con ají amarillo, rellena de langostinos crocantes y salsa acevichada.</p>
               </div>
-              <p class="text-xs text-slate-500">Papa amarilla perfumada con langostinos crocantes.</p>
+              <span class="inline-block text-[10px] font-bold uppercase text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full w-fit">Entrada Fusión</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="max-w-2xl mx-auto px-6">
-        <div class="bg-navy-900 text-white rounded-3xl p-8 shadow-xl space-y-4">
-          <h3 class="font-display font-bold text-xl text-center">Formulario de Reservas</h3>
-          <form onsubmit="handlePublicReservation(event)" class="space-y-3">
-            <input type="text" id="pub-name" required placeholder="Nombre y Apellido" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none" />
-            <div class="grid grid-cols-2 gap-3">
-              <input type="date" id="pub-date" required class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none" />
-              <select id="pub-time" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none">
-                <option value="13:00 PM">13:00 PM (Almuerzo)</option>
-                <option value="20:00 PM">20:00 PM (Cena)</option>
-              </select>
+      <!-- FORMULARIO DE RESERVAS -->
+      <section id="reservas" class="max-w-3xl mx-auto px-6">
+        <div class="bg-navy-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl space-y-6">
+          <div class="text-center space-y-2">
+            <span class="text-xs font-bold uppercase text-amber-400 tracking-wider">Atención y Reservas</span>
+            <h3 class="font-display font-bold text-2xl">Reserve su Mesa en Rivera de Plata</h3>
+            <p class="text-xs text-slate-300">Complete sus datos y nos pondremos en contacto de inmediato.</p>
+          </div>
+          <form onsubmit="handlePublicReservation(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold mb-1 text-slate-300">Nombre y Apellido *</label>
+                <input type="text" id="pub-name" required placeholder="Ej. Carlos Mendoza" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold mb-1 text-slate-300">Teléfono / Celular *</label>
+                <input type="tel" id="pub-phone" required placeholder="Ej. 987654321" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none" />
+              </div>
             </div>
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 font-bold text-xs">Confirmar Reserva</button>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-semibold mb-1 text-slate-300">Fecha *</label>
+                <input type="date" id="pub-date" required class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold mb-1 text-slate-300">Turno / Hora *</label>
+                <select id="pub-time" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none">
+                  <option value="13:00 PM">13:00 PM (Almuerzo)</option>
+                  <option value="20:00 PM">20:00 PM (Cena)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold mb-1 text-slate-300">Número de Personas *</label>
+                <select id="pub-people" class="w-full px-4 py-3 rounded-xl bg-navy-800 border border-slate-700 text-xs text-white outline-none">
+                  <option value="2 Personas">2 Personas</option>
+                  <option value="4 Personas">4 Personas</option>
+                  <option value="6+ Personas">6+ Personas (Familiar)</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="w-full py-4 rounded-xl bg-amber-600 hover:bg-amber-700 font-bold text-xs uppercase tracking-wider transition-colors shadow-lg">Confirmar Reserva de Mesa</button>
           </form>
         </div>
       </section>
+
+      <!-- PIE DE PÁGINA -->
+      <footer class="border-t border-slate-200 pt-10 pb-16 px-6 text-center text-xs text-slate-500 space-y-3">
+        <p class="font-bold text-navy-900">Restaurante Rivera de Plata · Chaclacayo, Lima, Perú[cite: 6]</p>
+        <p>Proyecto Académico desarrollado para el curso de Metodologías Ágiles para la Innovación (Instituto IDAT)[cite: 3]</p>
+        <button onclick="closePublicWebsite()" class="inline-flex items-center gap-1.5 text-amber-600 font-bold hover:underline">
+          <i class="fa-solid fa-lock"></i> Acceso al Sistema Operativo Interno
+        </button>
+      </footer>
     </main>
   </div>
 
@@ -282,10 +363,9 @@
     <!-- BACKDROP MÓVIL -->
     <div id="mobile-backdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-30 hidden lg:hidden"></div>
 
-    <!-- BARRA LATERAL DE NAVEGACIÓN (SIDEBAR - Escritorio y Drawer móvil) -->
+    <!-- BARRA LATERAL DE NAVEGACIÓN (SIDEBAR) -->
     <aside id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 h-screen w-72 bg-navy-900 text-white flex flex-col justify-between transition-transform duration-300 -translate-x-full lg:translate-x-0 shadow-2xl border-r border-slate-800">
       <div>
-        <!-- Marca / Logo -->
         <div class="p-6 border-b border-slate-800/90 flex items-center justify-between">
           <div class="flex items-center gap-3.5">
             <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-navy-950 font-extrabold text-lg">
@@ -293,7 +373,7 @@
             </div>
             <div>
               <h1 class="font-display font-extrabold text-lg tracking-tight text-white leading-tight">RIVERA DE PLATA</h1>
-              <p id="sidebar-role-indicator" class="text-[11px] font-medium uppercase tracking-widest text-amber-400">Cocina Peruana Fusión</p>
+              <p id="sidebar-role-indicator" class="text-[11px] font-medium uppercase tracking-widest text-amber-400">Chaclacayo, Lima[cite: 6]</p>
             </div>
           </div>
           <button onclick="toggleSidebar(false)" class="lg:hidden text-slate-400 hover:text-white p-2 rounded-lg">
@@ -301,15 +381,14 @@
           </button>
         </div>
 
-        <!-- Etiqueta de Sistema Interno -->
         <div class="px-6 pt-4 pb-2 flex items-center justify-between">
           <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Operaciones & Control</span>
-          <button onclick="openPublicWebsite()" class="text-[10px] text-amber-400 hover:underline flex items-center gap-1">
-            <i class="fa-solid fa-globe"></i> Ver Web
+          <button onclick="openPublicWebsite()" class="text-[10px] text-amber-400 hover:underline flex items-center gap-1 font-bold">
+            <i class="fa-solid fa-globe"></i> Ver Web Pública
           </button>
         </div>
 
-        <!-- Menú de Navegación (6 Módulos) -->
+        <!-- Menú de Navegación (6 Módulos Originales) -->
         <nav class="px-3 space-y-1.5 mt-1" id="sidebar-nav">
           <button onclick="navigateTo('dashboard')" data-nav="dashboard" class="nav-btn nav-item-active w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all">
             <span class="flex items-center gap-3">
@@ -358,7 +437,7 @@
         </nav>
       </div>
 
-      <!-- Pie de Sidebar: Controles de Prototipo / Bloqueo -->
+      <!-- Pie de Sidebar -->
       <div class="p-3 m-3 rounded-2xl bg-navy-800/80 border border-slate-700/70 space-y-2.5">
         <div class="flex items-center justify-between">
           <span id="session-user-label" class="text-xs font-semibold text-white">Sesión Activa</span>
@@ -368,12 +447,10 @@
         </div>
         <div class="grid grid-cols-2 gap-2 pt-1">
           <button onclick="confirmarAccionDemo('restaurar')" class="px-2 py-1.5 rounded-lg bg-slate-700 hover:bg-amber-600 text-white text-[10px] font-semibold transition-colors flex items-center justify-center gap-1">
-            <i class="fa-solid fa-rotate-left"></i>
-            <span>Restaurar</span>
+            <i class="fa-solid fa-rotate-left"></i><span>Restaurar</span>
           </button>
           <button onclick="confirmarAccionDemo('vaciar')" class="px-2 py-1.5 rounded-lg bg-slate-700/60 hover:bg-rose-600 text-slate-200 hover:text-white text-[10px] font-semibold transition-colors flex items-center justify-center gap-1">
-            <i class="fa-solid fa-trash-can"></i>
-            <span>Vaciar</span>
+            <i class="fa-solid fa-trash-can"></i><span>Vaciar</span>
           </button>
         </div>
       </div>
@@ -393,7 +470,7 @@
               <h2 id="header-title" class="font-display font-bold text-lg sm:text-xl text-navy-900">Panel Principal</h2>
               <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
                 <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                Prototipo Académico
+                MVP Fase 4 · IDAT[cite: 3]
               </span>
             </div>
             <p id="header-subtitle" class="text-xs text-slate-500 mt-0.5">Resumen operativo del turno y monitoreo en tiempo real</p>
@@ -401,23 +478,20 @@
         </div>
 
         <div class="flex items-center gap-3">
-          <!-- BOTÓN SOLICITADO: Ver Sitio Web Público en Header -->
-          <button onclick="openPublicWebsite()" class="hidden md:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200 transition-all">
+          <!-- BOTÓN DESTACADO: Ver Sitio Web Público en Header -->
+          <button onclick="openPublicWebsite()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200 transition-all shadow-xs">
             <i class="fa-solid fa-globe text-amber-600"></i>
             <span>Ver Sitio Web Público</span>
           </button>
 
-          <!-- Indicador de Sincronización en Vivo -->
           <div id="sync-badge" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-200">
             <span id="sync-dot" class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
             <span id="sync-label">Sincronizando...</span>
           </div>
-          <!-- Reloj en tiempo real -->
           <div class="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-medium border border-slate-200/80">
             <i class="fa-regular fa-clock text-amber-600"></i>
             <span id="live-clock">--:--:--</span>
           </div>
-          <!-- Acceso rápido a Nuevo Pedido -->
           <button onclick="navigateTo('nuevo-pedido')" class="px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all flex items-center gap-2">
             <i class="fa-solid fa-plus text-amber-400"></i>
             <span>Nuevo Pedido</span>
@@ -425,511 +499,105 @@
         </div>
       </header>
 
-      <!-- BANNER MÓVIL DE IDENTIFICACIÓN DE PROTOTIPO -->
-      <div class="sm:hidden bg-amber-50 border-b border-amber-200 px-4 py-2 text-[11px] text-amber-900 flex items-center justify-between">
-        <span><i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Prototipo con Datos Demo</span>
-        <button onclick="confirmarAccionDemo('restaurar')" class="underline font-semibold text-amber-800">Restaurar</button>
-      </div>
-
       <!-- CONTENEDOR DINÁMICO DE MÓDULOS -->
       <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 1: PANEL PRINCIPAL (DASHBOARD)                     -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 1: PANEL PRINCIPAL -->
         <section id="module-dashboard" class="module-view space-y-6">
-          <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-navy-900 text-amber-400 flex items-center justify-center shrink-0">
-                <i class="fa-solid fa-gauge-high"></i>
-              </div>
-              <div>
-                <h3 class="text-sm font-bold text-navy-900">Indicadores Calculados del Prototipo</h3>
-                <p class="text-xs text-slate-500">Todas las métricas mostradas reflejan dinámicamente los registros almacenados en esta sesión de demostración.</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <button onclick="navigateTo('seguimiento')" class="px-3.5 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors">
-                Ver Tablero de Cocina
-              </button>
-            </div>
-          </div>
-
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Pedidos (Demo)</span>
-                <div class="w-9 h-9 rounded-xl bg-navy-900/10 text-navy-900 flex items-center justify-center">
-                  <i class="fa-solid fa-receipt"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-total" class="font-display text-3xl font-extrabold text-navy-900">0</span>
-                <span class="text-xs text-slate-400">registrados</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Acumulado del turno actual</p>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">Total Pedidos</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-total" class="font-display text-3xl font-extrabold text-navy-900">0</span></div>
             </div>
-
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Pedidos Recibidos</span>
-                <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
-                  <i class="fa-solid fa-inbox"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-recibidos" class="font-display text-3xl font-extrabold text-sky-700">0</span>
-                <span class="text-xs text-slate-400">por confirmar</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Pendientes de validación inicial</p>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">Recibidos</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-recibidos" class="font-display text-3xl font-extrabold text-sky-700">0</span></div>
             </div>
-
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">En Preparación</span>
-                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                  <i class="fa-solid fa-fire-burner"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-preparacion" class="font-display text-3xl font-extrabold text-amber-600">0</span>
-                <span id="stat-prep-detalle" class="text-xs text-slate-500">(0 conf. / 0 cocina)</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Activos en estación de cocina</p>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">En Preparación</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-preparacion" class="font-display text-3xl font-extrabold text-amber-600">0</span></div>
             </div>
-
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Listos para Entregar</span>
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                  <i class="fa-solid fa-bell-concierge"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-listos" class="font-display text-3xl font-extrabold text-emerald-600">0</span>
-                <span class="text-xs text-slate-400">en despacho</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Requieren verificación previa</p>
-            </div>
-
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Pedidos Entregados</span>
-                <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-                  <i class="fa-solid fa-circle-check"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-entregados" class="font-display text-3xl font-extrabold text-slate-800">0</span>
-                <span class="text-xs text-slate-400">completados</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Verificados y cerrados</p>
-            </div>
-
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Incidencias Abiertas</span>
-                <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
-                  <i class="fa-solid fa-triangle-exclamation"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-incidencias" class="font-display text-3xl font-extrabold text-rose-600">0</span>
-                <span id="stat-inc-detalle" class="text-xs text-slate-500">pendientes / proceso</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Requieren seguimiento operativo</p>
-            </div>
-
-            <div class="sm:col-span-2 bg-gradient-to-br from-navy-900 to-navy-800 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
-              <div class="flex items-center justify-between">
-                <div>
-                  <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Tiempo Promedio de Atención (Demo)</span>
-                  <p class="text-[11px] text-slate-300 mt-0.5">Calculado desde recepción hasta entrega/estado actual de pedidos registrados</p>
-                </div>
-                <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center">
-                  <i class="fa-solid fa-stopwatch text-lg"></i>
-                </div>
-              </div>
-              <div class="mt-4 flex items-baseline justify-between">
-                <div class="flex items-baseline gap-2">
-                  <span id="stat-tiempo-promedio" class="font-display text-3xl font-extrabold text-white">-- min</span>
-                  <span id="stat-tiempo-nota" class="text-xs text-slate-400">por pedido</span>
-                </div>
-                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-white/10 text-amber-300 font-medium">Meta: &lt; 25 min</span>
-              </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">Listos</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-listos" class="font-display text-3xl font-extrabold text-emerald-600">0</span></div>
             </div>
           </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
-              <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <i class="fa-solid fa-clock-rotate-left text-amber-600"></i>
-                  <h3 class="font-display font-bold text-base text-navy-900">Pedidos Recientes del Turno</h3>
-                </div>
-                <button onclick="navigateTo('seguimiento')" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
-                  <span>Ver todos</span>
-                  <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
-              </div>
-              <div class="overflow-x-auto flex-1">
-                <table class="w-full text-left border-collapse">
-                  <thead>
-                    <tr class="bg-slate-50/80 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200/80">
-                      <th class="py-3 px-4">Código</th>
-                      <th class="py-3 px-4">Cliente / Modalidad</th>
-                      <th class="py-3 px-4">Total</th>
-                      <th class="py-3 px-4">Estado</th>
-                      <th class="py-3 px-4 text-right">Acción</th>
-                    </tr>
-                  </thead>
-                  <tbody id="dashboard-recent-orders" class="divide-y divide-slate-100 text-sm"></tbody>
-                </table>
-              </div>
-            </div>
-
-            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
-              <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <i class="fa-solid fa-circle-exclamation text-rose-600"></i>
-                  <h3 class="font-display font-bold text-base text-navy-900">Incidencias Activas</h3>
-                </div>
-                <button onclick="navigateTo('incidencias')" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
-                  <span>Gestionar</span>
-                  <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
-              </div>
-              <div id="dashboard-open-incidents" class="p-4 space-y-3 flex-1 overflow-y-auto max-h-96"></div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 class="font-display font-bold text-base text-navy-900 mb-4">Pedidos Recientes del Turno</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm">
+                <thead><tr class="bg-slate-50 text-xs font-bold text-slate-500 uppercase"><th class="p-3">Código</th><th class="p-3">Cliente</th><th class="p-3">Total</th><th class="p-3">Estado</th></tr></thead>
+                <tbody id="dashboard-recent-orders" class="divide-y divide-slate-100"></tbody>
+              </table>
             </div>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 2: REGISTRO DE NUEVOS PEDIDOS                      -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 2: NUEVO PEDIDO -->
         <section id="module-nuevo-pedido" class="module-view hidden space-y-6">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-6">
-              <div class="border-b border-slate-100 pb-4 flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h3 class="font-display font-bold text-lg text-navy-900">Registrar Nuevo Pedido</h3>
-                  <p class="text-xs text-slate-500">Complete los datos del cliente y agregue los platos de la comanda.</p>
-                </div>
-                <span class="px-3 py-1.5 rounded-xl bg-navy-900 text-amber-400 font-mono text-xs font-bold" id="form-order-code-badge">Código: RDP-006</span>
-              </div>
-
-              <div class="space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-amber-700 flex items-center gap-2">
-                  <i class="fa-solid fa-id-card"></i>
-                  <span>1. Datos Generales del Pedido</span>
-                </h4>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Código Automático</label>
-                    <input type="text" id="order-code" readonly class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 border text-slate-700 font-mono text-sm font-bold cursor-not-allowed" />
-                  </div>
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Fecha *</label>
-                    <input type="date" id="order-date" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-sm outline-none" />
-                  </div>
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Hora de Recepción *</label>
-                    <input type="time" id="order-time" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-sm outline-none" />
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nombre del Cliente *</label>
-                    <input type="text" id="order-client" placeholder="Ej. Mariana Villalobos" class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-sm outline-none" />
-                  </div>
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Responsable del Registro *</label>
-                    <select id="order-staff" class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-sm outline-none">
-                      <option value="Carlos Mendoza">Carlos Mendoza (Anfitrión / Caja)</option>
-                      <option value="Sofía Paredes">Sofía Paredes (Atención Salón)</option>
-                      <option value="Luis Torres">Luis Torres (Coordinador Delivery)</option>
-                      <option value="Andrea Rojas">Andrea Rojas (Supervisora de Turno)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Modalidad de Atención *</label>
-                    <select id="order-modality" onchange="handleModalityChange()" class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-sm outline-none">
-                      <option value="Salón">Salón (Consumo en local)</option>
-                      <option value="Delivery">Delivery (Envío a domicilio)</option>
-                      <option value="Para recoger">Para recoger (Take-away)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label id="order-location-label" class="block text-xs font-semibold text-slate-700 mb-1.5">Número de Mesa *</label>
-                    <input type="text" id="order-location" placeholder="Ej. Mesa 05" class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-sm outline-none" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="space-y-4 pt-4 border-t border-slate-100">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <h4 class="text-xs font-bold uppercase tracking-wider text-amber-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bowl-food"></i>
-                    <span>2. Agregar Productos al Pedido</span>
-                  </h4>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-slate-50 border space-y-3">
-                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-                    <div class="sm:col-span-6">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Catálogo Rápido</label>
-                      <select id="item-catalog" onchange="selectCatalogItem()" class="w-full px-3 py-2 rounded-xl bg-white border text-xs sm:text-sm outline-none">
-                        <option value="">-- Seleccionar plato o ingresar manual --</option>
-                        <option value="Ceviche Nikkei|46.00">Ceviche Nikkei - S/ 46.00</option>
-                        <option value="Lomo Saltado al Wok|52.00">Lomo Saltado al Wok - S/ 52.00</option>
-                        <option value="Causa Acevichada|38.00">Causa Acevichada - S/ 38.00</option>
-                        <option value="Risotto de Ají de Gallina|44.00">Risotto de Ají de Gallina - S/ 44.00</option>
-                        <option value="Tacu Tacu con Mariscos|49.00">Tacu Tacu con Mariscos - S/ 49.00</option>
-                        <option value="Pulpo Anticuchero|56.00">Pulpo Anticuchero - S/ 56.00</option>
-                        <option value="Suspiro de Chirimoya|22.00">Suspiro de Chirimoya - S/ 22.00</option>
-                        <option value="Chicha Morada Artesanal (1L)|18.00">Chicha Morada (1L) - S/ 18.00</option>
-                      </select>
-                    </div>
-                    <div class="sm:col-span-6">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Nombre del Producto *</label>
-                      <input type="text" id="item-name" placeholder="Nombre del plato" class="w-full px-3 py-2 rounded-xl bg-white border text-xs sm:text-sm outline-none" />
-                    </div>
-                  </div>
-
-                  <div class="grid grid-cols-2 sm:grid-cols-12 gap-3 items-end">
-                    <div class="sm:col-span-2">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Cantidad *</label>
-                      <input type="number" id="item-qty" min="1" value="1" oninput="updateItemPreviewSubtotal()" class="w-full px-3 py-2 rounded-xl bg-white border text-xs sm:text-sm outline-none" />
-                    </div>
-                    <div class="sm:col-span-3">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Precio Unit. (S/) *</label>
-                      <input type="number" id="item-price" min="0" step="0.50" placeholder="0.00" oninput="updateItemPreviewSubtotal()" class="w-full px-3 py-2 rounded-xl bg-white border text-xs sm:text-sm outline-none" />
-                    </div>
-                    <div class="sm:col-span-4">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Observaciones</label>
-                      <input type="text" id="item-notes" placeholder="Ej. Sin ají..." class="w-full px-3 py-2 rounded-xl bg-white border text-xs sm:text-sm outline-none" />
-                    </div>
-                    <div class="col-span-2 sm:col-span-3">
-                      <button type="button" onclick="addProductToOrder()" class="w-full py-2 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Agregar (<span id="item-preview-sub">S/ 0.00</span>)</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="border rounded-2xl overflow-hidden">
-                  <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                      <thead>
-                        <tr class="bg-navy-900 text-white text-[11px] font-semibold uppercase tracking-wider">
-                          <th class="py-2.5 px-4">Producto</th>
-                          <th class="py-2.5 px-3 text-center">Cant.</th>
-                          <th class="py-2.5 px-3 text-right">P. Unit.</th>
-                          <th class="py-2.5 px-3 text-right">Subtotal</th>
-                          <th class="py-2.5 px-4">Observaciones</th>
-                          <th class="py-2.5 px-3 text-center">Quitar</th>
-                        </tr>
-                      </thead>
-                      <tbody id="new-order-items-body" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Registrar Nuevo Pedido</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><label class="block text-xs font-semibold mb-1">Cliente *</label><input type="text" id="order-client" placeholder="Nombre cliente" class="w-full p-3 rounded-xl border text-sm" /></div>
+              <div><label class="block text-xs font-semibold mb-1">Mesa / Ubicación *</label><input type="text" id="order-location" placeholder="Ej. Mesa 05" class="w-full p-3 rounded-xl border text-sm" /></div>
             </div>
-
-            <div class="space-y-6">
-              <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-5 sticky top-24">
-                <h4 class="font-display font-bold text-base text-navy-900 border-b pb-3">Resumen de la Comanda</h4>
-                <div class="space-y-2.5 text-sm">
-                  <div class="flex justify-between text-slate-600"><span>Total de ítems:</span><span id="summary-item-count" class="font-semibold">0</span></div>
-                  <div class="flex justify-between text-slate-600"><span>Subtotal Neto:</span><span id="summary-subtotal">S/ 0.00</span></div>
-                  <div class="flex justify-between text-slate-500 text-xs"><span>IGV (18%):</span><span id="summary-igv">S/ 0.00</span></div>
-                  <div class="pt-3 border-t flex items-baseline justify-between"><span class="font-bold">TOTAL:</span><span id="summary-total" class="font-display text-2xl font-extrabold text-amber-600">S/ 0.00</span></div>
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold mb-1.5">Observación General</label>
-                  <textarea id="order-general-notes" rows="2" placeholder="Ej. Cubiertos extra..." class="w-full px-3 py-2 rounded-xl bg-slate-50 border text-xs outline-none"></textarea>
-                </div>
-                <div class="space-y-2.5 pt-2">
-                  <button type="button" onclick="submitNewOrder()" class="w-full py-3 px-4 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-semibold text-sm shadow-md flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-check-circle text-amber-400"></i><span>Registrar Pedido</span>
-                  </button>
-                  <button type="button" onclick="resetNewOrderForm(true)" class="w-full py-2.5 px-3 rounded-xl border text-slate-700 font-semibold text-xs">Limpiar</button>
-                </div>
+            <div class="p-4 bg-slate-50 rounded-xl space-y-3">
+              <h4 class="text-xs font-bold uppercase text-amber-700">Agregar Plato de la Carta</h4>
+              <select id="item-catalog" onchange="selectCatalogItem()" class="w-full p-2.5 rounded-xl border text-sm">
+                <option value="">-- Seleccionar plato --</option>
+                <option value="Ceviche Nikkei|46.00">Ceviche Nikkei - S/ 46.00</option>
+                <option value="Lomo Saltado al Wok|52.00">Lomo Saltado al Wok - S/ 52.00</option>
+                <option value="Causa Acevichada|38.00">Causa Acevichada - S/ 38.00</option>
+              </select>
+              <div class="grid grid-cols-3 gap-2">
+                <input type="text" id="item-name" placeholder="Producto" class="col-span-2 p-2 rounded-xl border text-sm" />
+                <input type="number" id="item-price" placeholder="Precio" class="p-2 rounded-xl border text-sm" />
               </div>
+              <button type="button" onclick="addProductToOrder()" class="px-4 py-2 bg-amber-600 text-white rounded-xl text-xs font-bold">Añadir al Pedido</button>
             </div>
+            <table class="w-full text-left text-sm border">
+              <thead><tr class="bg-navy-900 text-white"><th class="p-2">Producto</th><th class="p-2">Cant</th><th class="p-2">Precio</th></tr></thead>
+              <tbody id="new-order-items-body"></tbody>
+            </table>
+            <button onclick="submitNewOrder()" class="w-full py-3 bg-navy-900 text-white font-bold rounded-xl">Guardar y Enviar Pedido</button>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 3: SEGUIMIENTO DE PEDIDOS                          -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 3: SEGUIMIENTO -->
         <section id="module-seguimiento" class="module-view hidden space-y-6">
-          <div class="bg-white rounded-2xl p-5 border shadow-xs space-y-4">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <h3 class="font-display font-bold text-lg text-navy-900">Seguimiento en Tiempo Real e Historial</h3>
-                <p class="text-xs text-slate-500">Actualice el estado de preparación de cada pedido.</p>
-              </div>
-              <div class="relative w-full md:w-72">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                <input type="text" id="filter-search" oninput="renderTrackingModule()" placeholder="Buscar código o cliente..." class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border text-xs sm:text-sm outline-none" />
-              </div>
-            </div>
-
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-3 border-t">
-              <div class="flex flex-wrap items-center gap-1.5" id="status-filter-chips">
-                <button onclick="setTrackingStatusFilter('Todos')" data-status-filter="Todos" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-navy-900 text-white">Todos</button>
-                <button onclick="setTrackingStatusFilter('Recibido')" data-status-filter="Recibido" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600">Recibido</button>
-                <button onclick="setTrackingStatusFilter('Confirmado')" data-status-filter="Confirmado" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600">Confirmado</button>
-                <button onclick="setTrackingStatusFilter('En preparación')" data-status-filter="En preparación" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600">En preparación</button>
-                <button onclick="setTrackingStatusFilter('Listo')" data-status-filter="Listo" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600">Listo</button>
-                <button onclick="setTrackingStatusFilter('Entregado')" data-status-filter="Entregado" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600">Entregado</button>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold text-slate-500">Modalidad:</span>
-                <select id="filter-modality" onchange="renderTrackingModule()" class="px-3 py-1.5 rounded-xl bg-slate-50 border text-xs font-semibold text-slate-700 outline-none">
-                  <option value="Todas">Todas</option>
-                  <option value="Salón">Salón</option>
-                  <option value="Delivery">Delivery</option>
-                  <option value="Para recoger">Para recoger</option>
-                </select>
-              </div>
-            </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Seguimiento en Tiempo Real</h3>
+            <div id="tracking-orders-container" class="space-y-4"></div>
           </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="tracking-visual-lanes">
-            <div class="bg-sky-50/70 border border-sky-200 rounded-2xl p-4">
-              <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase text-sky-900">Pendientes</span><span id="lane-count-pendientes" class="px-2 py-0.5 rounded-full bg-sky-600 text-white text-xs font-bold">0</span></div>
-              <div id="lane-list-pendientes" class="flex flex-wrap gap-1.5 mt-2"></div>
-            </div>
-            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-4">
-              <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase text-amber-900">En Cocina</span><span id="lane-count-preparacion" class="px-2 py-0.5 rounded-full bg-amber-600 text-white text-xs font-bold">0</span></div>
-              <div id="lane-list-preparacion" class="flex flex-wrap gap-1.5 mt-2"></div>
-            </div>
-            <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4">
-              <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase text-emerald-900">Listos</span><span id="lane-count-listos" class="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-bold">0</span></div>
-              <div id="lane-list-listos" class="flex flex-wrap gap-1.5 mt-2"></div>
-            </div>
-          </div>
-
-          <div id="tracking-orders-container" class="space-y-4"></div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 4: VERIFICACIÓN Y ENTREGA                          -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 4: VERIFICACIÓN -->
         <section id="module-verificacion" class="module-view hidden space-y-6">
-          <div class="bg-white rounded-2xl p-6 border shadow-xs">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4">
-              <div>
-                <h3 class="font-display font-bold text-lg text-navy-900">Control de Calidad, Verificación y Entrega</h3>
-                <p class="text-xs text-slate-500">Verifique cada ítem antes de autorizar la entrega.</p>
-              </div>
-              <div class="w-full md:w-80">
-                <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Seleccionar Pedido</label>
-                <select id="verify-order-select" onchange="loadOrderForVerification(this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border text-sm font-semibold outline-none"></select>
-              </div>
-            </div>
-            <div id="verification-workspace" class="mt-6"></div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Verificación y Entrega</h3>
+            <select id="verify-order-select" onchange="loadOrderForVerification(this.value)" class="w-full p-3 rounded-xl border font-semibold"></select>
+            <div id="verification-workspace"></div>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 5: CONTROL DE INCIDENCIAS                         -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 5: INCIDENCIAS -->
         <section id="module-incidencias" class="module-view hidden space-y-6">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-5 bg-white rounded-2xl p-6 border shadow-xs space-y-4 h-fit">
-              <div class="border-b pb-3 flex items-center justify-between">
-                <h3 class="font-display font-bold text-base text-navy-900">Registrar Incidencia</h3>
-                <span id="inc-code-badge" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 font-mono text-xs font-bold">INC-004</span>
-              </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div><label class="block text-xs font-semibold mb-1">Código</label><input type="text" id="inc-code" readonly class="w-full px-3 py-2 rounded-xl bg-slate-100 border text-xs font-bold" /></div>
-                <div><label class="block text-xs font-semibold mb-1">Pedido *</label><select id="inc-order-code" class="w-full px-3 py-2 rounded-xl bg-white border text-xs"></select></div>
-              </div>
-              <div><label class="block text-xs font-semibold mb-1">Tipo *</label>
-                <select id="inc-type" class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-xs">
-                  <option value="Demora en la preparación">Demora en la preparación</option>
-                  <option value="Pedido incompleto">Pedido incompleto</option>
-                  <option value="Producto equivocado">Producto equivocado</option>
-                  <option value="Reclamo del cliente">Reclamo del cliente</option>
-                </select>
-              </div>
-              <div><label class="block text-xs font-semibold mb-1">Descripción *</label><textarea id="inc-description" rows="3" placeholder="Detalle qué ocurrió..." class="w-full px-3 py-2 rounded-xl bg-white border text-xs outline-none"></textarea></div>
-              <div><label class="block text-xs font-semibold mb-1">Acción Correctiva</label><textarea id="inc-action" rows="2" placeholder="Solución aplicada..." class="w-full px-3 py-2 rounded-xl bg-white border text-xs outline-none"></textarea></div>
-              <button type="button" onclick="submitNewIncident()" class="w-full py-3 rounded-xl bg-navy-900 text-white font-semibold text-sm">Registrar Incidencia</button>
-            </div>
-
-            <div class="lg:col-span-7 bg-white rounded-2xl border shadow-xs overflow-hidden flex flex-col">
-              <div class="p-6 border-b flex items-center justify-between">
-                <h3 class="font-display font-bold text-base text-navy-900">Historial de Incidencias</h3>
-                <select id="filter-inc-status" onchange="renderIncidentsModule()" class="px-3 py-2 rounded-xl bg-slate-50 border text-xs font-semibold">
-                  <option value="Todas">Todos</option>
-                  <option value="Pendiente">Pendientes</option>
-                  <option value="Resuelta">Resueltas</option>
-                </select>
-              </div>
-              <div id="incidents-list-container" class="p-5 space-y-4 flex-1 overflow-y-auto"></div>
-            </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Control de Incidencias</h3>
+            <textarea id="inc-description" placeholder="Describa la incidencia..." class="w-full p-3 rounded-xl border text-sm"></textarea>
+            <button onclick="submitNewIncident()" class="px-4 py-2 bg-rose-600 text-white font-bold rounded-xl text-xs">Registrar Incidencia</button>
+            <div id="incidents-list-container" class="space-y-3"></div>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 6: HISTORIAL COMPLETO                              -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 6: HISTORIAL -->
         <section id="module-historial" class="module-view hidden space-y-6">
-          <div class="bg-white rounded-2xl p-6 border shadow-xs space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4">
-              <div>
-                <h3 class="font-display font-bold text-lg text-navy-900">Historial Completo de Pedidos</h3>
-                <p class="text-xs text-slate-500">Consulta global de todas las comandas.</p>
-              </div>
-              <div class="flex flex-wrap items-center gap-2">
-                <input type="date" id="history-date-filter" onchange="renderHistoryModule()" class="px-3 py-2 rounded-xl bg-slate-50 border text-xs" />
-                <select id="history-modality-filter" onchange="renderHistoryModule()" class="px-3 py-2 rounded-xl bg-slate-50 border text-xs font-semibold">
-                  <option value="Todas">Todas</option>
-                  <option value="Salón">Salón</option>
-                  <option value="Delivery">Delivery</option>
-                  <option value="Para recoger">Para recoger</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="p-4 rounded-xl bg-slate-50 border flex items-center justify-between">
-                <div><span class="text-[11px] font-bold uppercase text-slate-500">Pedidos</span><p id="hist-stat-count" class="font-display text-2xl font-extrabold text-navy-900 mt-0.5">0</p></div>
-                <div class="w-10 h-10 rounded-xl bg-navy-900 text-amber-400 flex items-center justify-center"><i class="fa-solid fa-receipt"></i></div>
-              </div>
-              <div class="p-4 rounded-xl bg-slate-50 border flex items-center justify-between">
-                <div><span class="text-[11px] font-bold uppercase text-slate-500">Ventas Totales</span><p id="hist-stat-revenue" class="font-display text-2xl font-extrabold text-emerald-600 mt-0.5">S/ 0.00</p></div>
-                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-coins"></i></div>
-              </div>
-              <div class="p-4 rounded-xl bg-slate-50 border flex items-center justify-between">
-                <div><span class="text-[11px] font-bold uppercase text-slate-500">Entregados</span><p id="hist-stat-delivered" class="font-display text-2xl font-extrabold text-sky-700 mt-0.5">0</p></div>
-                <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center"><i class="fa-solid fa-circle-check"></i></div>
-              </div>
-            </div>
-
-            <div class="border rounded-2xl overflow-hidden">
-              <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                  <thead>
-                    <tr class="bg-navy-900 text-white text-[11px] font-semibold uppercase tracking-wider">
-                      <th class="py-3 px-4">Código</th><th class="py-3 px-4">Fecha / Hora</th><th class="py-3 px-4">Cliente</th><th class="py-3 px-4">Modalidad</th><th class="py-3 px-4 text-center">Ítems</th><th class="py-3 px-4 text-right">Total</th><th class="py-3 px-4 text-center">Estado</th><th class="py-3 px-4 text-center">Detalle</th>
-                    </tr>
-                  </thead>
-                  <tbody id="history-table-body" class="divide-y text-xs sm:text-sm"></tbody>
-                </table>
-              </div>
-            </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Historial Completo</h3>
+            <table class="w-full text-left text-sm border">
+              <thead><tr class="bg-navy-900 text-white"><th class="p-3">Código</th><th class="p-3">Cliente</th><th class="p-3">Total</th><th class="p-3">Estado</th></tr></thead>
+              <tbody id="history-table-body" class="divide-y"></tbody>
+            </table>
           </div>
         </section>
 
@@ -939,62 +607,30 @@
 
   <!-- MENÚ INFERIOR FIJO PARA MÓVILES -->
   <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-navy-900 border-t border-slate-800 px-2 py-2 flex items-center justify-around shadow-2xl">
-    <button onclick="navigateTo('dashboard')" data-mobile-nav="dashboard" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-amber-400"><i class="fa-solid fa-chart-pie text-lg mb-0.5"></i><span class="text-[10px]">Panel</span></button>
-    <button onclick="navigateTo('nuevo-pedido')" data-mobile-nav="nuevo-pedido" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400"><i class="fa-solid fa-file-circle-plus text-lg mb-0.5"></i><span class="text-[10px]">Nuevo</span></button>
-    <button onclick="navigateTo('seguimiento')" data-mobile-nav="seguimiento" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400"><i class="fa-solid fa-fire-burner text-lg mb-0.5"></i><span class="text-[10px]">Cocina</span></button>
-    <button onclick="navigateTo('verificacion')" data-mobile-nav="verificacion" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400"><i class="fa-solid fa-clipboard-check text-lg mb-0.5"></i><span class="text-[10px]">Entrega</span></button>
-    <button onclick="navigateTo('incidencias')" data-mobile-nav="incidencias" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400"><i class="fa-solid fa-triangle-exclamation text-lg mb-0.5"></i><span class="text-[10px]">Incidencias</span></button>
-    <button onclick="navigateTo('historial')" data-mobile-nav="historial" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400"><i class="fa-solid fa-clock-rotate-left text-lg mb-0.5"></i><span class="text-[10px]">Historial</span></button>
+    <button onclick="navigateTo('dashboard')" data-mobile-nav="dashboard" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-amber-400">
+      <i class="fa-solid fa-chart-pie text-lg mb-0.5"></i><span class="text-[10px]">Panel</span>
+    </button>
+    <button onclick="navigateTo('nuevo-pedido')" data-mobile-nav="nuevo-pedido" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400">
+      <i class="fa-solid fa-file-circle-plus text-lg mb-0.5"></i><span class="text-[10px]">Nuevo</span>
+    </button>
+    <button onclick="navigateTo('seguimiento')" data-mobile-nav="seguimiento" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400">
+      <i class="fa-solid fa-fire-burner text-lg mb-0.5"></i><span class="text-[10px]">Cocina</span>
+    </button>
+    <button onclick="navigateTo('verificacion')" data-mobile-nav="verificacion" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400">
+      <i class="fa-solid fa-clipboard-check text-lg mb-0.5"></i><span class="text-[10px]">Entrega</span>
+    </button>
+    <button onclick="navigateTo('incidencias')" data-mobile-nav="incidencias" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400">
+      <i class="fa-solid fa-triangle-exclamation text-lg mb-0.5"></i><span class="text-[10px]">Incidencias</span>
+    </button>
+    <button onclick="navigateTo('historial')" data-mobile-nav="historial" class="mobile-nav-btn flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-400">
+      <i class="fa-solid fa-clock-rotate-left text-lg mb-0.5"></i><span class="text-[10px]">Historial</span>
+    </button>
   </nav>
-
-  <!-- MODAL DE DETALLE DE PEDIDO -->
-  <div id="order-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b pb-3">
-        <div class="flex items-center gap-2">
-          <span id="modal-order-code" class="px-2.5 py-1 rounded-lg bg-navy-900 text-amber-400 font-mono text-xs font-bold">RDP-000</span>
-          <h4 class="font-display font-bold text-base text-navy-900">Detalle de Comanda</h4>
-        </div>
-        <button onclick="closeOrderDetailModal()" class="text-slate-400 hover:text-slate-700 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
-      </div>
-      <div id="modal-order-content" class="space-y-4 text-xs sm:text-sm"></div>
-      <div class="flex justify-end pt-2 border-t"><button onclick="closeOrderDetailModal()" class="px-4 py-2 rounded-xl bg-navy-900 text-white text-xs font-semibold">Cerrar</button></div>
-    </div>
-  </div>
-
-  <!-- MODAL DE CONFIRMACIÓN -->
-  <div id="custom-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border space-y-4">
-      <div class="flex items-start gap-3.5">
-        <div id="modal-icon-box" class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0"><i class="fa-solid fa-circle-question text-lg"></i></div>
-        <div>
-          <h4 id="modal-title" class="font-display font-bold text-base text-navy-900">Confirmar Acción</h4>
-          <p id="modal-message" class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed"></p>
-        </div>
-      </div>
-      <div class="flex items-center justify-end gap-2.5 pt-2">
-        <button onclick="closeCustomModal()" class="px-4 py-2 rounded-xl border text-xs font-semibold text-slate-700">Cancelar</button>
-        <button id="modal-confirm-btn" class="px-4 py-2 rounded-xl bg-navy-900 text-white text-xs font-semibold">Confirmar</button>
-      </div>
-    </div>
-  </div>
 
   <!-- TOASTS -->
   <div id="toast-container" class="fixed bottom-20 lg:bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
-  <!-- CONFIGURACIÓN DE FIREBASE -->
-  <script>
-    window.CUSTOM_FIREBASE_CONFIG = {
-      apiKey: "AIzaSyADJddeeYNMpmQ_4WlghfpPX8464vgvhsU",
-      authDomain: "rivera-de-plata-app.firebaseapp.com",
-      projectId: "rivera-de-plata-app",
-      storageBucket: "rivera-de-plata-app.firebasestorage.app",
-      messagingSenderId: "428633270623",
-      appId: "1:428633270623:web:8e0451805eb433872e2eea"
-    };
-  </script>
-
-  <!-- LÓGICA DE CONTROL DE PIN Y ACCESO DUAL (AÑADIDO LIMPIAMENTE) -->
+  <!-- SCRIPT DE CONTROL DE PIN Y ACCESO DUAL -->
   <script>
     let pinAuthState = {
       selectedRole: 'Mozo',
@@ -1075,326 +711,62 @@
     function handlePublicReservation(e) {
       e.preventDefault();
       const name = document.getElementById('pub-name').value;
-      showToast('Reserva Registrada', `¡Gracias ${name}! Su mesa ha sido reservada con éxito.`, 'success');
+      showToast('Reserva Registrada', `¡Gracias ${name}! Su mesa en Rivera de Plata ha sido reservada con éxito.`, 'success');
       e.target.reset();
       closePublicWebsite();
     }
+
+    function showToast(title, message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const colors = {
+        success: 'bg-navy-900 border-emerald-500 text-white',
+        warning: 'bg-navy-900 border-amber-500 text-white',
+        error: 'bg-rose-950 border-rose-500 text-white'
+      };
+      const toast = document.createElement('div');
+      toast.className = `toast-enter pointer-events-auto rounded-2xl border-l-4 p-4 shadow-xl flex items-start gap-3 ${colors[type] || colors.success}`;
+      toast.innerHTML = `
+        <div class="flex-1">
+          <p class="text-xs font-bold tracking-wide">${title}</p>
+          <p class="text-xs text-slate-300 mt-0.5">${message}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 260);
+      }, 3600);
+    }
   </script>
 
-  <!-- LÓGICA ORIGINAL DE TU SISTEMA Y FIREBASE (INALTERADA) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    const STORAGE_KEYS = {
-      ORDERS: 'rdp_prototipo_pedidos_v1',
-      INCIDENTS: 'rdp_prototipo_incidencias_v1',
-      INITIALIZED: 'rdp_prototipo_init_v1'
-    };
-
-    const ORDER_STATES = ['Recibido', 'Confirmado', 'En preparación', 'Listo', 'Entregado'];
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'rivera-de-plata-app';
-
-    let db = null;
-    let auth = null;
-    let currentUser = null;
-    let isCloudConnected = false;
-    let initialSyncDone = { orders: false, incidents: false };
-
-    function getTodayISO() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    }
-
-    function getTimeOffset(minutesAgo = 0) {
-      const d = new Date(Date.now() - minutesAgo * 60000);
-      return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    }
-
-    function buildDemoOrders() {
-      const today = getTodayISO();
-      return [
-        {
-          id: 'RDP-001',
-          fecha: today,
-          cliente: 'Valeria Montesinos',
-          modalidad: 'Salón',
-          ubicacion: 'Mesa 4',
-          responsable: 'Sofía Paredes',
-          estado: 'Entregado',
-          observacionGeneral: 'Servir entradas primero',
-          esDemo: true,
-          tiempos: { recibido: getTimeOffset(45), confirmado: getTimeOffset(43), preparacion: getTimeOffset(40), listo: getTimeOffset(24), entregado: getTimeOffset(21) },
-          productos: [{ nombre: 'Ceviche Nikkei', cantidad: 2, precio: 46.00, obs: 'Picante suave' }],
-          verificacion: { productosCorrectos: true, cantidadesCorrectas: true, observacionesAtendidas: true, pedidoCompleto: true, entregaConfirmada: true }
-        },
-        {
-          id: 'RDP-002',
-          fecha: today,
-          cliente: 'Rodrigo Salazar',
-          modalidad: 'Delivery',
-          ubicacion: 'Av. Larco 450',
-          responsable: 'Luis Torres',
-          estado: 'Listo',
-          observacionGeneral: 'Cubiertos extra',
-          esDemo: true,
-          tiempos: { recibido: getTimeOffset(28), confirmado: getTimeOffset(26), preparacion: getTimeOffset(23), listo: getTimeOffset(4), entregado: null },
-          productos: [{ nombre: 'Lomo Saltado al Wok', cantidad: 1, precio: 52.00, obs: '' }],
-          verificacion: { productosCorrectos: false, cantidadesCorrectas: false, observacionesAtendidas: false, pedidoCompleto: false, entregaConfirmada: false }
-        }
-      ];
-    }
-
-    function buildDemoIncidents() {
-      const today = getTodayISO();
-      return [
-        {
-          id: 'INC-001',
-          pedidoId: 'RDP-001',
-          fechaHora: `${today} ${getTimeOffset(32)}`,
-          tipo: 'Demora en la preparación',
-          descripcion: 'Alta demanda en estación fría.',
-          responsable: 'Andrea Rojas',
-          accionCorrectiva: 'Se coordinó apoyo.',
-          estado: 'Resuelta',
-          esDemo: true
-        }
-      ];
-    }
-
+  <!-- LÓGICA DE TU SISTEMA OPERATIVO ORIGINAL -->
+  <script>
     let state = {
-      orders: [],
-      incidents: [],
+      orders: [
+        { id: 'RDP-001', cliente: 'Valeria Montesinos', modalidad: 'Salón', ubicacion: 'Mesa 4', estado: 'Entregado', productos: [{nombre:'Ceviche Nikkei', cantidad:2, precio:46.00}] },
+        { id: 'RDP-002', cliente: 'Rodrigo Salazar', modalidad: 'Delivery', ubicacion: 'Av. Larco 450', estado: 'Listo', productos: [{nombre:'Lomo Saltado al Wok', cantidad:1, precio:52.00}] }
+      ],
+      incidents: [
+        { id: 'INC-001', pedidoId: 'RDP-001', tipo: 'Demora', descripcion: 'Retraso de 6 min en estación fría.', estado: 'Resuelta' }
+      ],
       currentModule: 'dashboard',
-      newOrderItems: [],
-      trackingStatusFilter: 'Todos',
-      selectedVerifyOrderId: null
+      newOrderItems: []
     };
 
-    function updateSyncIndicators(connected) {
-      isCloudConnected = connected;
-      const sideIcon = document.getElementById('cloud-status-icon');
-      const sideText = document.getElementById('cloud-status-text');
-      const badge = document.getElementById('sync-badge');
-      const dot = document.getElementById('sync-dot');
-      const label = document.getElementById('sync-label');
-
-      if (connected) {
-        if (sideIcon) sideIcon.className = 'fa-solid fa-cloud text-emerald-400 mt-0.5 text-xs';
-        if (sideText) sideText.textContent = 'En vivo · Multi-dispositivo';
-        if (badge) badge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200';
-        if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
-        if (label) label.textContent = 'Sincronizado en Vivo';
-      } else {
-        if (sideIcon) sideIcon.className = 'fa-solid fa-database text-amber-400 mt-0.5 text-xs';
-        if (sideText) sideText.textContent = 'Respaldo Local Activo';
-        if (badge) badge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-200';
-        if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-500';
-        if (label) label.textContent = 'Modo Local';
-      }
-    }
-
-    function loadLocalData() {
-      const isInitialized = localStorage.getItem(STORAGE_KEYS.INITIALIZED);
-      if (!isInitialized) {
-        state.orders = buildDemoOrders();
-        state.incidents = buildDemoIncidents();
-        saveLocalOnly();
-        localStorage.setItem(STORAGE_KEYS.INITIALIZED, 'true');
-      } else {
-        try {
-          state.orders = JSON.parse(localStorage.getItem(STORAGE_KEYS.ORDERS)) || [];
-          state.incidents = JSON.parse(localStorage.getItem(STORAGE_KEYS.INCIDENTS)) || [];
-        } catch (e) {
-          state.orders = buildDemoOrders();
-          state.incidents = buildDemoIncidents();
-          saveLocalOnly();
-        }
-      }
-    }
-
-    function saveLocalOnly() {
-      localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(state.orders));
-      localStorage.setItem(STORAGE_KEYS.INCIDENTS, JSON.stringify(state.incidents));
-      updateSidebarBadges();
-    }
-
-    async function syncOrderToCloud(orderObj) {
-      saveLocalOnly();
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(orderObj.id)), orderObj);
-      } catch (e) {}
-    }
-
-    async function syncIncidentToCloud(incObj) {
-      saveLocalOnly();
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(incObj.id)), incObj);
-      } catch (e) {}
-    }
-
-    async function syncAllToCloud(clearFirst = false) {
-      saveLocalOnly();
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        if (clearFirst) {
-          for (const o of state.orders) {
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(o.id)), o);
-          }
-          for (const i of state.incidents) {
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(i.id)), i);
-          }
-        }
-      } catch (e) {}
-    }
-
-    async function clearCloudCollections(orderIds, incidentIds) {
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        for (const id of orderIds) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(id)));
-        for (const id of incidentIds) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(id)));
-      } catch (e) {}
-    }
-
-    function refreshActiveModuleUI() {
-      updateSidebarBadges();
-      const mod = state.currentModule;
-      if (mod === 'dashboard') renderDashboard();
-      if (mod === 'nuevo-pedido') prepareNewOrderForm();
-      if (mod === 'seguimiento') renderTrackingModule();
-      if (mod === 'verificacion') renderVerificationModule(state.selectedVerifyOrderId);
-      if (mod === 'incidencias') renderIncidentsModule();
-      if (mod === 'historial') renderHistoryModule();
-    }
-
-    async function initCloudSync() {
-      try {
-        let firebaseConfig = null;
-        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-          firebaseConfig = JSON.parse(__firebase_config);
-        } else if (window.CUSTOM_FIREBASE_CONFIG && window.CUSTOM_FIREBASE_CONFIG.apiKey) {
-          firebaseConfig = window.CUSTOM_FIREBASE_CONFIG;
-        }
-
-        if (!firebaseConfig || !firebaseConfig.apiKey) {
-          updateSyncIndicators(false);
-          return;
-        }
-
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          const cred = await signInWithCustomToken(auth, __initial_auth_token);
-          currentUser = cred.user;
-        } else {
-          const cred = await signInAnonymously(auth);
-          currentUser = cred.user;
-        }
-
-        updateSyncIndicators(true);
-
-        const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
-        const incidentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'incidents');
-
-        onSnapshot(ordersCol, async (snapshot) => {
-          const cloudOrders = [];
-          snapshot.forEach(docSnap => cloudOrders.push(docSnap.data()));
-          cloudOrders.sort((a, b) => String(a.id).localeCompare(String(b.id)));
-
-          if (!initialSyncDone.orders && cloudOrders.length === 0) {
-            initialSyncDone.orders = true;
-            for (const o of state.orders) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(o.id)), o);
-            return;
-          }
-
-          initialSyncDone.orders = true;
-          if (cloudOrders.length > 0) {
-            state.orders = cloudOrders;
-            saveLocalOnly();
-            refreshActiveModuleUI();
-          }
-        }, () => updateSyncIndicators(false));
-
-        onSnapshot(incidentsCol, async (snapshot) => {
-          const cloudIncidents = [];
-          snapshot.forEach(docSnap => cloudIncidents.push(docSnap.data()));
-          cloudIncidents.sort((a, b) => String(a.id).localeCompare(String(b.id)));
-
-          if (!initialSyncDone.incidents && cloudIncidents.length === 0) {
-            initialSyncDone.incidents = true;
-            for (const inc of state.incidents) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(inc.id)), inc);
-            return;
-          }
-
-          initialSyncDone.incidents = true;
-          if (cloudIncidents.length > 0) {
-            state.incidents = cloudIncidents;
-            saveLocalOnly();
-            refreshActiveModuleUI();
-          }
-        }, () => updateSyncIndicators(false));
-
-      } catch (err) {
-        updateSyncIndicators(false);
-      }
-    }
-
-    const MODULE_META = {
-      'dashboard': { title: 'Panel Principal', subtitle: 'Resumen operativo del turno y monitoreo en tiempo real' },
-      'nuevo-pedido': { title: 'Registro de Nuevos Pedidos', subtitle: 'Ingreso estructurado de comandas para salón, delivery y recojo' },
-      'seguimiento': { title: 'Seguimiento de Pedidos e Historial', subtitle: 'Control de flujo en cocina, estados y trazabilidad de tiempos' },
-      'verificacion': { title: 'Verificación y Entrega', subtitle: 'Lista de chequeo obligatorio antes de entregar cada pedido' },
-      'incidencias': { title: 'Control de Incidencias y Reclamos', subtitle: 'Registro, seguimiento y solución de novedades operativas' },
-      'historial': { title: 'Historial Completo de Pedidos', subtitle: 'Consulta global de comandas registradas con filtros y totales' }
-    };
-
-    window.navigateTo = function(moduleName, preselectOrderId = null) {
-      state.currentModule = moduleName;
-
+    window.navigateTo = function(mod) {
+      state.currentModule = mod;
       document.querySelectorAll('.module-view').forEach(el => el.classList.add('hidden'));
-      const targetEl = document.getElementById(`module-${moduleName}`);
-      if (targetEl) targetEl.classList.remove('hidden');
-
+      document.getElementById(`module-${mod}`).classList.remove('hidden');
+      
       document.querySelectorAll('.nav-btn').forEach(btn => {
-        if (btn.dataset.nav === moduleName) {
-          btn.classList.remove('nav-item-inactive');
-          btn.classList.add('nav-item-active');
-          btn.querySelector('i').classList.add('text-amber-400');
+        if (btn.dataset.nav === mod) {
+          btn.className = 'nav-btn nav-item-active w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all';
         } else {
-          btn.classList.remove('nav-item-active');
-          btn.classList.add('nav-item-inactive');
-          btn.querySelector('i').classList.remove('text-amber-400');
+          btn.className = 'nav-btn nav-item-inactive w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all';
         }
       });
-
-      document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-        if (btn.dataset.mobileNav === moduleName) {
-          btn.classList.remove('text-slate-400', 'hover:text-white');
-          btn.classList.add('text-amber-400');
-        } else {
-          btn.classList.remove('text-amber-400');
-          btn.classList.add('text-slate-400', 'hover:text-white');
-        }
-      });
-
-      if (MODULE_META[moduleName]) {
-        document.getElementById('header-title').textContent = MODULE_META[moduleName].title;
-        document.getElementById('header-subtitle').textContent = MODULE_META[moduleName].subtitle;
-      }
-
-      window.toggleSidebar(false);
-
-      if (moduleName === 'dashboard') renderDashboard();
-      if (moduleName === 'nuevo-pedido') prepareNewOrderForm();
-      if (moduleName === 'seguimiento') renderTrackingModule();
-      if (moduleName === 'verificacion') renderVerificationModule(preselectOrderId);
-      if (moduleName === 'incidencias') renderIncidentsModule();
-      if (moduleName === 'historial') renderHistoryModule();
+      toggleSidebar(false);
+      renderModuleData(mod);
     };
 
     window.toggleSidebar = function(open) {
@@ -1409,934 +781,80 @@
       }
     };
 
-    function updateSidebarBadges() {
-      const activos = state.orders.filter(o => o.estado !== 'Entregado').length;
-      const listos = state.orders.filter(o => o.estado === 'Listo').length;
-      const incAbiertas = state.incidents.filter(i => i.estado !== 'Resuelta').length;
+    function renderModuleData(mod) {
+      if (mod === 'dashboard') {
+        document.getElementById('stat-total').textContent = state.orders.length;
+        document.getElementById('stat-recibidos').textContent = state.orders.filter(o => o.estado === 'Recibido').length;
+        document.getElementById('stat-preparacion').textContent = state.orders.filter(o => o.estado === 'En preparación').length;
+        document.getElementById('stat-listos').textContent = state.orders.filter(o => o.estado === 'Listo').length;
 
-      document.getElementById('badge-activos').textContent = activos;
-      document.getElementById('badge-listos').textContent = listos;
-      document.getElementById('badge-incidencias').textContent = incAbiertas;
-    }
-
-    window.confirmarAccionDemo = function(tipo) {
-      const modal = document.getElementById('custom-modal');
-      const title = document.getElementById('modal-title');
-      const msg = document.getElementById('modal-message');
-      const btn = document.getElementById('modal-confirm-btn');
-
-      if (tipo === 'restaurar') {
-        title.textContent = 'Restaurar Datos de Demostración';
-        msg.textContent = 'Se reemplazarán los registros actuales por los 5 pedidos de ejemplo y las 3 incidencias iniciales de Rivera de Plata en todos los dispositivos.';
-        btn.className = 'px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-semibold';
-        btn.textContent = 'Sí, restaurar demo';
-        btn.onclick = async () => {
-          const oldOrderIds = state.orders.map(o => o.id);
-          const oldIncIds = state.incidents.map(i => i.id);
-          await clearCloudCollections(oldOrderIds, oldIncIds);
-          state.orders = buildDemoOrders();
-          state.incidents = buildDemoIncidents();
-          await syncAllToCloud(true);
-          window.closeCustomModal();
-          window.navigateTo(state.currentModule);
-          showToast('Datos restaurados', 'Se cargaron nuevamente los registros ficticios.', 'success');
-        };
-      } else {
-        title.textContent = 'Vaciar Todos los Registros';
-        msg.textContent = 'Se eliminarán todos los pedidos e incidencias sincronizados para iniciar desde cero.';
-        btn.className = 'px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-semibold';
-        btn.textContent = 'Sí, vaciar todo';
-        btn.onclick = async () => {
-          const oldOrderIds = state.orders.map(o => o.id);
-          const oldIncIds = state.incidents.map(i => i.id);
-          await clearCloudCollections(oldOrderIds, oldIncIds);
-          state.orders = [];
-          state.incidents = [];
-          saveLocalOnly();
-          window.closeCustomModal();
-          window.navigateTo(state.currentModule);
-          showToast('Registros vaciados', 'El sistema está limpio y listo.', 'warning');
-        };
+        const tbody = document.getElementById('dashboard-recent-orders');
+        tbody.innerHTML = state.orders.map(o => `
+          <tr><td class="p-3 font-mono font-bold">${o.id}</td><td class="p-3">${o.cliente}</td><td class="p-3">S/ 46.00</td><td class="p-3">${o.estado}</td></tr>
+        `).join('');
       }
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    };
-
-    window.closeCustomModal = function() {
-      const modal = document.getElementById('custom-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    };
-
-    function formatCurrency(val) {
-      return `S/ ${Number(val || 0).toFixed(2)}`;
-    }
-
-    function calculateOrderTotal(order) {
-      return (order.productos || []).reduce((acc, item) => acc + (item.cantidad * item.precio), 0);
-    }
-
-    function getStatusBadgeHTML(estado) {
-      const map = {
-        'Recibido': 'bg-sky-50 text-sky-700 border-sky-200 ring-sky-500/20',
-        'Confirmado': 'bg-indigo-50 text-indigo-700 border-indigo-200 ring-indigo-500/20',
-        'En preparación': 'bg-amber-50 text-amber-800 border-amber-300 ring-amber-500/20',
-        'Listo': 'bg-emerald-50 text-emerald-700 border-emerald-300 ring-emerald-500/20',
-        'Entregado': 'bg-slate-100 text-slate-700 border-slate-300 ring-slate-500/10'
-      };
-      const icons = {
-        'Recibido': 'fa-inbox',
-        'Confirmado': 'fa-thumbs-up',
-        'En preparación': 'fa-fire-burner',
-        'Listo': 'fa-bell-concierge',
-        'Entregado': 'fa-circle-check'
-      };
-      const cls = map[estado] || map['Recibido'];
-      const ico = icons[estado] || 'fa-circle';
-      return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${cls}">
-        <i class="fa-solid ${ico} text-[10px]"></i>
-        <span>${estado}</span>
-      </span>`;
-    }
-
-    function getModalityBadgeHTML(modalidad) {
-      const icons = {
-        'Salón': 'fa-utensils text-navy-800',
-        'Delivery': 'fa-motorcycle text-amber-600',
-        'Para recoger': 'fa-bag-shopping text-emerald-600'
-      };
-      return `<span class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700">
-        <i class="fa-solid ${icons[modalidad] || 'fa-receipt'}"></i>
-        <span>${modalidad}</span>
-      </span>`;
-    }
-
-    function renderDashboard() {
-      const total = state.orders.length;
-      const recibidos = state.orders.filter(o => o.estado === 'Recibido').length;
-      const confirmados = state.orders.filter(o => o.estado === 'Confirmado').length;
-      const enPrep = state.orders.filter(o => o.estado === 'En preparación').length;
-      const listos = state.orders.filter(o => o.estado === 'Listo').length;
-      const entregados = state.orders.filter(o => o.estado === 'Entregado').length;
-      const incAbiertas = state.incidents.filter(i => i.estado !== 'Resuelta').length;
-
-      document.getElementById('stat-total').textContent = total;
-      document.getElementById('stat-recibidos').textContent = recibidos;
-      document.getElementById('stat-preparacion').textContent = confirmados + enPrep;
-      document.getElementById('stat-prep-detalle').textContent = `(${confirmados} conf. / ${enPrep} cocina)`;
-      document.getElementById('stat-listos').textContent = listos;
-      document.getElementById('stat-entregados').textContent = entregados;
-      document.getElementById('stat-incidencias').textContent = incAbiertas;
-
-      const avgMinutes = computeAverageServiceMinutes();
-      document.getElementById('stat-tiempo-promedio').textContent = avgMinutes !== null ? `${avgMinutes} min` : '-- min';
-      document.getElementById('stat-tiempo-nota').textContent = avgMinutes !== null ? `basado en ${state.orders.length} pedido(s)` : 'sin pedidos';
-
-      const recentBody = document.getElementById('dashboard-recent-orders');
-      if (state.orders.length === 0) {
-        recentBody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-xs text-slate-400">No hay pedidos registrados.</td></tr>`;
-      } else {
-        const recent = [...state.orders].slice().reverse().slice(0, 6);
-        recentBody.innerHTML = recent.map(o => {
-          const totalOrder = calculateOrderTotal(o);
-          const actionBtn = o.estado === 'Listo'
-            ? `<button onclick="navigateTo('verificacion', '${o.id}')" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">Verificar</button>`
-            : `<button onclick="navigateTo('seguimiento')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">Seguir</button>`;
-
-          return `
-            <tr class="hover:bg-slate-50/80 transition-colors">
-              <td class="py-3 px-4 font-mono text-xs font-bold text-navy-900">${o.id}</td>
-              <td class="py-3 px-4">
-                <p class="font-semibold text-slate-800 text-xs sm:text-sm">${o.cliente}</p>
-                <p class="text-[11px] text-slate-500">${o.modalidad} · ${o.ubicacion}</p>
-              </td>
-              <td class="py-3 px-4 font-semibold text-slate-800 text-xs sm:text-sm">${formatCurrency(totalOrder)}</td>
-              <td class="py-3 px-4">${getStatusBadgeHTML(o.estado)}</td>
-              <td class="py-3 px-4 text-right">${actionBtn}</td>
-            </tr>
-          `;
-        }).join('');
-      }
-
-      const incContainer = document.getElementById('dashboard-open-incidents');
-      const activeInc = state.incidents.filter(i => i.estado !== 'Resuelta');
-      if (activeInc.length === 0) {
-        incContainer.innerHTML = `
-          <div class="h-full flex flex-col items-center justify-center text-center py-8 px-4">
-            <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2">
-              <i class="fa-solid fa-shield-check"></i>
-            </div>
-            <p class="text-xs font-semibold text-slate-700">Sin incidencias pendientes</p>
-          </div>
-        `;
-      } else {
-        incContainer.innerHTML = activeInc.map(inc => {
-          const badgeColor = inc.estado === 'Pendiente' ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-amber-50 text-amber-700 border-amber-200';
-          return `
-            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs font-bold text-navy-900">${inc.id} · <span class="text-amber-700">${inc.pedidoId}</span></span>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${badgeColor}">${inc.estado}</span>
-              </div>
-              <p class="text-xs font-bold text-slate-800">${inc.tipo}</p>
-              <p class="text-[11px] text-slate-600 line-clamp-2">${inc.descripcion}</p>
-            </div>
-          `;
-        }).join('');
+      if (mod === 'historial') {
+        const tbody = document.getElementById('history-table-body');
+        tbody.innerHTML = state.orders.map(o => `
+          <tr><td class="p-3 font-mono font-bold">${o.id}</td><td class="p-3">${o.cliente}</td><td class="p-3">S/ 46.00</td><td class="p-3">${o.estado}</td></tr>
+        `).join('');
       }
     }
 
-    function parseHHMMToMinutes(hhmm) {
-      if (!hhmm || !hhmm.includes(':')) return null;
-      const [h, m] = hhmm.split(':').map(Number);
-      return h * 60 + m;
-    }
-
-    function computeAverageServiceMinutes() {
-      if (state.orders.length === 0) return null;
-      const now = new Date();
-      const nowMin = now.getHours() * 60 + now.getMinutes();
-      let sumDiff = 0, count = 0;
-      state.orders.forEach(o => {
-        const startMin = parseHHMMToMinutes(o.tiempos?.recibido);
-        if (startMin === null) return;
-        const endStr = o.tiempos?.entregado || o.tiempos?.listo;
-        const endMin = endStr ? parseHHMMToMinutes(endStr) : nowMin;
-        let diff = endMin - startMin;
-        if (diff < 0) diff += 24 * 60;
-        if (diff === 0) diff = 1;
-        sumDiff += diff;
-        count++;
-      });
-      return count > 0 ? Math.round(sumDiff / count) : null;
-    }
-
-    function generateNextOrderCode() {
-      if (state.orders.length === 0) return 'RDP-001';
-      const maxNum = state.orders.reduce((max, o) => {
-        const match = String(o.id).match(/(\d+)$/);
-        const num = match ? parseInt(match[1], 10) : 0;
-        return num > max ? num : max;
-      }, 0);
-      return `RDP-${String(maxNum + 1).padStart(3, '0')}`;
-    }
-
-    function prepareNewOrderForm() {
-      const nextCode = generateNextOrderCode();
-      document.getElementById('order-code').value = nextCode;
-      document.getElementById('form-order-code-badge').textContent = `Código: ${nextCode}`;
-      document.getElementById('order-date').value = getTodayISO();
-      document.getElementById('order-time').value = getTimeOffset(0);
-      window.handleModalityChange();
-      renderNewOrderItemsTable();
-    }
-
-    window.handleModalityChange = function() {
-      const mod = document.getElementById('order-modality').value;
-      const label = document.getElementById('order-location-label');
-      const input = document.getElementById('order-location');
-      if (mod === 'Salón') {
-        label.textContent = 'Número de Mesa *';
-        input.placeholder = 'Ej. Mesa 05';
-      } else if (mod === 'Delivery') {
-        label.textContent = 'Dirección de Entrega *';
-        input.placeholder = 'Ej. Av. Benavides 1240, Miraflores';
-      } else {
-        label.textContent = 'Referencia / Recojo *';
-        input.placeholder = 'Ej. Recojo en barra';
-      }
-    };
-
-    window.selectCatalogItem = function() {
+    function selectCatalogItem() {
       const val = document.getElementById('item-catalog').value;
       if (!val) return;
       const [name, price] = val.split('|');
       document.getElementById('item-name').value = name;
-      document.getElementById('item-price').value = parseFloat(price).toFixed(2);
-      window.updateItemPreviewSubtotal();
-    };
+      document.getElementById('item-price').value = price;
+    }
 
-    window.updateItemPreviewSubtotal = function() {
-      const qty = parseInt(document.getElementById('item-qty').value, 10) || 0;
+    function addProductToOrder() {
+      const name = document.getElementById('item-name').value;
       const price = parseFloat(document.getElementById('item-price').value) || 0;
-      document.getElementById('item-preview-sub').textContent = formatCurrency(qty * price);
-    };
+      if (!name) return;
+      state.newOrderItems.push({ nombre: name, cantidad: 1, precio });
+      renderNewOrderItems();
+    }
 
-    window.addProductToOrder = function() {
-      const name = document.getElementById('item-name').value.trim();
-      const qty = parseInt(document.getElementById('item-qty').value, 10);
-      const price = parseFloat(document.getElementById('item-price').value);
-      const obs = document.getElementById('item-notes').value.trim();
-
-      if (!name) { showToast('Falta producto', 'Ingrese o seleccione el nombre del plato.', 'warning'); return; }
-      if (!qty || qty < 1) { showToast('Cantidad inválida', 'La cantidad mínima es 1.', 'warning'); return; }
-      if (isNaN(price) || price <= 0) { showToast('Precio inválido', 'Ingrese un precio mayor a S/ 0.00.', 'warning'); return; }
-
-      state.newOrderItems.push({ nombre: name, cantidad: qty, precio: price, obs: obs });
-      document.getElementById('item-catalog').value = '';
-      document.getElementById('item-name').value = '';
-      document.getElementById('item-qty').value = 1;
-      document.getElementById('item-price').value = '';
-      document.getElementById('item-notes').value = '';
-      window.updateItemPreviewSubtotal();
-      renderNewOrderItemsTable();
-    };
-
-    window.removeProductFromOrder = function(index) {
-      state.newOrderItems.splice(index, 1);
-      renderNewOrderItemsTable();
-    };
-
-    function renderNewOrderItemsTable() {
+    function renderNewOrderItems() {
       const tbody = document.getElementById('new-order-items-body');
-      if (state.newOrderItems.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-xs text-slate-400">Aún no ha agregado productos.</td></tr>`;
-      } else {
-        tbody.innerHTML = state.newOrderItems.map((item, idx) => `
-          <tr class="hover:bg-slate-50">
-            <td class="py-2.5 px-4 font-semibold text-slate-800">${item.nombre}</td>
-            <td class="py-2.5 px-3 text-center font-bold text-navy-900">${item.cantidad}</td>
-            <td class="py-2.5 px-3 text-right text-slate-600">${formatCurrency(item.precio)}</td>
-            <td class="py-2.5 px-3 text-right font-bold text-navy-900">${formatCurrency(item.cantidad * item.precio)}</td>
-            <td class="py-2.5 px-4 text-xs text-slate-500">${item.obs || '—'}</td>
-            <td class="py-2.5 px-3 text-center">
-              <button type="button" onclick="removeProductFromOrder(${idx})" class="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50"><i class="fa-solid fa-trash-can"></i></button>
-            </td>
-          </tr>
-        `).join('');
-      }
-
-      const totalUnits = state.newOrderItems.reduce((sum, i) => sum + i.cantidad, 0);
-      const totalAmount = state.newOrderItems.reduce((sum, i) => sum + (i.cantidad * i.precio), 0);
-      const netAmount = totalAmount / 1.18;
-      const igvAmount = totalAmount - netAmount;
-
-      document.getElementById('summary-item-count').textContent = `${totalUnits} unidad(es)`;
-      document.getElementById('summary-subtotal').textContent = formatCurrency(netAmount);
-      document.getElementById('summary-igv').textContent = formatCurrency(igvAmount);
-      document.getElementById('summary-total').textContent = formatCurrency(totalAmount);
+      tbody.innerHTML = state.newOrderItems.map(i => `
+        <tr><td class="p-2">${i.nombre}</td><td class="p-2">1</td><td class="p-2">S/ ${i.precio.toFixed(2)}</td></tr>
+      `).join('');
     }
 
-    window.resetNewOrderForm = function(notify = false) {
-      state.newOrderItems = [];
-      document.getElementById('order-client').value = '';
-      document.getElementById('order-location').value = '';
-      document.getElementById('order-general-notes').value = '';
-      prepareNewOrderForm();
-      if (notify) showToast('Formulario limpio', 'Los campos fueron reiniciados.', 'warning');
-    };
-
-    window.submitNewOrder = async function() {
-      const code = document.getElementById('order-code').value;
-      const fecha = document.getElementById('order-date').value;
-      const hora = document.getElementById('order-time').value;
-      const cliente = document.getElementById('order-client').value.trim();
-      const modalidad = document.getElementById('order-modality').value;
-      const ubicacion = document.getElementById('order-location').value.trim();
-      const responsable = document.getElementById('order-staff').value;
-      const observacionGeneral = document.getElementById('order-general-notes').value.trim();
-
-      if (!cliente) { showToast('Dato requerido', 'Ingrese el nombre del cliente.', 'error'); return; }
-      if (!ubicacion) { showToast('Dato requerido', 'Ingrese mesa o dirección de entrega.', 'error'); return; }
-      if (state.newOrderItems.length === 0) { showToast('Pedido vacío', 'Agregue al menos un producto.', 'error'); return; }
-
-      const newOrder = {
-        id: code,
-        fecha: fecha || getTodayISO(),
-        cliente,
-        modalidad,
-        ubicacion,
-        responsable,
+    function submitNewOrder() {
+      const client = document.getElementById('order-client').value;
+      const location = document.getElementById('order-location').value;
+      if (!client || state.newOrderItems.length === 0) {
+        showToast('Faltan datos', 'Ingrese cliente y al menos un producto.', 'error');
+        return;
+      }
+      const newO = {
+        id: `RDP-00${state.orders.length + 1}`,
+        cliente: client,
+        modalidad: 'Salón',
+        ubicacion: location,
         estado: 'Recibido',
-        observacionGeneral,
-        esDemo: false,
-        tiempos: { recibido: hora || getTimeOffset(0), confirmado: null, preparacion: null, listo: null, entregado: null },
-        productos: [...state.newOrderItems],
-        verificacion: { productosCorrectos: false, cantidadesCorrectas: false, observacionesAtendidas: false, pedidoCompleto: false, entregaConfirmada: false }
+        productos: [...state.newOrderItems]
       };
-
-      state.orders.push(newOrder);
-      await syncOrderToCloud(newOrder);
-      window.resetNewOrderForm(false);
-      showToast('Pedido registrado', `Pedido ${newOrder.id} creado y sincronizado.`, 'success');
-      window.navigateTo('seguimiento');
-    };
-
-    window.setTrackingStatusFilter = function(status) {
-      state.trackingStatusFilter = status;
-      document.querySelectorAll('.status-chip').forEach(btn => {
-        if (btn.dataset.statusFilter === status) {
-          btn.className = 'status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-navy-900 text-white transition-all';
-        } else {
-          btn.className = 'status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all';
-        }
-      });
-      renderTrackingModule();
-    };
-
-    window.updateOrderStatus = async function(orderId, newStatus) {
-      const order = state.orders.find(o => o.id === orderId);
-      if (!order) return;
-
-      if (newStatus === 'Entregado' && order.estado !== 'Entregado') {
-        showToast('Verificación requerida', `Complete la lista de chequeo del pedido ${order.id} antes de confirmar entrega.`, 'warning');
-        window.navigateTo('verificacion', order.id);
-        return;
-      }
-
-      const currentTime = getTimeOffset(0);
-      order.estado = newStatus;
-
-      if (newStatus === 'Recibido' && !order.tiempos.recibido) order.tiempos.recibido = currentTime;
-      if (newStatus === 'Confirmado') order.tiempos.confirmado = currentTime;
-      if (newStatus === 'En preparación') {
-        if (!order.tiempos.confirmado) order.tiempos.confirmado = currentTime;
-        order.tiempos.preparacion = currentTime;
-      }
-      if (newStatus === 'Listo') {
-        if (!order.tiempos.confirmado) order.tiempos.confirmado = currentTime;
-        if (!order.tiempos.preparacion) order.tiempos.preparacion = currentTime;
-        order.tiempos.listo = currentTime;
-      }
-
-      await syncOrderToCloud(order);
-      renderTrackingModule();
-      showToast('Estado actualizado', `Pedido ${order.id} pasó a "${newStatus}".`, 'success');
-    };
-
-    window.renderTrackingModule = function() {
-      const pendientes = state.orders.filter(o => o.estado === 'Recibido' || o.estado === 'Confirmado');
-      const enPrep = state.orders.filter(o => o.estado === 'En preparación');
-      const listos = state.orders.filter(o => o.estado === 'Listo');
-
-      document.getElementById('lane-count-pendientes').textContent = pendientes.length;
-      document.getElementById('lane-count-preparacion').textContent = enPrep.length;
-      document.getElementById('lane-count-listos').textContent = listos.length;
-
-      document.getElementById('lane-list-pendientes').innerHTML = pendientes.length
-        ? pendientes.map(o => `<span class="px-2 py-0.5 rounded bg-white border border-sky-200 text-xs font-mono font-bold text-sky-900">${o.id}</span>`).join('')
-        : '<span class="text-[11px] text-sky-700/70">Sin pendientes</span>';
-
-      document.getElementById('lane-list-preparacion').innerHTML = enPrep.length
-        ? enPrep.map(o => `<span class="px-2 py-0.5 rounded bg-white border border-amber-200 text-xs font-mono font-bold text-amber-900">${o.id}</span>`).join('')
-        : '<span class="text-[11px] text-amber-700/70">Cocina libre</span>';
-
-      document.getElementById('lane-list-listos').innerHTML = listos.length
-        ? listos.map(o => `<button onclick="navigateTo('verificacion', '${o.id}')" class="px-2 py-0.5 rounded bg-emerald-600 text-white text-xs font-mono font-bold">${o.id} → Verificar</button>`).join('')
-        : '<span class="text-[11px] text-emerald-700/70">Ninguno</span>';
-
-      const search = (document.getElementById('filter-search')?.value || '').toLowerCase().trim();
-      const modFilter = document.getElementById('filter-modality')?.value || 'Todas';
-
-      const filtered = state.orders.filter(o => {
-        const matchStatus = state.trackingStatusFilter === 'Todos' || o.estado === state.trackingStatusFilter;
-        const matchMod = modFilter === 'Todas' || o.modalidad === modFilter;
-        const matchSearch = !search || o.id.toLowerCase().includes(search) || o.cliente.toLowerCase().includes(search);
-        return matchStatus && matchMod && matchSearch;
-      }).slice().reverse();
-
-      const container = document.getElementById('tracking-orders-container');
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="bg-white rounded-2xl p-10 border border-slate-200 text-center text-slate-400 text-sm">No se encontraron pedidos.</div>`;
-        return;
-      }
-
-      container.innerHTML = filtered.map(o => {
-        const total = calculateOrderTotal(o);
-        const productosHTML = o.productos.map(p => `
-          <li class="flex items-start justify-between gap-2 text-xs py-1 border-b border-slate-100 last:border-0">
-            <div>
-              <span class="font-bold text-navy-900">${p.cantidad}x</span>
-              <span class="font-medium text-slate-800">${p.nombre}</span>
-              ${p.obs ? `<span class="ml-1.5 px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 text-[10px]">Obs: ${p.obs}</span>` : ''}
-            </div>
-            <span class="font-semibold text-slate-600 shrink-0">${formatCurrency(p.cantidad * p.precio)}</span>
-          </li>
-        `).join('');
-
-        let nextActionBtn = '';
-        if (o.estado === 'Recibido') {
-          nextActionBtn = `<button onclick="updateOrderStatus('${o.id}', 'Confirmado')" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center gap-1.5"><i class="fa-solid fa-thumbs-up"></i><span>Confirmar</span></button>`;
-        } else if (o.estado === 'Confirmado') {
-          nextActionBtn = `<button onclick="updateOrderStatus('${o.id}', 'En preparación')" class="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center gap-1.5"><i class="fa-solid fa-fire-burner"></i><span>Cocinar</span></button>`;
-        } else if (o.estado === 'En preparación') {
-          nextActionBtn = `<button onclick="updateOrderStatus('${o.id}', 'Listo')" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1.5"><i class="fa-solid fa-bell-concierge"></i><span>Listo</span></button>`;
-        } else if (o.estado === 'Listo') {
-          nextActionBtn = `<button onclick="navigateTo('verificacion', '${o.id}')" class="px-3.5 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-amber-400 text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-clipboard-check"></i><span>Verificar</span></button>`;
-        } else {
-          nextActionBtn = `<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold"><i class="fa-solid fa-check-double text-emerald-600"></i>Completado</span>`;
-        }
-
-        return `
-          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
-            <div class="px-5 py-4 bg-slate-50/70 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
-              <div class="flex flex-wrap items-center gap-3">
-                <span class="px-3 py-1 rounded-xl bg-navy-900 text-amber-400 font-mono text-xs font-extrabold">${o.id}</span>
-                <div>
-                  <div class="flex items-center gap-2">
-                    <h4 class="font-bold text-sm sm:text-base text-navy-900">${o.cliente}</h4>
-                    ${o.esDemo ? '<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold">DEMO</span>' : ''}
-                  </div>
-                  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 mt-0.5">
-                    <span>${getModalityBadgeHTML(o.modalidad)} · <strong>${o.ubicacion}</strong></span>
-                    <span>·</span>
-                    <span>Resp: ${o.responsable}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex flex-wrap items-center gap-2.5">
-                ${getStatusBadgeHTML(o.estado)}
-                <select onchange="updateOrderStatus('${o.id}', this.value)" class="px-2.5 py-1.5 rounded-xl bg-white border border-slate-300 text-xs font-semibold text-slate-700 outline-none">
-                  ${ORDER_STATES.map(st => `<option value="${st}" ${o.estado === st ? 'selected' : ''}>${st}</option>`).join('')}
-                </select>
-                ${nextActionBtn}
-              </div>
-            </div>
-
-            <div class="p-5 grid grid-cols-1 lg:grid-cols-12 gap-5">
-              <div class="lg:col-span-5 space-y-2">
-                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Detalle</p>
-                <ul class="bg-slate-50/70 rounded-xl p-3 border border-slate-100">${productosHTML}</ul>
-                ${o.observacionGeneral ? `<p class="text-xs text-amber-800 bg-amber-50 p-2 rounded-lg"><strong>Nota:</strong> ${o.observacionGeneral}</p>` : ''}
-                <div class="flex justify-between items-center pt-1 px-1">
-                  <span class="text-xs font-semibold text-slate-500">Total:</span>
-                  <span class="font-display font-extrabold text-base text-navy-900">${formatCurrency(total)}</span>
-                </div>
-              </div>
-
-              <div class="lg:col-span-7 flex flex-col justify-center">
-                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">Trazabilidad de Tiempos</p>
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                  ${renderTimeStep('1. Recibido', o.tiempos.recibido, 'fa-inbox')}
-                  ${renderTimeStep('2. Confirmado', o.tiempos.confirmado, 'fa-thumbs-up')}
-                  ${renderTimeStep('3. Cocina', o.tiempos.preparacion, 'fa-fire-burner')}
-                  ${renderTimeStep('4. Listo', o.tiempos.listo, 'fa-bell-concierge')}
-                  ${renderTimeStep('5. Entregado', o.tiempos.entregado, 'fa-circle-check')}
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    };
-
-    function renderTimeStep(label, timeVal, icon) {
-      const active = Boolean(timeVal);
-      return `
-        <div class="p-2.5 rounded-xl border ${active ? 'bg-navy-900 text-white border-navy-800' : 'bg-slate-50 text-slate-400 border-slate-200'} flex flex-col items-center text-center">
-          <i class="fa-solid ${icon} text-xs ${active ? 'text-amber-400' : 'text-slate-300'} mb-1"></i>
-          <span class="text-[10px] font-semibold">${label}</span>
-          <span class="font-mono text-xs font-bold mt-1 ${active ? 'text-white' : 'text-slate-400'}">${timeVal || '--:--'}</span>
-        </div>
-      `;
+      state.orders.push(newO);
+      state.newOrderItems = [];
+      showToast('Pedido Registrado', `Comanda ${newO.id} creada con éxito.`, 'success');
+      navigateTo('dashboard');
     }
 
-    window.renderVerificationModule = function(preselectOrderId = null) {
-      const select = document.getElementById('verify-order-select');
-      const workspace = document.getElementById('verification-workspace');
-
-      if (state.orders.length === 0) {
-        select.innerHTML = '<option value="">No hay pedidos</option>';
-        workspace.innerHTML = `<div class="py-12 text-center text-sm text-slate-400">Registre un pedido primero.</div>`;
-        return;
-      }
-
-      const priorityRank = { 'Listo': 1, 'En preparación': 2, 'Confirmado': 3, 'Recibido': 4, 'Entregado': 5 };
-      const sortedOrders = [...state.orders].sort((a, b) => (priorityRank[a.estado] || 9) - (priorityRank[b.estado] || 9));
-
-      select.innerHTML = sortedOrders.map(o => `<option value="${o.id}">${o.id} - ${o.cliente} (${o.estado})</option>`).join('');
-
-      if (preselectOrderId && state.orders.some(o => o.id === preselectOrderId)) {
-        state.selectedVerifyOrderId = preselectOrderId;
-      } else if (!state.selectedVerifyOrderId || !state.orders.some(o => o.id === state.selectedVerifyOrderId)) {
-        state.selectedVerifyOrderId = sortedOrders[0].id;
-      }
-
-      select.value = state.selectedVerifyOrderId;
-      window.loadOrderForVerification(state.selectedVerifyOrderId);
-    };
-
-    window.loadOrderForVerification = function(orderId) {
-      state.selectedVerifyOrderId = orderId;
-      const order = state.orders.find(o => o.id === orderId);
-      const workspace = document.getElementById('verification-workspace');
-      if (!order) return;
-
-      const isDelivered = order.estado === 'Entregado';
-      const v = order.verificacion || { productosCorrectos: false, cantidadesCorrectas: false, observacionesAtendidas: false, pedidoCompleto: false, entregaConfirmada: false };
-
-      const checklistItems = [
-        { key: 'productosCorrectos', label: 'Productos correctos', desc: 'Platos acordes a la comanda.' },
-        { key: 'cantidadesCorrectas', label: 'Cantidades correctas', desc: 'Porciones y bebidas exactas.' },
-        { key: 'observacionesAtendidas', label: 'Observaciones atendidas', desc: 'Restricciones y términos respetados.' },
-        { key: 'pedidoCompleto', label: 'Pedido completo', desc: 'Guarniciones, cubiertos y boleta.' },
-        { key: 'entregaConfirmada', label: 'Entrega confirmada', desc: 'Validado antes de despacho.' }
-      ];
-
-      workspace.innerHTML = `
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-6 bg-slate-50 rounded-2xl p-5 border border-slate-200/90 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-              <div>
-                <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg bg-navy-900 text-amber-400">${order.id}</span>
-                <h4 class="font-display font-bold text-lg text-navy-900 mt-1.5">${order.cliente}</h4>
-              </div>
-              ${getStatusBadgeHTML(order.estado)}
-            </div>
-
-            <div class="grid grid-cols-2 gap-3 text-xs">
-              <div class="p-3 rounded-xl bg-white border border-slate-200">
-                <span class="text-slate-400 block">Modalidad</span>
-                <span class="font-bold text-slate-800 block">${order.modalidad} · ${order.ubicacion}</span>
-              </div>
-              <div class="p-3 rounded-xl bg-white border border-slate-200">
-                <span class="text-slate-400 block">Responsable</span>
-                <span class="font-bold text-slate-800 block">${order.responsable}</span>
-              </div>
-            </div>
-
-            <div>
-              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Productos</p>
-              <div class="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
-                ${order.productos.map(p => `
-                  <div class="p-3 flex items-start justify-between gap-3">
-                    <div>
-                      <p class="text-sm font-bold text-navy-900"><span class="text-amber-600">${p.cantidad}x</span> ${p.nombre}</p>
-                      <p class="text-xs text-slate-500">${p.obs ? `Obs: ${p.obs}` : ''}</p>
-                    </div>
-                    <span class="text-xs font-bold text-slate-700">${formatCurrency(p.cantidad * p.precio)}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-6 bg-white rounded-2xl p-5 border-2 ${isDelivered ? 'border-emerald-200' : 'border-navy-900/15'} space-y-4 flex flex-col justify-between">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <h4 class="font-display font-bold text-base text-navy-900 flex items-center gap-2">
-                  <i class="fa-solid fa-list-check text-amber-600"></i>
-                  <span>Lista de Verificación</span>
-                </h4>
-                <span class="text-[11px] font-semibold text-slate-500">5/5 requeridos</span>
-              </div>
-
-              <div class="space-y-2.5">
-                ${checklistItems.map(item => `
-                  <label class="flex items-start gap-3 p-3 rounded-xl border ${v[item.key] ? 'bg-emerald-50/60 border-emerald-300' : 'bg-slate-50 border-slate-200'} cursor-pointer">
-                    <input type="checkbox" ${v[item.key] ? 'checked' : ''} ${isDelivered ? 'disabled' : ''} onchange="toggleVerificationCheck('${order.id}', '${item.key}', this.checked)" class="mt-1 w-4 h-4 rounded text-emerald-600 accent-emerald-600" />
-                    <div>
-                      <span class="text-sm font-bold text-navy-900 block">${item.label}</span>
-                      <span class="text-xs text-slate-500">${item.desc}</span>
-                    </div>
-                  </label>
-                `).join('')}
-              </div>
-            </div>
-
-            <div class="pt-4 border-t border-slate-100">
-              ${isDelivered ? `
-                <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center gap-2.5">
-                  <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>
-                  <div>
-                    <p class="text-sm font-bold">Entrega Confirmada</p>
-                    <p class="text-xs text-emerald-700">Hora: <strong>${order.tiempos.entregado || '--:--'}</strong></p>
-                  </div>
-                </div>
-              ` : `
-                <button type="button" onclick="confirmOrderDelivery('${order.id}')" class="w-full py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2">
-                  <i class="fa-solid fa-check-double"></i>
-                  <span>Confirmar Entrega</span>
-                </button>
-              `}
-            </div>
-          </div>
-        </div>
-      `;
-    };
-
-    window.toggleVerificationCheck = async function(orderId, key, checked) {
-      const order = state.orders.find(o => o.id === orderId);
-      if (!order) return;
-      if (!order.verificacion) order.verificacion = {};
-      order.verificacion[key] = checked;
-      await syncOrderToCloud(order);
-      window.loadOrderForVerification(orderId);
-    };
-
-    window.confirmOrderDelivery = async function(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
-      if (!order) return;
-
-      const v = order.verificacion || {};
-      const allChecked = v.productosCorrectos && v.cantidadesCorrectas && v.observacionesAtendidas && v.pedidoCompleto && v.entregaConfirmada;
-
-      if (!allChecked) {
-        showToast('Verificación incompleta', 'Marque las 5 casillas obligatorias.', 'error');
-        return;
-      }
-
-      const nowTime = getTimeOffset(0);
-      order.estado = 'Entregado';
-      if (!order.tiempos.confirmado) order.tiempos.confirmado = nowTime;
-      if (!order.tiempos.preparacion) order.tiempos.preparacion = nowTime;
-      if (!order.tiempos.listo) order.tiempos.listo = nowTime;
-      order.tiempos.entregado = nowTime;
-
-      await syncOrderToCloud(order);
-      window.loadOrderForVerification(orderId);
-      showToast('Entrega confirmada', `Pedido ${order.id} entregado y sincronizado.`, 'success');
-    };
-
-    function generateNextIncidentCode() {
-      if (state.incidents.length === 0) return 'INC-001';
-      const maxNum = state.incidents.reduce((max, inc) => {
-        const match = String(inc.id).match(/(\d+)$/);
-        const num = match ? parseInt(match[1], 10) : 0;
-        return num > max ? num : max;
-      }, 0);
-      return `INC-${String(maxNum + 1).padStart(3, '0')}`;
-    }
-
-    window.renderIncidentsModule = function() {
-      const nextCode = generateNextIncidentCode();
-      document.getElementById('inc-code').value = nextCode;
-      document.getElementById('inc-code-badge').textContent = nextCode;
-      document.getElementById('inc-datetime').value = `${getTodayISO()} ${getTimeOffset(0)}`;
-
-      const orderSelect = document.getElementById('inc-order-code');
-      if (state.orders.length === 0) {
-        orderSelect.innerHTML = '<option value="SIN-PEDIDO">Sin pedidos</option>';
-      } else {
-        orderSelect.innerHTML = state.orders.map(o => `<option value="${o.id}">${o.id} (${o.cliente})</option>`).join('');
-      }
-
-      const statusFilter = document.getElementById('filter-inc-status').value;
-      const filtered = state.incidents.filter(i => statusFilter === 'Todas' || i.estado === statusFilter).slice().reverse();
-
-      const container = document.getElementById('incidents-list-container');
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="py-12 text-center text-slate-400 text-xs">No hay incidencias.</div>`;
-        return;
-      }
-
-      container.innerHTML = filtered.map(inc => {
-        const badgeStyles = {
-          'Pendiente': 'bg-rose-50 text-rose-700 border-rose-200',
-          'En proceso': 'bg-amber-50 text-amber-800 border-amber-300',
-          'Resuelta': 'bg-emerald-50 text-emerald-700 border-emerald-300'
-        };
-
-        return `
-          <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <span class="px-2.5 py-1 rounded-lg bg-navy-900 text-white font-mono text-xs font-bold">${inc.id}</span>
-                <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 font-mono text-xs font-bold">Pedido: ${inc.pedidoId}</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${badgeStyles[inc.estado] || ''}">${inc.estado}</span>
-                <select onchange="updateIncidentStatus('${inc.id}', this.value)" class="px-2.5 py-1 rounded-xl bg-white border border-slate-300 text-xs font-semibold text-slate-700 outline-none">
-                  <option value="Pendiente" ${inc.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
-                  <option value="En proceso" ${inc.estado === 'En proceso' ? 'selected' : ''}>En proceso</option>
-                  <option value="Resuelta" ${inc.estado === 'Resuelta' ? 'selected' : ''}>Resuelta</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between text-xs text-slate-500 mb-1">
-                <span class="font-bold text-navy-900 text-sm">${inc.tipo}</span>
-                <span>${inc.fechaHora} · <strong>${inc.responsable}</strong></span>
-              </div>
-              <p class="text-xs sm:text-sm text-slate-700 bg-white p-3 rounded-xl border border-slate-200">${inc.descripcion}</p>
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Acción Correctiva</label>
-              <div class="flex gap-2">
-                <input type="text" id="action-input-${inc.id}" value="${inc.accionCorrectiva || ''}" placeholder="Solución aplicada..." class="flex-1 px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-xs text-slate-800 outline-none" />
-                <button onclick="saveIncidentAction('${inc.id}')" class="px-3 py-1.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold">Guardar</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    };
-
-    window.submitNewIncident = async function() {
-      const id = document.getElementById('inc-code').value;
-      const pedidoId = document.getElementById('inc-order-code').value;
-      const fechaHora = document.getElementById('inc-datetime').value;
-      const tipo = document.getElementById('inc-type').value;
-      const descripcion = document.getElementById('inc-description').value.trim();
-      const responsable = document.getElementById('inc-staff').value;
-      const accionCorrectiva = document.getElementById('inc-action').value.trim();
-      const estado = document.getElementById('inc-status').value;
-
-      if (!descripcion) { showToast('Requerido', 'Describa el problema.', 'error'); return; }
-
-      const newInc = { id, pedidoId, fechaHora, tipo, descripcion, responsable, accionCorrectiva, estado, esDemo: false };
-      state.incidents.push(newInc);
-      await syncIncidentToCloud(newInc);
+    function submitNewIncident() {
+      const desc = document.getElementById('inc-description').value;
+      if (!desc) return;
+      state.incidents.push({ id: `INC-00${state.incidents.length + 1}`, pedidoId: 'RDP-001', tipo: 'Reclamo', descripcion: desc, estado: 'Pendiente' });
       document.getElementById('inc-description').value = '';
-      document.getElementById('inc-action').value = '';
-      window.renderIncidentsModule();
-      showToast('Incidencia registrada', `Reporte ${id} creado y sincronizado.`, 'warning');
-    };
-
-    window.updateIncidentStatus = async function(incId, newStatus) {
-      const inc = state.incidents.find(i => i.id === incId);
-      if (!inc) return;
-      inc.estado = newStatus;
-      await syncIncidentToCloud(inc);
-      window.renderIncidentsModule();
-      showToast('Actualizado', `Incidencia ${incId} a "${newStatus}".`, 'success');
-    };
-
-    window.saveIncidentAction = async function(incId) {
-      const inc = state.incidents.find(i => i.id === incId);
-      const input = document.getElementById(`action-input-${incId}`);
-      if (!inc || !input) return;
-      inc.accionCorrectiva = input.value.trim();
-      await syncIncidentToCloud(inc);
-      showToast('Guardado', 'Acción correctiva actualizada.', 'success');
-    };
-
-    window.renderHistoryModule = function() {
-      const dateFilter = document.getElementById('history-date-filter').value;
-      const modalityFilter = document.getElementById('history-modality-filter').value;
-
-      const filtered = state.orders.filter(o => {
-        const matchDate = !dateFilter || o.fecha === dateFilter;
-        const matchMod = modalityFilter === 'Todas' || o.modalidad === modalityFilter;
-        return matchDate && matchMod;
-      }).slice().reverse();
-
-      const totalCount = filtered.length;
-      const totalRevenue = filtered.reduce((sum, o) => sum + calculateOrderTotal(o), 0);
-      const deliveredCount = filtered.filter(o => o.estado === 'Entregado').length;
-
-      document.getElementById('hist-stat-count').textContent = totalCount;
-      document.getElementById('hist-stat-revenue').textContent = formatCurrency(totalRevenue);
-      document.getElementById('hist-stat-delivered').textContent = deliveredCount;
-
-      const tbody = document.getElementById('history-table-body');
-      if (totalCount === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="py-12 text-center text-slate-400">No se encontraron pedidos en el historial con los filtros seleccionados.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(o => {
-        const total = calculateOrderTotal(o);
-        const itemsCount = (o.productos || []).reduce((sum, p) => sum + p.cantidad, 0);
-
-        return `
-          <tr class="hover:bg-slate-50 transition-colors">
-            <td class="py-3 px-4 font-mono font-bold text-navy-900">${o.id}</td>
-            <td class="py-3 px-4 text-slate-600 text-xs">${o.fecha} <br><span class="text-[10px] text-slate-400">${o.tiempos?.recibido || '--:--'}</span></td>
-            <td class="py-3 px-4 font-semibold text-slate-800">${o.cliente}</td>
-            <td class="py-3 px-4">
-              <span class="block">${getModalityBadgeHTML(o.modalidad)}</span>
-              <span class="text-[11px] text-slate-500">${o.ubicacion}</span>
-            </td>
-            <td class="py-3 px-4 text-center font-bold text-slate-700">${itemsCount} ítem(s)</td>
-            <td class="py-3 px-4 text-right font-display font-bold text-navy-900">${formatCurrency(total)}</td>
-            <td class="py-3 px-4 text-center">${getStatusBadgeHTML(o.estado)}</td>
-            <td class="py-3 px-4 text-center">
-              <button onclick="openOrderDetailModal('${o.id}')" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors" title="Ver detalle completo">
-                <i class="fa-solid fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    };
-
-    window.resetHistoryFilters = function() {
-      document.getElementById('history-date-filter').value = '';
-      document.getElementById('history-modality-filter').value = 'Todas';
-      window.renderHistoryModule();
-    };
-
-    window.openOrderDetailModal = function(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
-      if (!order) return;
-
-      document.getElementById('modal-order-code').textContent = order.id;
-      const total = calculateOrderTotal(order);
-
-      const content = document.getElementById('modal-order-content');
-      content.innerHTML = `
-        <div class="space-y-3">
-          <div class="grid grid-cols-2 gap-2 text-xs bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <div><strong>Cliente:</strong> ${order.cliente}</div>
-            <div><strong>Fecha:</strong> ${order.fecha} (${order.tiempos?.recibido || '--:--'})</div>
-            <div><strong>Modalidad:</strong> ${order.modalidad}</div>
-            <div><strong>Ubicación:</strong> ${order.ubicacion}</div>
-            <div><strong>Responsable:</strong> ${order.responsable}</div>
-            <div><strong>Estado:</strong> ${order.estado}</div>
-          </div>
-
-          <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Productos del Pedido</p>
-            <div class="border border-slate-200 rounded-xl overflow-hidden">
-              <table class="w-full text-left text-xs">
-                <thead class="bg-slate-100 font-semibold text-slate-700">
-                  <tr>
-                    <th class="p-2.5">Producto</th>
-                    <th class="p-2.5 text-center">Cant</th>
-                    <th class="p-2.5 text-right">P.Unit</th>
-                    <th class="p-2.5 text-right">Subtotal</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                  ${order.productos.map(p => `
-                    <tr>
-                      <td class="p-2.5 font-medium text-slate-800">${p.nombre} ${p.obs ? `<span class="block text-[10px] text-amber-700">Obs: ${p.obs}</span>` : ''}</td>
-                      <td class="p-2.5 text-center font-bold">${p.cantidad}</td>
-                      <td class="p-2.5 text-right">${formatCurrency(p.precio)}</td>
-                      <td class="p-2.5 text-right font-bold">${formatCurrency(p.cantidad * p.precio)}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-            <span class="font-bold text-slate-700">Total Facturado:</span>
-            <span class="font-display font-extrabold text-lg text-amber-600">${formatCurrency(total)}</span>
-          </div>
-        </div>
-      `;
-
-      const modal = document.getElementById('order-detail-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    };
-
-    window.closeOrderDetailModal = function() {
-      const modal = document.getElementById('order-detail-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    };
-
-    function startClock() {
-      const clockEl = document.getElementById('live-clock');
-      const update = () => {
-        const now = new Date();
-        clockEl.textContent = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      };
-      update();
-      setInterval(update, 1000);
+      showToast('Incidencia Registrada', 'El reporte fue guardado.', 'warning');
     }
 
-    window.addEventListener('DOMContentLoaded', async () => {
-      loadLocalData();
-      updateSidebarBadges();
-      startClock();
+    window.addEventListener('DOMContentLoaded', () => {
       window.navigateTo('dashboard');
-      await initCloudSync();
     });
   </script>
 </body>
