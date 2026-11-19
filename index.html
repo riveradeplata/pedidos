@@ -2833,7 +2833,7 @@
   })();
 </script>-->
 <!-- ================================================================= -->
-<!-- SCRIPT COMPLEMENTARIO: NOTIFICACIONES, SONIDO, EDITAR Y ELIMINAR   -->
+<!-- SCRIPT DEFINITIVO: NOTIFICACIONES, SONIDO, EDICIÓN Y ELIMINACIÓN  -->
 <!-- ================================================================= -->
 <script>
   (function() {
@@ -2890,96 +2890,95 @@
     }
 
     // =================================================================
-    // NUEVAS FUNCIONES DE EDICIÓN Y ELIMINACIÓN SEGURAS
+    // FUNCIONES AUTÓNOMAS Y DIRECTAS PARA EDITAR Y ELIMINAR
     // =================================================================
-    
-    // 1. Eliminar pedido (local y en Firebase)
-    window.eliminarPedidoSistema = async function(orderId) {
+    window.eliminarPedidoSistema = function(orderId) {
       if (!confirm(`¿Estás seguro de eliminar el pedido ${orderId}?`)) return;
       
-      // Remover de la lista en memoria
-      if (window.state && window.state.orders) {
-        window.state.orders = window.state.orders.filter(o => o.id !== orderId);
-        // Actualizar almacenamiento local usando las funciones de tu app
-        if (typeof saveLocalOnly === 'function') saveLocalOnly();
-        else localStorage.setItem('rdp_prototipo_pedidos_v1', JSON.stringify(window.state.orders));
-        
-        // Si está conectado a Firebase, eliminar de la nube de forma segura
+      try {
+        let orders = JSON.parse(localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]');
+        orders = orders.filter(o => o.id !== orderId);
+        localStorage.setItem('rdp_prototipo_pedidos_v1', JSON.stringify(orders));
+
+        // Eliminar también de Firebase si está disponible
         if (window.db && window.currentUser && window.appId) {
-          try {
-            const { doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
-            await deleteDoc(doc(window.db, 'artifacts', window.appId, 'public', 'data', 'orders', String(orderId)));
-          } catch (e) {}
+          import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js").then(({ doc, deleteDoc }) => {
+            deleteDoc(doc(window.db, 'artifacts', window.appId, 'public', 'data', 'orders', String(orderId)));
+          });
         }
 
-        // Refrescar vistas activas
-        if (typeof refreshActiveModuleUI === 'function') refreshActiveModuleUI();
-        else if (typeof navigateTo === 'function' && window.state?.currentModule) navigateTo(window.state.currentModule);
+        showNotificationAlert('Pedido Eliminado', `El registro ${orderId} fue borrado correctamente.`, 'warning');
         
-        showToast('Pedido eliminado', `El registro ${orderId} fue borrado con éxito.`, 'warning');
+        // Recargar la vista actual de forma limpia
+        setTimeout(() => location.reload(), 600);
+      } catch (err) {
+        alert('Error al eliminar el pedido.');
       }
     };
 
-    // 2. Editar cliente o ubicación de un pedido rápido
-    window.editarPedidoSistema = async function(orderId) {
-      const order = window.state?.orders?.find(o => o.id === orderId);
-      if (!order) return;
+    window.editarPedidoSistema = function(orderId) {
+      try {
+        let orders = JSON.parse(localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]');
+        const order = orders.find(o => o.id === orderId);
+        if (!order) { alert('Pedido no encontrado.'); return; }
 
-      const nuevoCliente = prompt("Modificar nombre del cliente:", order.cliente);
-      if (nuevoCliente === null) return;
-      const nuevaUbicacion = prompt("Modificar mesa o dirección:", order.ubicacion);
-      if (nuevaUbicacion === null) return;
+        const nuevoCliente = prompt("Modificar nombre del cliente:", order.cliente);
+        if (nuevoCliente === null) return;
+        const nuevaUbicacion = prompt("Modificar mesa o dirección:", order.ubicacion);
+        if (nuevaUbicacion === null) return;
 
-      order.cliente = nuevoCliente.trim() || order.cliente;
-      order.ubicacion = nuevaUbicacion.trim() || order.ubicacion;
+        order.cliente = nuevoCliente.trim() || order.cliente;
+        order.ubicacion = nuevaUbicacion.trim() || order.ubicacion;
 
-      // Guardar cambios sincronizados
-      if (typeof syncOrderToCloud === 'function') {
-        await syncOrderToCloud(order);
-      } else {
-        localStorage.setItem('rdp_prototipo_pedidos_v1', JSON.stringify(window.state.orders));
+        localStorage.setItem('rdp_prototipo_pedidos_v1', JSON.stringify(orders));
+
+        // Sincronizar actualización a Firebase si está disponible
+        if (window.db && window.currentUser && window.appId) {
+          import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js").then(({ doc, setDoc }) => {
+            setDoc(doc(window.db, 'artifacts', window.appId, 'public', 'data', 'orders', String(orderId)), order);
+          });
+        }
+
+        showNotificationAlert('Pedido Actualizado', `Se modificó la información de ${order.id}.`, 'success');
+        
+        // Recargar la vista para reflejar los cambios
+        setTimeout(() => location.reload(), 600);
+      } catch (err) {
+        alert('Error al editar el pedido.');
       }
-
-      if (typeof refreshActiveModuleUI === 'function') refreshActiveModuleUI();
-      showToast('Pedido actualizado', `Se modificó la información de ${order.id}.`, 'success');
     };
 
     // =================================================================
-    // INYECTOR VISUAL PARA LOS BOTONES DE EDITAR Y ELIMINAR EN SEGUIMIENTO
+    // INYECTOR VISUAL PARA LOS BOTONES EN LAS TARJETAS DE SEGUIMIENTO
     // =================================================================
     window.addEventListener('DOMContentLoaded', () => {
-      // Monitorear cambios para añadir los botones de acción dinámicamente en las tarjetas de pedidos
       setInterval(() => {
-        // Buscar las tarjetas de pedidos en la vista de seguimiento
         const tarjetas = document.querySelectorAll('#tracking-orders-container > div');
         tarjetas.forEach(tarjeta => {
-          // Si ya tiene el botón de eliminar inyectado, saltar
           if (tarjeta.querySelector('.btn-accion-extra')) return;
 
-          // Extraer el código del pedido de la tarjeta (ej. RDP-001)
           const codigoEl = tarjeta.querySelector('.font-mono');
           if (!codigoEl) return;
           const orderId = codigoEl.textContent.trim();
 
-          // Buscar el contenedor superior de la tarjeta donde están los estados
           const headerAcciones = tarjeta.querySelector('.flex.flex-wrap.items-center.gap-2\\.5') || tarjeta.querySelector('.flex.items-center.gap-2\\.5');
           if (headerAcciones && !headerAcciones.querySelector('.btn-accion-extra')) {
             const btnGroup = document.createElement('div');
-            btnGroup.className = 'btn-accion-extra flex items-center gap-1 ml-1';
+            btnGroup.className = 'btn-accion-extra flex items-center gap-1.5 ml-2';
             btnGroup.innerHTML = `
-              <button onclick="editarPedidoSistema('${orderId}')" class="p-2 rounded-xl bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-800 text-xs transition-all" title="Editar datos del pedido">
-                <i class="fa-solid fa-pen"></i>
+              <button onclick="editarPedidoSistema('${orderId}')" class="px-2.5 py-1.5 rounded-xl bg-slate-200 hover:bg-amber-500 hover:text-white text-slate-700 text-xs font-semibold transition-all shadow-xs" title="Editar datos">
+                <i class="fa-solid fa-pen"></i> Editar
               </button>
-              <button onclick="eliminarPedidoSistema('${orderId}')" class="p-2 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-700 hover:text-rose-700 text-xs transition-all" title="Eliminar pedido">
+              <button onclick="eliminarPedidoSistema('${orderId}')" class="px-2.5 py-1.5 rounded-xl bg-slate-200 hover:bg-rose-600 hover:text-white text-slate-700 text-xs font-semibold transition-all shadow-xs" title="Eliminar pedido">
                 <i class="fa-solid fa-trash-can"></i>
               </button>
             `;
             headerAcciones.appendChild(btnGroup);
           }
         });
-      }, 1000);
+      }, 800);
 
-      // Sincronización de notificaciones de sonido previas
+      // Notificaciones de sonido en tiempo real para otros equipos
       let lastOrderCount = -1;
       let lastIncidentCount = -1;
       setInterval(() => {
@@ -3005,5 +3004,4 @@
     });
   })();
 </script>
-
 </html>
