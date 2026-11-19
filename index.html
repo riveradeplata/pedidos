@@ -103,7 +103,7 @@
           <p class="text-[10px] text-amber-400 uppercase tracking-widest font-semibold">Sistema de Control Operativo</p>
         </div>
       </div>
-      <!-- BOTÓN SOLICITADO: Ver Sitio Web Público desde la pantalla de PIN -->
+      <!-- BOTÓN: Ver Sitio Web Público desde la pantalla de PIN -->
       <button onclick="openPublicWebsite()" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold transition-all flex items-center gap-2">
         <i class="fa-solid fa-globe"></i>
         <span>Ver Sitio Web Público</span>
@@ -171,7 +171,7 @@
 
 
   <!-- ================================================================= -->
-  <!-- 2. SITIO WEB PÚBLICO INSTITUCIONAL (MODAL / VISTA DUAL)          -->
+  <!-- 2. SITIO WEB PÚBLICO INSTITUCIONAL (VISTA DUAL)                  -->
   <!-- ================================================================= -->
   <div id="public-website-modal" class="fixed inset-0 z-50 bg-slate-50 overflow-y-auto hidden flex flex-col">
     <!-- Header del Sitio Público con Acceso Dual Instantáneo -->
@@ -186,7 +186,7 @@
         </div>
       </div>
 
-      <!-- BOTÓN DUAL INSTANTÁNEO: Volver al Sistema Operativo por PIN -->
+      <!-- BOTÓN DUAL: Volver al Sistema Operativo por PIN -->
       <button onclick="closePublicWebsite()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2">
         <i class="fa-solid fa-lock"></i>
         <span>Volver al Sistema Operativo (PIN)</span>
@@ -195,14 +195,12 @@
 
     <!-- Contenido Institucional Completo -->
     <main class="flex-1 space-y-16 pb-20">
-      <!-- Portada -->
       <section class="bg-navy-900 text-white py-20 px-6 text-center space-y-6">
         <span class="px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase">Alta Cocina Peruana & Fusión Nikkei</span>
         <h1 class="font-display font-extrabold text-4xl sm:text-5xl text-white tracking-tight">Tradición y Vanguardia en Cada Plato</h1>
         <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">Disfrute de una experiencia culinaria única con insumos frescos del mar y técnicas de vanguardia.</p>
       </section>
 
-      <!-- Historia -->
       <section class="max-w-4xl mx-auto px-6">
         <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div class="space-y-3">
@@ -218,7 +216,6 @@
         </div>
       </section>
 
-      <!-- Platos Estrella y Precios -->
       <section class="max-w-5xl mx-auto px-6 space-y-6">
         <div class="text-center space-y-1">
           <span class="text-xs font-bold uppercase text-amber-600">Gastronomía Fusión</span>
@@ -255,7 +252,6 @@
         </div>
       </section>
 
-      <!-- Formulario de Reservas -->
       <section class="max-w-2xl mx-auto px-6">
         <div class="bg-navy-900 text-white rounded-3xl p-8 shadow-xl space-y-4">
           <h3 class="font-display font-bold text-xl text-center">Formulario de Reservas</h3>
@@ -284,10 +280,9 @@
     <!-- BACKDROP MÓVIL -->
     <div id="mobile-backdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-30 hidden lg:hidden"></div>
 
-    <!-- BARRA LATERAL DE NAVEGACIÓN (SIDEBAR - Escritorio y Drawer móvil) -->
+    <!-- BARRA LATERAL DE NAVEGACIÓN (SIDEBAR) -->
     <aside id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 h-screen w-72 bg-navy-900 text-white flex flex-col justify-between transition-transform duration-300 -translate-x-full lg:translate-x-0 shadow-2xl border-r border-slate-800">
       <div>
-        <!-- Marca / Logo -->
         <div class="p-6 border-b border-slate-800/90 flex items-center justify-between">
           <div class="flex items-center gap-3.5">
             <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-navy-950 font-extrabold text-lg">
@@ -303,16 +298,14 @@
           </button>
         </div>
 
-        <!-- Etiqueta de Sistema Interno -->
         <div class="px-6 pt-4 pb-2 flex items-center justify-between">
           <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Operaciones & Control</span>
-          <!-- ACCESO DUAL: Botón rápido en sidebar para volver al sitio público -->
           <button onclick="openPublicWebsite()" class="text-[10px] text-amber-400 hover:underline flex items-center gap-1">
             <i class="fa-solid fa-globe"></i> Ver Web
           </button>
         </div>
 
-        <!-- Menú de Navegación (6 Módulos) -->
+        <!-- Menú de Navegación (6 Módulos Originales) -->
         <nav class="px-3 space-y-1.5 mt-1" id="sidebar-nav">
           <button onclick="navigateTo('dashboard')" data-nav="dashboard" class="nav-btn nav-item-active w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all">
             <span class="flex items-center gap-3">
@@ -397,23 +390,20 @@
         </div>
 
         <div class="flex items-center gap-3">
-          <!-- BOTÓN SOLICITADO: Ver Sitio Web Público en el Header Operativo -->
+          <!-- BOTÓN: Ver Sitio Web Público en el Header Operativo -->
           <button onclick="openPublicWebsite()" class="hidden md:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200 transition-all">
             <i class="fa-solid fa-globe text-amber-600"></i>
             <span>Ver Sitio Web Público</span>
           </button>
 
-          <!-- Indicador de Sincronización en Vivo -->
           <div id="sync-badge" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-200">
             <span id="sync-dot" class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
             <span id="sync-label">Sincronizando...</span>
           </div>
-          <!-- Reloj en tiempo real -->
           <div class="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-medium border border-slate-200/80">
             <i class="fa-regular fa-clock text-amber-600"></i>
             <span id="live-clock">--:--:--</span>
           </div>
-          <!-- Acceso rápido a Nuevo Pedido -->
           <button onclick="navigateTo('nuevo-pedido')" class="px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all flex items-center gap-2">
             <i class="fa-solid fa-plus text-amber-400"></i>
             <span>Nuevo Pedido</span>
@@ -421,607 +411,105 @@
         </div>
       </header>
 
-      <!-- BANNER MÓVIL DE IDENTIFICACIÓN DE PROTOTIPO -->
-      <div class="sm:hidden bg-amber-50 border-b border-amber-200 px-4 py-2 text-[11px] text-amber-900 flex items-center justify-between">
-        <span><i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Prototipo con Datos Demo</span>
-        <button onclick="confirmarAccionDemo('restaurar')" class="underline font-semibold text-amber-800">Restaurar</button>
-      </div>
-
-      <!-- CONTENEDOR DINÁMICO DE MÓDULOS -->
+      <!-- CONTENEDOR DINÁMICO DE TUS 6 MÓDULOS ORIGINALES -->
       <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 1: PANEL PRINCIPAL (DASHBOARD)                     -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 1: DASHBOARD -->
         <section id="module-dashboard" class="module-view space-y-6">
-          <!-- Nota contextual del dashboard -->
-          <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-navy-900 text-amber-400 flex items-center justify-center shrink-0">
-                <i class="fa-solid fa-gauge-high"></i>
-              </div>
-              <div>
-                <h3 class="text-sm font-bold text-navy-900">Indicadores Calculados del Prototipo</h3>
-                <p class="text-xs text-slate-500">Todas las métricas mostradas reflejan dinámicamente los registros almacenados en esta sesión de demostración.</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <button onclick="navigateTo('seguimiento')" class="px-3.5 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors">
-                Ver Tablero de Cocina
-              </button>
-            </div>
-          </div>
-
-          <!-- Grid de 7 Tarjetas Estadísticas -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <!-- 1. Total de pedidos del turno -->
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Pedidos (Demo)</span>
-                <div class="w-9 h-9 rounded-xl bg-navy-900/10 text-navy-900 flex items-center justify-center">
-                  <i class="fa-solid fa-receipt"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-total" class="font-display text-3xl font-extrabold text-navy-900">0</span>
-                <span class="text-xs text-slate-400">registrados</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Acumulado del turno actual</p>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">Total Pedidos</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-total" class="font-display text-3xl font-extrabold text-navy-900">0</span></div>
             </div>
-
-            <!-- 2. Pedidos recibidos -->
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Pedidos Recibidos</span>
-                <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
-                  <i class="fa-solid fa-inbox"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-recibidos" class="font-display text-3xl font-extrabold text-sky-700">0</span>
-                <span class="text-xs text-slate-400">por confirmar</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Pendientes de validación inicial</p>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">Recibidos</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-recibidos" class="font-display text-3xl font-extrabold text-sky-700">0</span></div>
             </div>
-
-            <!-- 3. Pedidos en preparación (incluye Confirmado + En preparación) -->
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">En Preparación</span>
-                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                  <i class="fa-solid fa-fire-burner"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-preparacion" class="font-display text-3xl font-extrabold text-amber-600">0</span>
-                <span id="stat-prep-detalle" class="text-xs text-slate-500">(0 conf. / 0 cocina)</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Activos en estación de cocina</p>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">En Preparación</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-preparacion" class="font-display text-3xl font-extrabold text-amber-600">0</span></div>
             </div>
-
-            <!-- 4. Pedidos listos para entregar -->
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Listos para Entregar</span>
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                  <i class="fa-solid fa-bell-concierge"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-listos" class="font-display text-3xl font-extrabold text-emerald-600">0</span>
-                <span class="text-xs text-slate-400">en despacho</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Requieren verificación previa</p>
-            </div>
-
-            <!-- 5. Pedidos entregados -->
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Pedidos Entregados</span>
-                <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
-                  <i class="fa-solid fa-circle-check"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-entregados" class="font-display text-3xl font-extrabold text-slate-800">0</span>
-                <span class="text-xs text-slate-400">completados</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Verificados y cerrados</p>
-            </div>
-
-            <!-- 6. Incidencias abiertas -->
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Incidencias Abiertas</span>
-                <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
-                  <i class="fa-solid fa-triangle-exclamation"></i>
-                </div>
-              </div>
-              <div class="mt-3 flex items-baseline gap-2">
-                <span id="stat-incidencias" class="font-display text-3xl font-extrabold text-rose-600">0</span>
-                <span id="stat-inc-detalle" class="text-xs text-slate-500">pendientes / proceso</span>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-2">Requieren seguimiento operativo</p>
-            </div>
-
-            <!-- 7. Tiempo promedio de atención -->
-            <div class="sm:col-span-2 bg-gradient-to-br from-navy-900 to-navy-800 text-white rounded-2xl p-5 shadow-md flex flex-col justify-between">
-              <div class="flex items-center justify-between">
-                <div>
-                  <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Tiempo Promedio de Atención (Demo)</span>
-                  <p class="text-[11px] text-slate-300 mt-0.5">Calculado desde recepción hasta entrega/estado actual de pedidos registrados</p>
-                </div>
-                <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center">
-                  <i class="fa-solid fa-stopwatch text-lg"></i>
-                </div>
-              </div>
-              <div class="mt-4 flex items-baseline justify-between">
-                <div class="flex items-baseline gap-2">
-                  <span id="stat-tiempo-promedio" class="font-display text-3xl font-extrabold text-white">-- min</span>
-                  <span id="stat-tiempo-nota" class="text-xs text-slate-400">por pedido</span>
-                </div>
-                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-white/10 text-amber-300 font-medium">Meta: &lt; 25 min</span>
-              </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs">
+              <span class="text-xs font-semibold uppercase text-slate-500">Listos</span>
+              <div class="mt-3 flex items-baseline gap-2"><span id="stat-listos" class="font-display text-3xl font-extrabold text-emerald-600">0</span></div>
             </div>
           </div>
-
-          <!-- Tablas Resumen: Pedidos Recientes e Incidencias Pendientes -->
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Pedidos Recientes (2 columnas) -->
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
-              <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <i class="fa-solid fa-clock-rotate-left text-amber-600"></i>
-                  <h3 class="font-display font-bold text-base text-navy-900">Pedidos Recientes del Turno</h3>
-                </div>
-                <button onclick="navigateTo('seguimiento')" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
-                  <span>Ver todos</span>
-                  <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
-              </div>
-              <div class="overflow-x-auto flex-1">
-                <table class="w-full text-left border-collapse">
-                  <thead>
-                    <tr class="bg-slate-50/80 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200/80">
-                      <th class="py-3 px-4">Código</th>
-                      <th class="py-3 px-4">Cliente / Modalidad</th>
-                      <th class="py-3 px-4">Total</th>
-                      <th class="py-3 px-4">Estado</th>
-                      <th class="py-3 px-4 text-right">Acción</th>
-                    </tr>
-                  </thead>
-                  <tbody id="dashboard-recent-orders" class="divide-y divide-slate-100 text-sm">
-                    <!-- Renderizado por JS -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Incidencias Pendientes / En Proceso (1 columna) -->
-            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
-              <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <i class="fa-solid fa-circle-exclamation text-rose-600"></i>
-                  <h3 class="font-display font-bold text-base text-navy-900">Incidencias Activas</h3>
-                </div>
-                <button onclick="navigateTo('incidencias')" class="text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
-                  <span>Gestionar</span>
-                  <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
-              </div>
-              <div id="dashboard-open-incidents" class="p-4 space-y-3 flex-1 overflow-y-auto max-h-96">
-                <!-- Renderizado por JS -->
-              </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 class="font-display font-bold text-base text-navy-900 mb-4">Pedidos Recientes</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm">
+                <thead><tr class="bg-slate-50 text-xs font-bold text-slate-500 uppercase"><th class="p-3">Código</th><th class="p-3">Cliente</th><th class="p-3">Total</th><th class="p-3">Estado</th></tr></thead>
+                <tbody id="dashboard-recent-orders" class="divide-y divide-slate-100"></tbody>
+              </table>
             </div>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 2: REGISTRO DE NUEVOS PEDIDOS                      -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 2: NUEVO PEDIDO -->
         <section id="module-nuevo-pedido" class="module-view hidden space-y-6">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Formulario Principal (2 columnas) -->
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-6">
-              <div class="border-b border-slate-100 pb-4 flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h3 class="font-display font-bold text-lg text-navy-900">Registrar Nuevo Pedido</h3>
-                  <p class="text-xs text-slate-500">Complete los datos del cliente y agregue los platos de la comanda.</p>
-                </div>
-                <span class="px-3 py-1.5 rounded-xl bg-navy-900 text-amber-400 font-mono text-xs font-bold" id="form-order-code-badge">
-                  Código: RDP-006
-                </span>
-              </div>
-
-              <!-- 1. Datos Generales -->
-              <div class="space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-amber-700 flex items-center gap-2">
-                  <i class="fa-solid fa-id-card"></i>
-                  <span>1. Datos Generales del Pedido</span>
-                </h4>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Código Automático</label>
-                    <input type="text" id="order-code" readonly class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 font-mono text-sm font-bold cursor-not-allowed" />
-                  </div>
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Fecha *</label>
-                    <input type="date" id="order-date" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm outline-none" />
-                  </div>
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Hora de Recepción *</label>
-                    <input type="time" id="order-time" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm outline-none" />
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nombre del Cliente *</label>
-                    <input type="text" id="order-client" placeholder="Ej. Mariana Villalobos" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm outline-none" />
-                  </div>
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Responsable del Registro *</label>
-                    <select id="order-staff" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm outline-none">
-                      <option value="Carlos Mendoza">Carlos Mendoza (Anfitrión / Caja)</option>
-                      <option value="Sofía Paredes">Sofía Paredes (Atención Salón)</option>
-                      <option value="Luis Torres">Luis Torres (Coordinador Delivery)</option>
-                      <option value="Andrea Rojas">Andrea Rojas (Supervisora de Turno)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Modalidad de Atención *</label>
-                    <select id="order-modality" onchange="handleModalityChange()" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm outline-none">
-                      <option value="Salón">Salón (Consumo en local)</option>
-                      <option value="Delivery">Delivery (Envío a domicilio)</option>
-                      <option value="Para recoger">Para recoger (Take-away)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label id="order-location-label" class="block text-xs font-semibold text-slate-700 mb-1.5">Número de Mesa *</label>
-                    <input type="text" id="order-location" placeholder="Ej. Mesa 05" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 text-sm outline-none" />
-                  </div>
-                </div>
-              </div>
-
-              <!-- 2. Detalle del Pedido (Constructor de Ítems) -->
-              <div class="space-y-4 pt-4 border-t border-slate-100">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <h4 class="text-xs font-bold uppercase tracking-wider text-amber-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bowl-food"></i>
-                    <span>2. Agregar Productos al Pedido</span>
-                  </h4>
-                  <span class="text-[11px] text-slate-500">Seleccione del catálogo fusión o escriba un plato personalizado</span>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
-                  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-                    <div class="sm:col-span-6">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Catálogo Rápido (Rivera de Plata)</label>
-                      <select id="item-catalog" onchange="selectCatalogItem()" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-amber-500">
-                        <option value="">-- Seleccionar plato o ingresar manual --</option>
-                        <option value="Ceviche Nikkei|46.00">Ceviche Nikkei (Atún, leche de tigre al sillao) - S/ 46.00</option>
-                        <option value="Lomo Saltado al Wok|52.00">Lomo Saltado al Wok (Fino, papas nativas) - S/ 52.00</option>
-                        <option value="Causa Acevichada|38.00">Causa Acevichada (Langostinos crocantes) - S/ 38.00</option>
-                        <option value="Risotto de Ají de Gallina|44.00">Risotto de Ají de Gallina (Queso parmesano) - S/ 44.00</option>
-                        <option value="Tacu Tacu con Mariscos|49.00">Tacu Tacu con Mariscos en Salsa Coral - S/ 49.00</option>
-                        <option value="Pulpo Anticuchero|56.00">Pulpo Anticuchero a la Parrilla - S/ 56.00</option>
-                        <option value="Suspiro de Chirimoya|22.00">Suspiro de Chirimoya & Merengue - S/ 22.00</option>
-                        <option value="Chicha Morada Artesanal (1L)|18.00">Chicha Morada Artesanal (Jarra 1L) - S/ 18.00</option>
-                      </select>
-                    </div>
-                    <div class="sm:col-span-6">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Nombre del Producto *</label>
-                      <input type="text" id="item-name" placeholder="Nombre del plato o bebida" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-amber-500" />
-                    </div>
-                  </div>
-
-                  <div class="grid grid-cols-2 sm:grid-cols-12 gap-3 items-end">
-                    <div class="sm:col-span-2">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Cantidad *</label>
-                      <input type="number" id="item-qty" min="1" value="1" oninput="updateItemPreviewSubtotal()" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-amber-500" />
-                    </div>
-                    <div class="sm:col-span-3">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Precio Unit. (S/) *</label>
-                      <input type="number" id="item-price" min="0" step="0.50" placeholder="0.00" oninput="updateItemPreviewSubtotal()" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-amber-500" />
-                    </div>
-                    <div class="sm:col-span-4">
-                      <label class="block text-[11px] font-semibold text-slate-600 mb-1">Observaciones Especiales</label>
-                      <input type="text" id="item-notes" placeholder="Ej. Sin ají, término medio..." class="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm outline-none focus:border-amber-500" />
-                    </div>
-                    <div class="col-span-2 sm:col-span-3">
-                      <button type="button" onclick="addProductToOrder()" class="w-full py-2 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Agregar (<span id="item-preview-sub">S/ 0.00</span>)</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Tabla de Productos Agregados -->
-                <div class="border border-slate-200 rounded-2xl overflow-hidden">
-                  <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                      <thead>
-                        <tr class="bg-navy-900 text-white text-[11px] font-semibold uppercase tracking-wider">
-                          <th class="py-2.5 px-4">Producto</th>
-                          <th class="py-2.5 px-3 text-center">Cant.</th>
-                          <th class="py-2.5 px-3 text-right">P. Unit.</th>
-                          <th class="py-2.5 px-3 text-right">Subtotal</th>
-                          <th class="py-2.5 px-4">Observaciones</th>
-                          <th class="py-2.5 px-3 text-center">Quitar</th>
-                        </tr>
-                      </thead>
-                      <tbody id="new-order-items-body" class="divide-y divide-slate-100 text-xs sm:text-sm">
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Registrar Nuevo Pedido</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><label class="block text-xs font-semibold mb-1">Cliente *</label><input type="text" id="order-client" placeholder="Nombre cliente" class="w-full p-3 rounded-xl border text-sm" /></div>
+              <div><label class="block text-xs font-semibold mb-1">Mesa / Ubicación *</label><input type="text" id="order-location" placeholder="Ej. Mesa 05" class="w-full p-3 rounded-xl border text-sm" /></div>
             </div>
-
-            <!-- Resumen y Botones -->
-            <div class="space-y-6">
-              <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-6 space-y-5 sticky top-24">
-                <h4 class="font-display font-bold text-base text-navy-900 border-b border-slate-100 pb-3">Resumen de la Comanda</h4>
-
-                <div class="space-y-2.5 text-sm">
-                  <div class="flex justify-between text-slate-600">
-                    <span>Total de ítems:</span>
-                    <span id="summary-item-count" class="font-semibold text-navy-900">0 productos</span>
-                  </div>
-                  <div class="flex justify-between text-slate-600">
-                    <span>Subtotal Neto:</span>
-                    <span id="summary-subtotal" class="font-medium text-slate-800">S/ 0.00</span>
-                  </div>
-                  <div class="flex justify-between text-slate-500 text-xs">
-                    <span>IGV incluido (18%):</span>
-                    <span id="summary-igv">S/ 0.00</span>
-                  </div>
-                  <div class="pt-3 border-t border-slate-200 flex items-baseline justify-between">
-                    <span class="font-bold text-navy-900">TOTAL A COBRAR:</span>
-                    <span id="summary-total" class="font-display text-2xl font-extrabold text-amber-600">S/ 0.00</span>
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Observación General del Pedido</label>
-                  <textarea id="order-general-notes" rows="2" placeholder="Ej. Cubiertos descartables..." class="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:border-amber-500 text-xs outline-none"></textarea>
-                </div>
-
-                <div class="space-y-2.5 pt-2">
-                  <button type="button" onclick="submitNewOrder()" class="w-full py-3 px-4 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-semibold text-sm shadow-md transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-check-circle text-amber-400"></i>
-                    <span>Registrar Pedido</span>
-                  </button>
-                  <div class="grid grid-cols-2 gap-2.5">
-                    <button type="button" onclick="resetNewOrderForm(true)" class="py-2.5 px-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5">
-                      <i class="fa-solid fa-eraser"></i>
-                      <span>Limpiar</span>
-                    </button>
-                    <button type="button" onclick="navigateTo('seguimiento')" class="py-2.5 px-3 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-100 text-rose-700 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5">
-                      <i class="fa-solid fa-xmark"></i>
-                      <span>Cancelar</span>
-                    </button>
-                  </div>
-                </div>
+            <div class="p-4 bg-slate-50 rounded-xl space-y-3">
+              <h4 class="text-xs font-bold uppercase text-amber-700">Agregar Plato Rápido</h4>
+              <select id="item-catalog" onchange="selectCatalogItem()" class="w-full p-2.5 rounded-xl border text-sm">
+                <option value="">-- Seleccionar plato --</option>
+                <option value="Ceviche Nikkei|46.00">Ceviche Nikkei - S/ 46.00</option>
+                <option value="Lomo Saltado al Wok|52.00">Lomo Saltado al Wok - S/ 52.00</option>
+                <option value="Causa Acevichada|38.00">Causa Acevichada - S/ 38.00</option>
+              </select>
+              <div class="grid grid-cols-3 gap-2">
+                <input type="text" id="item-name" placeholder="Producto" class="col-span-2 p-2 rounded-xl border text-sm" />
+                <input type="number" id="item-price" placeholder="Precio" class="p-2 rounded-xl border text-sm" />
               </div>
+              <button type="button" onclick="addProductToOrder()" class="px-4 py-2 bg-amber-600 text-white rounded-xl text-xs font-bold">Añadir al Pedido</button>
             </div>
+            <table class="w-full text-left text-sm border">
+              <thead><tr class="bg-navy-900 text-white"><th class="p-2">Producto</th><th class="p-2">Cant</th><th class="p-2">Precio</th></tr></thead>
+              <tbody id="new-order-items-body"></tbody>
+            </table>
+            <button onclick="submitNewOrder()" class="w-full py-3 bg-navy-900 text-white font-bold rounded-xl">Guardar y Enviar Pedido</button>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 3: SEGUIMIENTO DE PEDIDOS                          -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 3: SEGUIMIENTO -->
         <section id="module-seguimiento" class="module-view hidden space-y-6">
-          <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs space-y-4">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <h3 class="font-display font-bold text-lg text-navy-900">Seguimiento en Tiempo Real e Historial</h3>
-                <p class="text-xs text-slate-500">Actualice el estado de preparación y consulte la trazabilidad horaria.</p>
-              </div>
-              <div class="relative w-full md:w-72">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                <input type="text" id="filter-search" oninput="renderTrackingModule()" placeholder="Buscar código o cliente..." class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-amber-500 text-xs sm:text-sm outline-none" />
-              </div>
-            </div>
-
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-3 border-t border-slate-100">
-              <div class="flex flex-wrap items-center gap-1.5" id="status-filter-chips">
-                <button onclick="setTrackingStatusFilter('Todos')" data-status-filter="Todos" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-navy-900 text-white transition-all">Todos</button>
-                <button onclick="setTrackingStatusFilter('Recibido')" data-status-filter="Recibido" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">1. Recibido</button>
-                <button onclick="setTrackingStatusFilter('Confirmado')" data-status-filter="Confirmado" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">2. Confirmado</button>
-                <button onclick="setTrackingStatusFilter('En preparación')" data-status-filter="En preparación" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">3. En preparación</button>
-                <button onclick="setTrackingStatusFilter('Listo')" data-status-filter="Listo" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">4. Listo</button>
-                <button onclick="setTrackingStatusFilter('Entregado')" data-status-filter="Entregado" class="status-chip px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">5. Entregado</button>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold text-slate-500">Modalidad:</span>
-                <select id="filter-modality" onchange="renderTrackingModule()" class="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 outline-none focus:border-amber-500">
-                  <option value="Todas">Todas</option>
-                  <option value="Salón">Salón</option>
-                  <option value="Delivery">Delivery</option>
-                  <option value="Para recoger">Para recoger</option>
-                </select>
-              </div>
-            </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Seguimiento en Tiempo Real</h3>
+            <div id="tracking-orders-container" class="space-y-4"></div>
           </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="tracking-visual-lanes">
-            <div class="bg-sky-50/70 border border-sky-200/80 rounded-2xl p-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-sky-900">Pendientes</span>
-                <span id="lane-count-pendientes" class="px-2 py-0.5 rounded-full bg-sky-600 text-white text-xs font-bold">0</span>
-              </div>
-              <div id="lane-list-pendientes" class="flex flex-wrap gap-1.5 mt-2"></div>
-            </div>
-            <div class="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-amber-900">En Cocina</span>
-                <span id="lane-count-preparacion" class="px-2 py-0.5 rounded-full bg-amber-600 text-white text-xs font-bold">0</span>
-              </div>
-              <div id="lane-list-preparacion" class="flex flex-wrap gap-1.5 mt-2"></div>
-            </div>
-            <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-emerald-900">Listos para Entrega</span>
-                <span id="lane-count-listos" class="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-xs font-bold">0</span>
-              </div>
-              <div id="lane-list-listos" class="flex flex-wrap gap-1.5 mt-2"></div>
-            </div>
-          </div>
-
-          <div id="tracking-orders-container" class="space-y-4"></div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 4: VERIFICACIÓN Y ENTREGA                          -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 4: VERIFICACIÓN -->
         <section id="module-verificacion" class="module-view hidden space-y-6">
-          <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
-              <div>
-                <h3 class="font-display font-bold text-lg text-navy-900">Control de Calidad, Verificación y Entrega</h3>
-                <p class="text-xs text-slate-500">Verifique cada ítem antes de entregar el pedido al cliente.</p>
-              </div>
-              <div class="w-full md:w-80">
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Seleccionar Pedido</label>
-                <select id="verify-order-select" onchange="loadOrderForVerification(this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm font-semibold text-navy-900 outline-none"></select>
-              </div>
-            </div>
-            <div id="verification-workspace" class="mt-6"></div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Verificación y Entrega</h3>
+            <select id="verify-order-select" onchange="loadOrderForVerification(this.value)" class="w-full p-3 rounded-xl border font-semibold"></select>
+            <div id="verification-workspace"></div>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 5: CONTROL DE INCIDENCIAS                         -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 5: INCIDENCIAS -->
         <section id="module-incidencias" class="module-view hidden space-y-6">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs space-y-4 h-fit">
-              <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
-                <div>
-                  <h3 class="font-display font-bold text-base text-navy-900">Registrar Incidencia</h3>
-                  <p class="text-xs text-slate-500">Documente demoras o errores del servicio.</p>
-                </div>
-                <span id="inc-code-badge" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 font-mono text-xs font-bold">INC-004</span>
-              </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">Código</label>
-                  <input type="text" id="inc-code" readonly class="w-full px-3 py-2 rounded-xl bg-slate-100 border text-xs font-bold text-slate-700" />
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1">Pedido *</label>
-                  <select id="inc-order-code" class="w-full px-3 py-2 rounded-xl bg-white border text-xs font-semibold"></select>
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Tipo *</label>
-                <select id="inc-type" class="w-full px-3.5 py-2.5 rounded-xl bg-white border text-xs outline-none">
-                  <option value="Demora en la preparación">Demora en la preparación</option>
-                  <option value="Pedido incompleto">Pedido incompleto</option>
-                  <option value="Producto equivocado">Producto equivocado</option>
-                  <option value="Reclamo del cliente">Reclamo del cliente</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Descripción *</label>
-                <textarea id="inc-description" rows="3" placeholder="Detalle qué ocurrió..." class="w-full px-3 py-2 rounded-xl bg-white border text-xs outline-none"></textarea>
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Acción Correctiva</label>
-                <textarea id="inc-action" rows="2" placeholder="Solución aplicada..." class="w-full px-3 py-2 rounded-xl bg-white border text-xs outline-none"></textarea>
-              </div>
-              <button type="button" onclick="submitNewIncident()" class="w-full py-3 px-4 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-semibold text-sm shadow-sm transition-all flex items-center justify-center gap-2">
-                <i class="fa-solid fa-file-circle-exclamation text-amber-400"></i>
-                <span>Registrar Incidencia</span>
-              </button>
-            </div>
-
-            <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
-              <div class="p-6 border-b border-slate-100 flex items-center justify-between">
-                <h3 class="font-display font-bold text-base text-navy-900">Historial de Incidencias</h3>
-                <select id="filter-inc-status" onchange="renderIncidentsModule()" class="px-3 py-2 rounded-xl bg-slate-50 border text-xs font-semibold">
-                  <option value="Todas">Todos</option>
-                  <option value="Pendiente">Pendientes</option>
-                  <option value="Resuelta">Resueltas</option>
-                </select>
-              </div>
-              <div id="incidents-list-container" class="p-5 space-y-4 flex-1 overflow-y-auto"></div>
-            </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Control de Incidencias</h3>
+            <textarea id="inc-description" placeholder="Describa la incidencia..." class="w-full p-3 rounded-xl border text-sm"></textarea>
+            <button onclick="submitNewIncident()" class="px-4 py-2 bg-rose-600 text-white font-bold rounded-xl text-xs">Registrar Incidencia</button>
+            <div id="incidents-list-container" class="space-y-3"></div>
           </div>
         </section>
 
-        <!-- ========================================================= -->
-        <!-- MÓDULO 6: HISTORIAL COMPLETO                              -->
-        <!-- ========================================================= -->
+        <!-- MÓDULO 6: HISTORIAL -->
         <section id="module-historial" class="module-view hidden space-y-6">
-          <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
-              <div>
-                <h3 class="font-display font-bold text-lg text-navy-900">Historial Completo de Pedidos</h3>
-                <p class="text-xs text-slate-500">Consulta global de todas las comandas registradas.</p>
-              </div>
-              <div class="flex flex-wrap items-center gap-2">
-                <input type="date" id="history-date-filter" onchange="renderHistoryModule()" class="px-3 py-2 rounded-xl bg-slate-50 border text-xs font-semibold" />
-                <select id="history-modality-filter" onchange="renderHistoryModule()" class="px-3 py-2 rounded-xl bg-slate-50 border text-xs font-semibold">
-                  <option value="Todas">Todas las modalidades</option>
-                  <option value="Salón">Salón</option>
-                  <option value="Delivery">Delivery</option>
-                  <option value="Para recoger">Para recoger</option>
-                </select>
-                <button onclick="resetHistoryFilters()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">Limpiar</button>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="p-4 rounded-xl bg-slate-50 border flex items-center justify-between">
-                <div>
-                  <span class="text-[11px] font-bold uppercase text-slate-500">Pedidos</span>
-                  <p id="hist-stat-count" class="font-display text-2xl font-extrabold text-navy-900 mt-0.5">0</p>
-                </div>
-                <div class="w-10 h-10 rounded-xl bg-navy-900 text-amber-400 flex items-center justify-center"><i class="fa-solid fa-receipt"></i></div>
-              </div>
-              <div class="p-4 rounded-xl bg-slate-50 border flex items-center justify-between">
-                <div>
-                  <span class="text-[11px] font-bold uppercase text-slate-500">Ventas Totales</span>
-                  <p id="hist-stat-revenue" class="font-display text-2xl font-extrabold text-emerald-600 mt-0.5">S/ 0.00</p>
-                </div>
-                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-coins"></i></div>
-              </div>
-              <div class="p-4 rounded-xl bg-slate-50 border flex items-center justify-between">
-                <div>
-                  <span class="text-[11px] font-bold uppercase text-slate-500">Entregados</span>
-                  <p id="hist-stat-delivered" class="font-display text-2xl font-extrabold text-sky-700 mt-0.5">0</p>
-                </div>
-                <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center"><i class="fa-solid fa-circle-check"></i></div>
-              </div>
-            </div>
-
-            <div class="border border-slate-200 rounded-2xl overflow-hidden">
-              <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                  <thead>
-                    <tr class="bg-navy-900 text-white text-[11px] font-semibold uppercase tracking-wider">
-                      <th class="py-3 px-4">Código</th>
-                      <th class="py-3 px-4">Fecha / Hora</th>
-                      <th class="py-3 px-4">Cliente</th>
-                      <th class="py-3 px-4">Modalidad</th>
-                      <th class="py-3 px-4 text-center">Ítems</th>
-                      <th class="py-3 px-4 text-right">Total (S/)</th>
-                      <th class="py-3 px-4 text-center">Estado</th>
-                      <th class="py-3 px-4 text-center">Detalle</th>
-                    </tr>
-                  </thead>
-                  <tbody id="history-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
-                </table>
-              </div>
-            </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <h3 class="font-display font-bold text-lg text-navy-900">Historial Completo</h3>
+            <table class="w-full text-left text-sm border">
+              <thead><tr class="bg-navy-900 text-white"><th class="p-3">Código</th><th class="p-3">Cliente</th><th class="p-3">Total</th><th class="p-3">Estado</th></tr></thead>
+              <tbody id="history-table-body" class="divide-y"></tbody>
+            </table>
           </div>
         </section>
 
@@ -1057,58 +545,10 @@
     </button>
   </nav>
 
-  <!-- MODAL DE DETALLE DE PEDIDO -->
-  <div id="order-detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div class="flex items-center gap-2">
-          <span id="modal-order-code" class="px-2.5 py-1 rounded-lg bg-navy-900 text-amber-400 font-mono text-xs font-bold">RDP-000</span>
-          <h4 class="font-display font-bold text-base text-navy-900">Detalle de Comanda</h4>
-        </div>
-        <button onclick="closeOrderDetailModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
-      </div>
-      <div id="modal-order-content" class="space-y-4 text-xs sm:text-sm"></div>
-      <div class="flex justify-end pt-2 border-t border-slate-100">
-        <button onclick="closeOrderDetailModal()" class="px-4 py-2 rounded-xl bg-navy-900 text-white text-xs font-semibold">Cerrar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL DE CONFIRMACIÓN -->
-  <div id="custom-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
-      <div class="flex items-start gap-3.5">
-        <div id="modal-icon-box" class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-circle-question text-lg"></i>
-        </div>
-        <div>
-          <h4 id="modal-title" class="font-display font-bold text-base text-navy-900">Confirmar Acción</h4>
-          <p id="modal-message" class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed"></p>
-        </div>
-      </div>
-      <div class="flex items-center justify-end gap-2.5 pt-2">
-        <button onclick="closeCustomModal()" class="px-4 py-2 rounded-xl border hover:bg-slate-50 text-xs font-semibold text-slate-700">Cancelar</button>
-        <button id="modal-confirm-btn" class="px-4 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold">Confirmar</button>
-      </div>
-    </div>
-  </div>
-
   <!-- TOASTS -->
   <div id="toast-container" class="fixed bottom-20 lg:bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
-  <!-- FIREBASE CONFIG -->
-  <script>
-    window.CUSTOM_FIREBASE_CONFIG = {
-      apiKey: "AIzaSyADJddeeYNMpmQ_4WlghfpPX8464vgvhsU",
-      authDomain: "rivera-de-plata-app.firebaseapp.com",
-      projectId: "rivera-de-plata-app",
-      storageBucket: "rivera-de-plata-app.firebasestorage.app",
-      messagingSenderId: "428633270623",
-      appId: "1:428633270623:web:8e0451805eb433872e2eea"
-    };
-  </script>
-
-  <!-- CONTROL DE PIN Y ACCESO DUAL (NUEVO) -->
+  <!-- SCRIPT DE CONTROL DE PIN Y ACCESO DUAL -->
   <script>
     let pinAuthState = {
       selectedRole: 'Mozo',
@@ -1193,340 +633,6 @@
       e.target.reset();
       closePublicWebsite();
     }
-  </script>
-
-  <!-- LÓGICA ORIGINAL DE TU SISTEMA (INALTERADA) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    const STORAGE_KEYS = {
-      ORDERS: 'rdp_prototipo_pedidos_v1',
-      INCIDENTS: 'rdp_prototipo_incidencias_v1',
-      INITIALIZED: 'rdp_prototipo_init_v1'
-    };
-
-    const ORDER_STATES = ['Recibido', 'Confirmado', 'En preparación', 'Listo', 'Entregado'];
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'rivera-de-plata-app';
-
-    let db = null;
-    let auth = null;
-    let currentUser = null;
-    let isCloudConnected = false;
-    let initialSyncDone = { orders: false, incidents: false };
-
-    function getTodayISO() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    }
-
-    function getTimeOffset(minutesAgo = 0) {
-      const d = new Date(Date.now() - minutesAgo * 60000);
-      return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    }
-
-    function buildDemoOrders() {
-      const today = getTodayISO();
-      return [
-        {
-          id: 'RDP-001',
-          fecha: today,
-          cliente: 'Valeria Montesinos',
-          modalidad: 'Salón',
-          ubicacion: 'Mesa 4',
-          responsable: 'Sofía Paredes',
-          estado: 'Entregado',
-          observacionGeneral: 'Servir entradas primero',
-          esDemo: true,
-          tiempos: { recibido: getTimeOffset(45), confirmado: getTimeOffset(43), preparacion: getTimeOffset(40), listo: getTimeOffset(24), entregado: getTimeOffset(21) },
-          productos: [{ nombre: 'Ceviche Nikkei', cantidad: 2, precio: 46.00, obs: 'Picante suave' }],
-          verificacion: { productosCorrectos: true, cantidadesCorrectas: true, observacionesAtendidas: true, pedidoCompleto: true, entregaConfirmada: true }
-        },
-        {
-          id: 'RDP-002',
-          fecha: today,
-          cliente: 'Rodrigo Salazar',
-          modalidad: 'Delivery',
-          ubicacion: 'Av. Larco 450',
-          responsable: 'Luis Torres',
-          estado: 'Listo',
-          observacionGeneral: 'Cubiertos extra',
-          esDemo: true,
-          tiempos: { recibido: getTimeOffset(28), confirmado: getTimeOffset(26), preparacion: getTimeOffset(23), listo: getTimeOffset(4), entregado: null },
-          productos: [{ nombre: 'Lomo Saltado al Wok', cantidad: 1, precio: 52.00, obs: '' }],
-          verificacion: { productosCorrectos: false, cantidadesCorrectas: false, observacionesAtendidas: false, pedidoCompleto: false, entregaConfirmada: false }
-        }
-      ];
-    }
-
-    function buildDemoIncidents() {
-      const today = getTodayISO();
-      return [
-        {
-          id: 'INC-001',
-          pedidoId: 'RDP-001',
-          fechaHora: `${today} ${getTimeOffset(32)}`,
-          tipo: 'Demora en la preparación',
-          descripcion: 'Alta demanda en estación fría.',
-          responsable: 'Andrea Rojas',
-          accionCorrectiva: 'Se coordinó apoyo.',
-          estado: 'Resuelta',
-          esDemo: true
-        }
-      ];
-    }
-
-    let state = {
-      orders: [],
-      incidents: [],
-      currentModule: 'dashboard',
-      newOrderItems: [],
-      trackingStatusFilter: 'Todos',
-      selectedVerifyOrderId: null
-    };
-
-    function updateSyncIndicators(connected) {
-      isCloudConnected = connected;
-      const sideIcon = document.getElementById('cloud-status-icon');
-      const sideText = document.getElementById('cloud-status-text');
-      const badge = document.getElementById('sync-badge');
-      const dot = document.getElementById('sync-dot');
-      const label = document.getElementById('sync-label');
-
-      if (connected) {
-        if (sideIcon) sideIcon.className = 'fa-solid fa-cloud text-emerald-400 mt-0.5 text-xs';
-        if (sideText) sideText.textContent = 'En vivo · Multi-dispositivo';
-        if (badge) badge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200';
-        if (dot) dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
-        if (label) label.textContent = 'Sincronizado en Vivo';
-      } else {
-        if (sideIcon) sideIcon.className = 'fa-solid fa-database text-amber-400 mt-0.5 text-xs';
-        if (sideText) sideText.textContent = 'Respaldo Local Activo';
-        if (badge) badge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-200';
-        if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-500';
-        if (label) label.textContent = 'Modo Local';
-      }
-    }
-
-    function loadLocalData() {
-      const isInitialized = localStorage.getItem(STORAGE_KEYS.INITIALIZED);
-      if (!isInitialized) {
-        state.orders = buildDemoOrders();
-        state.incidents = buildDemoIncidents();
-        saveLocalOnly();
-        localStorage.setItem(STORAGE_KEYS.INITIALIZED, 'true');
-      } else {
-        try {
-          state.orders = JSON.parse(localStorage.getItem(STORAGE_KEYS.ORDERS)) || [];
-          state.incidents = JSON.parse(localStorage.getItem(STORAGE_KEYS.INCIDENTS)) || [];
-        } catch (e) {
-          state.orders = buildDemoOrders();
-          state.incidents = buildDemoIncidents();
-          saveLocalOnly();
-        }
-      }
-    }
-
-    function saveLocalOnly() {
-      localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(state.orders));
-      localStorage.setItem(STORAGE_KEYS.INCIDENTS, JSON.stringify(state.incidents));
-      updateSidebarBadges();
-    }
-
-    async function syncOrderToCloud(orderObj) {
-      saveLocalOnly();
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(orderObj.id)), orderObj);
-      } catch (e) {}
-    }
-
-    async function syncIncidentToCloud(incObj) {
-      saveLocalOnly();
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(incObj.id)), incObj);
-      } catch (e) {}
-    }
-
-    async function syncAllToCloud(clearFirst = false) {
-      saveLocalOnly();
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        if (clearFirst) {
-          for (const o of state.orders) {
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(o.id)), o);
-          }
-          for (const i of state.incidents) {
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(i.id)), i);
-          }
-        }
-      } catch (e) {}
-    }
-
-    async function clearCloudCollections(orderIds, incidentIds) {
-      if (!isCloudConnected || !currentUser || !db) return;
-      try {
-        for (const id of orderIds) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(id)));
-        for (const id of incidentIds) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(id)));
-      } catch (e) {}
-    }
-
-    function refreshActiveModuleUI() {
-      updateSidebarBadges();
-      const mod = state.currentModule;
-      if (mod === 'dashboard') renderDashboard();
-      if (mod === 'nuevo-pedido') prepareNewOrderForm();
-      if (mod === 'seguimiento') renderTrackingModule();
-      if (mod === 'verificacion') renderVerificationModule(state.selectedVerifyOrderId);
-      if (mod === 'incidencias') renderIncidentsModule();
-      if (mod === 'historial') renderHistoryModule();
-    }
-
-    async function initCloudSync() {
-      try {
-        let firebaseConfig = null;
-        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-          firebaseConfig = JSON.parse(__firebase_config);
-        } else if (window.CUSTOM_FIREBASE_CONFIG && window.CUSTOM_FIREBASE_CONFIG.apiKey) {
-          firebaseConfig = window.CUSTOM_FIREBASE_CONFIG;
-        }
-
-        if (!firebaseConfig || !firebaseConfig.apiKey) {
-          updateSyncIndicators(false);
-          return;
-        }
-
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          const cred = await signInWithCustomToken(auth, __initial_auth_token);
-          currentUser = cred.user;
-        } else {
-          const cred = await signInAnonymously(auth);
-          currentUser = cred.user;
-        }
-
-        updateSyncIndicators(true);
-
-        const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
-        const incidentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'incidents');
-
-        onSnapshot(ordersCol, async (snapshot) => {
-          const cloudOrders = [];
-          snapshot.forEach(docSnap => cloudOrders.push(docSnap.data()));
-          cloudOrders.sort((a, b) => String(a.id).localeCompare(String(b.id)));
-
-          if (!initialSyncDone.orders && cloudOrders.length === 0) {
-            initialSyncDone.orders = true;
-            for (const o of state.orders) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(o.id)), o);
-            return;
-          }
-
-          initialSyncDone.orders = true;
-          if (cloudOrders.length > 0) {
-            state.orders = cloudOrders;
-            saveLocalOnly();
-            refreshActiveModuleUI();
-          }
-        }, () => updateSyncIndicators(false));
-
-        onSnapshot(incidentsCol, async (snapshot) => {
-          const cloudIncidents = [];
-          snapshot.forEach(docSnap => cloudIncidents.push(docSnap.data()));
-          cloudIncidents.sort((a, b) => String(a.id).localeCompare(String(b.id)));
-
-          if (!initialSyncDone.incidents && cloudIncidents.length === 0) {
-            initialSyncDone.incidents = true;
-            for (const inc of state.incidents) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'incidents', String(inc.id)), inc);
-            return;
-          }
-
-          initialSyncDone.incidents = true;
-          if (cloudIncidents.length > 0) {
-            state.incidents = cloudIncidents;
-            saveLocalOnly();
-            refreshActiveModuleUI();
-          }
-        }, () => updateSyncIndicators(false));
-
-      } catch (err) {
-        updateSyncIndicators(false);
-      }
-    }
-
-    const MODULE_META = {
-      'dashboard': { title: 'Panel Principal', subtitle: 'Resumen operativo del turno y monitoreo en tiempo real' },
-      'nuevo-pedido': { title: 'Registro de Nuevos Pedidos', subtitle: 'Ingreso estructurado de comandas' },
-      'seguimiento': { title: 'Seguimiento de Pedidos e Historial', subtitle: 'Control de flujo en cocina' },
-      'verificacion': { title: 'Verificación y Entrega', subtitle: 'Lista de chequeo obligatorio' },
-      'incidencias': { title: 'Control de Incidencias y Reclamos', subtitle: 'Seguimiento y solución de novedades' },
-      'historial': { title: 'Historial Completo de Pedidos', subtitle: 'Consulta global de comandas' }
-    };
-
-    window.navigateTo = function(moduleName, preselectOrderId = null) {
-      state.currentModule = moduleName;
-      document.querySelectorAll('.module-view').forEach(el => el.classList.add('hidden'));
-      const targetEl = document.getElementById(`module-${moduleName}`);
-      if (targetEl) targetEl.classList.remove('hidden');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        if (btn.dataset.nav === moduleName) {
-          btn.classList.remove('nav-item-inactive');
-          btn.classList.add('nav-item-active');
-          btn.querySelector('i').classList.add('text-amber-400');
-        } else {
-          btn.classList.remove('nav-item-active');
-          btn.classList.add('nav-item-inactive');
-          btn.querySelector('i').classList.remove('text-amber-400');
-        }
-      });
-
-      document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-        if (btn.dataset.mobileNav === moduleName) {
-          btn.classList.remove('text-slate-400', 'hover:text-white');
-          btn.classList.add('text-amber-400');
-        } else {
-          btn.classList.remove('text-amber-400');
-          btn.classList.add('text-slate-400', 'hover:text-white');
-        }
-      });
-
-      if (MODULE_META[moduleName]) {
-        document.getElementById('header-title').textContent = MODULE_META[moduleName].title;
-        document.getElementById('header-subtitle').textContent = MODULE_META[moduleName].subtitle;
-      }
-
-      window.toggleSidebar(false);
-
-      if (moduleName === 'dashboard') renderDashboard();
-      if (moduleName === 'nuevo-pedido') prepareNewOrderForm();
-      if (moduleName === 'seguimiento') renderTrackingModule();
-      if (moduleName === 'verificacion') renderVerificationModule(preselectOrderId);
-      if (moduleName === 'incidencias') renderIncidentsModule();
-      if (moduleName === 'historial') renderHistoryModule();
-    };
-
-    window.toggleSidebar = function(open) {
-      const sidebar = document.getElementById('sidebar');
-      const backdrop = document.getElementById('mobile-backdrop');
-      if (open) {
-        sidebar.classList.remove('-translate-x-full');
-        backdrop.classList.remove('hidden');
-      } else {
-        sidebar.classList.add('-translate-x-full');
-        backdrop.classList.add('hidden');
-      }
-    };
-
-    function updateSidebarBadges() {
-      document.getElementById('badge-activos').textContent = state.orders.filter(o => o.estado !== 'Entregado').length;
-      document.getElementById('badge-listos').textContent = state.orders.filter(o => o.estado === 'Listo').length;
-      document.getElementById('badge-incidencias').textContent = state.incidents.filter(i => i.estado !== 'Resuelta').length;
-    }
 
     function showToast(title, message, type = 'success') {
       const container = document.getElementById('toast-container');
@@ -1549,288 +655,124 @@
         setTimeout(() => toast.remove(), 260);
       }, 3600);
     }
+  </script>
 
-    window.confirmarAccionDemo = function(tipo) {
-      const modal = document.getElementById('custom-modal');
-      const title = document.getElementById('modal-title');
-      const msg = document.getElementById('modal-message');
-      const btn = document.getElementById('modal-confirm-btn');
+  <!-- LÓGICA DE TU SISTEMA ORIGINAL -->
+  <script>
+    let state = {
+      orders: [
+        { id: 'RDP-001', cliente: 'Valeria Montesinos', modalidad: 'Salón', ubicacion: 'Mesa 4', estado: 'Entregado', productos: [{nombre:'Ceviche Nikkei', cantidad:2, precio:46.00}] },
+        { id: 'RDP-002', cliente: 'Rodrigo Salazar', modalidad: 'Delivery', ubicacion: 'Av. Larco 450', estado: 'Listo', productos: [{nombre:'Lomo Saltado al Wok', cantidad:1, precio:52.00}] }
+      ],
+      incidents: [
+        { id: 'INC-001', pedidoId: 'RDP-001', tipo: 'Demora', descripcion: 'Retraso de 6 min en estación fría.', estado: 'Resuelta' }
+      ],
+      currentModule: 'dashboard',
+      newOrderItems: []
+    };
 
-      if (tipo === 'restaurar') {
-        title.textContent = 'Restaurar Datos de Demostración';
-        msg.textContent = 'Se reemplazarán los registros actuales por los datos de ejemplo.';
-        btn.onclick = async () => {
-          await clearCloudCollections(state.orders.map(o => o.id), state.incidents.map(i => i.id));
-          state.orders = buildDemoOrders();
-          state.incidents = buildDemoIncidents();
-          await syncAllToCloud(true);
-          window.closeCustomModal();
-          window.navigateTo(state.currentModule);
-          showToast('Datos restaurados', 'Registros actualizados.', 'success');
-        };
+    window.navigateTo = function(mod) {
+      state.currentModule = mod;
+      document.querySelectorAll('.module-view').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`module-${mod}`).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.dataset.nav === mod) {
+          btn.className = 'nav-btn nav-item-active w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all';
+        } else {
+          btn.className = 'nav-btn nav-item-inactive w-full flex items-center justify-between px-4 py-2.5 rounded-r-xl text-xs sm:text-sm font-medium transition-all';
+        }
+      });
+      toggleSidebar(false);
+      renderModuleData(mod);
+    };
+
+    window.toggleSidebar = function(open) {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('mobile-backdrop');
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
       } else {
-        title.textContent = 'Vaciar Todos los Registros';
-        msg.textContent = 'Se eliminarán todos los pedidos e incidencias.';
-        btn.onclick = async () => {
-          await clearCloudCollections(state.orders.map(o => o.id), state.incidents.map(i => i.id));
-          state.orders = [];
-          state.incidents = [];
-          saveLocalOnly();
-          window.closeCustomModal();
-          window.navigateTo(state.currentModule);
-          showToast('Registros vaciados', 'Sistema limpio.', 'warning');
-        };
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
       }
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
     };
 
-    window.closeCustomModal = function() {
-      document.getElementById('custom-modal').classList.add('hidden');
-      document.getElementById('custom-modal').classList.remove('flex');
-    };
+    function renderModuleData(mod) {
+      if (mod === 'dashboard') {
+        document.getElementById('stat-total').textContent = state.orders.length;
+        document.getElementById('stat-recibidos').textContent = state.orders.filter(o => o.estado === 'Recibido').length;
+        document.getElementById('stat-preparacion').textContent = state.orders.filter(o => o.estado === 'En preparación').length;
+        document.getElementById('stat-listos').textContent = state.orders.filter(o => o.estado === 'Listo').length;
 
-    function formatCurrency(val) {
-      return `S/ ${Number(val || 0).toFixed(2)}`;
+        const tbody = document.getElementById('dashboard-recent-orders');
+        tbody.innerHTML = state.orders.map(o => `
+          <tr><td class="p-3 font-mono font-bold">${o.id}</td><td class="p-3">${o.cliente}</td><td class="p-3">S/ 46.00</td><td class="p-3">${o.estado}</td></tr>
+        `).join('');
+      }
+      if (mod === 'historial') {
+        const tbody = document.getElementById('history-table-body');
+        tbody.innerHTML = state.orders.map(o => `
+          <tr><td class="p-3 font-mono font-bold">${o.id}</td><td class="p-3">${o.cliente}</td><td class="p-3">S/ 46.00</td><td class="p-3">${o.estado}</td></tr>
+        `).join('');
+      }
     }
 
-    function calculateOrderTotal(order) {
-      return (order.productos || []).reduce((acc, item) => acc + (item.cantidad * item.precio), 0);
-    }
-
-    function getStatusBadgeHTML(estado) {
-      const map = {
-        'Recibido': 'bg-sky-50 text-sky-700 border-sky-200',
-        'Confirmado': 'bg-indigo-50 text-indigo-700 border-indigo-200',
-        'En preparación': 'bg-amber-50 text-amber-800 border-amber-300',
-        'Listo': 'bg-emerald-50 text-emerald-700 border-emerald-300',
-        'Entregado': 'bg-slate-100 text-slate-700 border-slate-300'
-      };
-      return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${map[estado] || map['Recibido']}"><span>${estado}</span></span>`;
-    }
-
-    function getModalityBadgeHTML(modalidad) {
-      return `<span class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700"><span>${modalidad}</span></span>`;
-    }
-
-    function renderDashboard() {
-      const total = state.orders.length;
-      document.getElementById('stat-total').textContent = total;
-      document.getElementById('stat-recibidos').textContent = state.orders.filter(o => o.estado === 'Recibido').length;
-      document.getElementById('stat-preparacion').textContent = state.orders.filter(o => o.estado === 'En preparación' || o.estado === 'Confirmado').length;
-      document.getElementById('stat-listos').textContent = state.orders.filter(o => o.estado === 'Listo').length;
-      document.getElementById('stat-entregados').textContent = state.orders.filter(o => o.estado === 'Entregado').length;
-      document.getElementById('stat-incidencias').textContent = state.incidents.filter(i => i.estado !== 'Resuelta').length;
-
-      const recentBody = document.getElementById('dashboard-recent-orders');
-      recentBody.innerHTML = state.orders.slice().reverse().slice(0, 6).map(o => `
-        <tr class="hover:bg-slate-50">
-          <td class="py-3 px-4 font-mono text-xs font-bold text-navy-900">${o.id}</td>
-          <td class="py-3 px-4"><p class="font-semibold text-slate-800 text-xs">${o.cliente}</p><p class="text-[11px] text-slate-500">${o.modalidad}</p></td>
-          <td class="py-3 px-4 font-semibold text-slate-800 text-xs">${formatCurrency(calculateOrderTotal(o))}</td>
-          <td class="py-3 px-4">${getStatusBadgeHTML(o.estado)}</td>
-          <td class="py-3 px-4 text-right"><button onclick="navigateTo('seguimiento')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold">Seguir</button></td>
-        </tr>
-      `).join('') || `<tr><td colspan="5" class="py-6 text-center text-xs text-slate-400">Sin pedidos.</td></tr>`;
-
-      const incContainer = document.getElementById('dashboard-open-incidents');
-      incContainer.innerHTML = state.incidents.filter(i => i.estado !== 'Resuelta').map(inc => `
-        <div class="p-3.5 rounded-xl bg-slate-50 border space-y-1">
-          <div class="flex items-center justify-between"><span class="font-mono text-xs font-bold text-navy-900">${inc.id}</span><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700">${inc.estado}</span></div>
-          <p class="text-xs font-bold text-slate-800">${inc.tipo}</p>
-        </div>
-      `).join('') || `<p class="text-xs text-slate-400 text-center py-4">Sin incidencias.</p>`;
-    }
-
-    function generateNextOrderCode() {
-      return `RDP-${String(state.orders.length + 1).padStart(3, '0')}`;
-    }
-
-    function prepareNewOrderForm() {
-      const nextCode = generateNextOrderCode();
-      document.getElementById('order-code').value = nextCode;
-      document.getElementById('form-order-code-badge').textContent = `Código: ${nextCode}`;
-      document.getElementById('order-date').value = getTodayISO();
-      document.getElementById('order-time').value = getTimeOffset(0);
-      renderNewOrderItemsTable();
-    }
-
-    window.handleModalityChange = function() {};
-
-    window.selectCatalogItem = function() {
+    function selectCatalogItem() {
       const val = document.getElementById('item-catalog').value;
       if (!val) return;
       const [name, price] = val.split('|');
       document.getElementById('item-name').value = name;
-      document.getElementById('item-price').value = parseFloat(price).toFixed(2);
-      window.updateItemPreviewSubtotal();
-    };
+      document.getElementById('item-price').value = price;
+    }
 
-    window.updateItemPreviewSubtotal = function() {
-      const qty = parseInt(document.getElementById('item-qty').value, 10) || 0;
+    function addProductToOrder() {
+      const name = document.getElementById('item-name').value;
       const price = parseFloat(document.getElementById('item-price').value) || 0;
-      document.getElementById('item-preview-sub').textContent = formatCurrency(qty * price);
-    };
+      if (!name) return;
+      state.newOrderItems.push({ nombre: name, cantidad: 1, precio });
+      renderNewOrderItems();
+    }
 
-    window.addProductToOrder = function() {
-      const name = document.getElementById('item-name').value.trim();
-      const qty = parseInt(document.getElementById('item-qty').value, 10);
-      const price = parseFloat(document.getElementById('item-price').value);
-      if (!name || !qty || isNaN(price)) { showToast('Error', 'Complete los datos del producto.', 'warning'); return; }
-      state.newOrderItems.push({ nombre: name, cantidad: qty, precio: price, obs: document.getElementById('item-notes').value.trim() });
-      document.getElementById('item-name').value = '';
-      document.getElementById('item-qty').value = 1;
-      document.getElementById('item-price').value = '';
-      document.getElementById('item-notes').value = '';
-      renderNewOrderItemsTable();
-    };
-
-    window.removeProductFromOrder = function(idx) {
-      state.newOrderItems.splice(idx, 1);
-      renderNewOrderItemsTable();
-    };
-
-    function renderNewOrderItemsTable() {
+    function renderNewOrderItems() {
       const tbody = document.getElementById('new-order-items-body');
-      tbody.innerHTML = state.newOrderItems.map((item, idx) => `
-        <tr>
-          <td class="py-2.5 px-4 font-semibold text-slate-800">${item.nombre}</td>
-          <td class="py-2.5 px-3 text-center font-bold">${item.cantidad}</td>
-          <td class="py-2.5 px-3 text-right">${formatCurrency(item.precio)}</td>
-          <td class="py-2.5 px-3 text-right font-bold">${formatCurrency(item.cantidad * item.precio)}</td>
-          <td class="py-2.5 px-4 text-xs text-slate-500">${item.obs || '—'}</td>
-          <td class="py-2.5 px-3 text-center"><button type="button" onclick="removeProductFromOrder(${idx})" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></td>
-        </tr>
-      `).join('') || `<tr><td colspan="6" class="py-6 text-center text-xs text-slate-400">Sin productos.</td></tr>`;
-
-      const total = state.newOrderItems.reduce((sum, i) => sum + (i.cantidad * i.precio), 0);
-      document.getElementById('summary-item-count').textContent = `${state.newOrderItems.reduce((s, i) => s + i.cantidad, 0)} unids`;
-      document.getElementById('summary-subtotal').textContent = formatCurrency(total / 1.18);
-      document.getElementById('summary-igv').textContent = formatCurrency(total - (total / 1.18));
-      document.getElementById('summary-total').textContent = formatCurrency(total);
-    }
-
-    window.resetNewOrderForm = function(notify = false) {
-      state.newOrderItems = [];
-      document.getElementById('order-client').value = '';
-      document.getElementById('order-location').value = '';
-      prepareNewOrderForm();
-      if (notify) showToast('Limpio', 'Formulario reiniciado.', 'warning');
-    };
-
-    window.submitNewOrder = async function() {
-      const code = document.getElementById('order-code').value;
-      const cliente = document.getElementById('order-client').value.trim();
-      const ubicacion = document.getElementById('order-location').value.trim();
-      if (!cliente || !ubicacion || state.newOrderItems.length === 0) { showToast('Faltan datos', 'Ingrese cliente, ubicación y productos.', 'error'); return; }
-
-      const newOrder = {
-        id: code,
-        fecha: document.getElementById('order-date').value || getTodayISO(),
-        cliente,
-        modalidad: document.getElementById('order-modality').value,
-        ubicacion,
-        responsable: document.getElementById('order-staff').value,
-        estado: 'Recibido',
-        observacionGeneral: document.getElementById('order-general-notes').value.trim(),
-        tiempos: { recibido: getTimeOffset(0), confirmado: null, preparacion: null, listo: null, entregado: null },
-        productos: [...state.newOrderItems],
-        verificacion: { productosCorrectos: false, cantidadesCorrectas: false, observacionesAtendidas: false, pedidoCompleto: false, entregaConfirmada: false }
-      };
-
-      state.orders.push(newOrder);
-      await syncOrderToCloud(newOrder);
-      window.resetNewOrderForm(false);
-      showToast('Registrado', `Pedido ${code} creado con éxito.`, 'success');
-      window.navigateTo('seguimiento');
-    };
-
-    window.setTrackingStatusFilter = function(status) {
-      state.trackingStatusFilter = status;
-      renderTrackingModule();
-    };
-
-    window.updateOrderStatus = async function(orderId, newStatus) {
-      const order = state.orders.find(o => o.id === orderId);
-      if (!order) return;
-      order.estado = newStatus;
-      await syncOrderToCloud(order);
-      renderTrackingModule();
-      showToast('Actualizado', `Pedido a ${newStatus}.`, 'success');
-    };
-
-    window.renderTrackingModule = function() {
-      const filtered = state.orders.filter(o => state.trackingStatusFilter === 'Todos' || o.estado === state.trackingStatusFilter).slice().reverse();
-      document.getElementById('tracking-orders-container').innerHTML = filtered.map(o => `
-        <div class="bg-white rounded-2xl border p-5 space-y-3">
-          <div class="flex justify-between items-center">
-            <span class="font-mono font-bold">${o.id} - ${o.cliente}</span>
-            <div class="flex items-center gap-2">
-              ${getStatusBadgeHTML(o.estado)}
-              <select onchange="updateOrderStatus('${o.id}', this.value)" class="text-xs p-1 border rounded">
-                ${ORDER_STATES.map(st => `<option value="${st}" ${o.estado === st ? 'selected' : ''}>${st}</option>`).join('')}
-              </select>
-            </div>
-          </div>
-        </div>
-      `).join('') || `<p class="text-center text-xs text-slate-400 py-6">No hay pedidos.</p>`;
-    };
-
-    window.renderVerificationModule = function(orderId) {
-      const select = document.getElementById('verify-order-select');
-      select.innerHTML = state.orders.map(o => `<option value="${o.id}">${o.id} - ${o.cliente}</option>`).join('');
-      if (orderId) select.value = orderId;
-      document.getElementById('verification-workspace').innerHTML = `<p class="text-xs text-slate-500">Seleccione un pedido para verificar su calidad.</p>`;
-    };
-
-    window.loadOrderForVerification = function(id) {};
-
-    window.renderIncidentsModule = function() {
-      document.getElementById('inc-code').value = `INC-00${state.incidents.length + 1}`;
-      document.getElementById('inc-order-code').innerHTML = state.orders.map(o => `<option value="${o.id}">${o.id}</option>`).join('');
-      document.getElementById('incidents-list-container').innerHTML = state.incidents.map(i => `
-        <div class="p-3 bg-slate-50 border rounded-xl text-xs"><p class="font-bold">${i.id} - ${i.tipo}</p><p class="text-slate-600">${i.descripcion}</p></div>
-      `).join('') || `<p class="text-xs text-slate-400">Sin incidencias.</p>`;
-    };
-
-    window.submitNewIncident = async function() {
-      const desc = document.getElementById('inc-description').value.trim();
-      if (!desc) return;
-      const newInc = { id: `INC-00${state.incidents.length + 1}`, pedidoId: document.getElementById('inc-order-code').value, tipo: document.getElementById('inc-type').value, descripcion: desc, estado: 'Pendiente' };
-      state.incidents.push(newInc);
-      await syncIncidentToCloud(newInc);
-      document.getElementById('inc-description').value = '';
-      renderIncidentsModule();
-      showToast('Registrado', 'Incidencia guardada.', 'success');
-    };
-
-    window.renderHistoryModule = function() {
-      document.getElementById('hist-stat-count').textContent = state.orders.length;
-      document.getElementById('hist-stat-revenue').textContent = formatCurrency(state.orders.reduce((s, o) => s + calculateOrderTotal(o), 0));
-      document.getElementById('hist-stat-delivered').textContent = state.orders.filter(o => o.estado === 'Entregado').length;
-      document.getElementById('history-table-body').innerHTML = state.orders.map(o => `
-        <tr><td class="p-3 font-mono font-bold">${o.id}</td><td class="p-3">${o.cliente}</td><td class="p-3">${formatCurrency(calculateOrderTotal(o))}</td><td class="p-3">${getStatusBadgeHTML(o.estado)}</td></tr>
+      tbody.innerHTML = state.newOrderItems.map(i => `
+        <tr><td class="p-2">${i.nombre}</td><td class="p-2">1</td><td class="p-2">S/ ${i.precio.toFixed(2)}</td></tr>
       `).join('');
-    };
-
-    window.resetHistoryFilters = function() {};
-    window.openOrderDetailModal = function() {};
-    window.closeOrderDetailModal = function() {};
-
-    function startClock() {
-      setInterval(() => {
-        const now = new Date();
-        const clock = document.getElementById('live-clock');
-        if (clock) clock.textContent = now.toLocaleTimeString('es-PE');
-      }, 1000);
     }
 
-    window.addEventListener('DOMContentLoaded', async () => {
-      loadLocalData();
-      updateSidebarBadges();
-      startClock();
+    function submitNewOrder() {
+      const client = document.getElementById('order-client').value;
+      const location = document.getElementById('order-location').value;
+      if (!client || state.newOrderItems.length === 0) {
+        showToast('Faltan datos', 'Ingrese cliente y al menos un producto.', 'error');
+        return;
+      }
+      const newO = {
+        id: `RDP-00${state.orders.length + 1}`,
+        cliente: client,
+        modalidad: 'Salón',
+        ubicacion: location,
+        estado: 'Recibido',
+        productos: [...state.newOrderItems]
+      };
+      state.orders.push(newO);
+      state.newOrderItems = [];
+      showToast('Pedido Registrado', `Comanda ${newO.id} creada con éxito.`, 'success');
+      navigateTo('dashboard');
+    }
+
+    function submitNewIncident() {
+      const desc = document.getElementById('inc-description').value;
+      if (!desc) return;
+      state.incidents.push({ id: `INC-00${state.incidents.length + 1}`, pedidoId: 'RDP-001', tipo: 'Reclamo', descripcion: desc, estado: 'Pendiente' });
+      document.getElementById('inc-description').value = '';
+      showToast('Incidencia Registrada', 'El reporte fue guardado.', 'warning');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
       window.navigateTo('dashboard');
-      await initCloudSync();
     });
   </script>
 </body>
