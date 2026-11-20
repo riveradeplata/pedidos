@@ -3198,7 +3198,7 @@
 <!-- ================================================================= -->
 <!-- SCRIPT EXTERNO: NOTIFICACIONES, SONIDO Y ALERTAS EN TIEMPO REAL -->
 <!-- ================================================================= -->
-<script>
+<!--<script>
   (function() {
     let myDeviceId = localStorage.getItem('rdp_device_uuid');
     if (!myDeviceId) {
@@ -3312,6 +3312,64 @@
               showNotificationAlert('¡Incidencia Reportada!', `Alerta en ${latestInc.pedidoId || 'Sistema'}: ${latestInc.tipo || 'Nuevo reporte'}.`, 'warning');
             }
 
+            lastIncidentsData = currentIncidentsJSON;
+          }
+        } catch (e) {}
+      }, 800);
+    });
+  })();
+</script>-->
+<!-- ================================================================= -->
+<!-- SCRIPT EXTERNO: SOLO VIGILANCIA Y SONIDO EN TIEMPO REAL           -->
+<!-- ================================================================= -->
+<script>
+  (function() {
+    let myDeviceId = localStorage.getItem('rdp_device_uuid');
+    if (!myDeviceId) {
+      myDeviceId = 'device_' + Math.random().toString(36).substring(2, 9);
+      localStorage.setItem('rdp_device_uuid', myDeviceId);
+    }
+
+    let audioUnlocked = false;
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, () => { audioUnlocked = true; }, { once: true });
+    });
+
+    function playBeepSound() {
+      if (!audioUnlocked) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); 
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    // Vigilante que SOLO reproduce el sonido al detectar cambios en localStorage
+    window.addEventListener('DOMContentLoaded', () => {
+      let lastOrdersData = localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]';
+      let lastIncidentsData = localStorage.getItem('rdp_prototipo_incidencias_v1') || '[]';
+
+      setInterval(() => {
+        try {
+          const currentOrdersJSON = localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]';
+          const currentIncidentsJSON = localStorage.getItem('rdp_prototipo_incidencias_v1') || '[]';
+
+          if (currentOrdersJSON !== lastOrdersData) {
+            playBeepSound(); // Solo suena el bip de alerta
+            lastOrdersData = currentOrdersJSON;
+          }
+
+          if (currentIncidentsJSON !== lastIncidentsData) {
+            playBeepSound(); // Solo suena el bip de alerta
             lastIncidentsData = currentIncidentsJSON;
           }
         } catch (e) {}
