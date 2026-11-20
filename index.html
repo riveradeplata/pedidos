@@ -2143,6 +2143,71 @@
       renderTrackingModule();
     };
 
+    /*Ini Add*/
+    // --- CONTROL DE DISPOSITIVO, SONIDO Y EDICIÓN/ELIMINACIÓN ---
+    let myDeviceId = localStorage.getItem('rdp_device_uuid');
+    if (!myDeviceId) {
+      myDeviceId = 'device_' + Math.random().toString(36).substring(2, 9);
+      localStorage.setItem('rdp_device_uuid', myDeviceId);
+    }
+
+    let audioUnlocked = false;
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, () => { audioUnlocked = true; }, { once: true });
+    });
+
+    function playBeepSound() {
+      if (!audioUnlocked) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    window.editarPedidoSistema = async function(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+
+      const nuevoCliente = prompt("Modificar nombre del cliente:", order.cliente);
+      if (nuevoCliente === null) return;
+      const nuevaUbicacion = prompt("Modificar mesa o dirección:", order.ubicacion);
+      if (nuevaUbicacion === null) return;
+
+      order.cliente = nuevoCliente.trim() || order.cliente;
+      order.ubicacion = nuevaUbicacion.trim() || order.ubicacion;
+
+      await syncOrderToCloud(order);
+      renderTrackingModule();
+      showToast('Pedido actualizado', `Se modificó la información de ${order.id}.`, 'success');
+    };
+
+    window.eliminarPedidoSistema = async function(orderId) {
+      if (!confirm(`¿Estás seguro de eliminar el pedido ${orderId}?`)) return;
+
+      state.orders = state.orders.filter(o => o.id !== orderId);
+      saveLocalOnly();
+
+      if (isCloudConnected && currentUser && db) {
+        try {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', String(orderId)));
+        } catch (e) {}
+      }
+
+      renderTrackingModule();
+      showToast('Pedido eliminado', `El registro ${orderId} fue borrado correctamente.`, 'warning');
+    };
+    /*Fin Add*/
+
     window.updateOrderStatus = async function(orderId, newStatus) {
       const order = state.orders.find(o => o.id === orderId);
       if (!order) return;
@@ -2253,13 +2318,21 @@
                   </div>
                 </div>
               </div>
+              
               <div class="flex flex-wrap items-center gap-2.5">
                 ${getStatusBadgeHTML(o.estado)}
                 <select onchange="updateOrderStatus('${o.id}', this.value)" class="px-2.5 py-1.5 rounded-xl bg-white border border-slate-300 text-xs font-semibold text-slate-700 outline-none">
                   ${ORDER_STATES.map(st => `<option value="${st}" ${o.estado === st ? 'selected' : ''}>${st}</option>`).join('')}
                 </select>
                 ${nextActionBtn}
+                <button type="button" onclick="editarPedidoSistema('${o.id}')" class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-amber-500 text-slate-700 hover:text-white text-xs font-semibold transition-all" title="Editar pedido">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button type="button" onclick="eliminarPedidoSistema('${o.id}')" class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-rose-600 text-slate-700 hover:text-white text-xs font-semibold transition-all" title="Eliminar pedido">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
               </div>
+
             </div>
 
             <div class="p-5 grid grid-cols-1 lg:grid-cols-12 gap-5">
@@ -3007,7 +3080,7 @@
 <!-- ================================================================= -->
 <!-- SCRIPT DEFINITIVO Y BLINDADO: NOTIFICACIONES, SONIDO, EDITAR Y ELIMINAR -->
 <!-- ================================================================= -->
-<script>
+<!--<script>
   (function() {
     let myDeviceId = localStorage.getItem('rdp_device_uuid');
     if (!myDeviceId) {
@@ -3179,5 +3252,5 @@
       }, 800);
     });
   })();
-</script>
+</script>-->
 </html>
