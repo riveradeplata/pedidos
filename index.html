@@ -3099,7 +3099,7 @@
 <!-- ================================================================= -->
 <!-- SCRIPT EXTERNO DE NOTIFICACIONES, SONIDO Y ALERTAS VIVAS          -->
 <!-- ================================================================= -->
-<script>
+<!-- <script>
   (function() {
     let myDeviceId = localStorage.getItem('rdp_device_uuid');
     if (!myDeviceId) {
@@ -3192,6 +3192,130 @@
           }
         } catch (e) {}
       }, 700);
+    });
+  })();
+</script>-->
+<!-- ================================================================= -->
+<!-- SCRIPT EXTERNO: NOTIFICACIONES, SONIDO Y ALERTAS EN TIEMPO REAL -->
+<!-- ================================================================= -->
+<script>
+  (function() {
+    let myDeviceId = localStorage.getItem('rdp_device_uuid');
+    if (!myDeviceId) {
+      myDeviceId = 'device_' + Math.random().toString(36).substring(2, 9);
+      localStorage.setItem('rdp_device_uuid', myDeviceId);
+    }
+
+    let audioUnlocked = false;
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, () => { audioUnlocked = true; }, { once: true });
+    });
+
+    function playBeepSound() {
+      if (!audioUnlocked) return;
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); 
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    function showNotificationAlert(title, message, type = 'success') {
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'fixed bottom-20 lg:bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4';
+        document.body.appendChild(container);
+      }
+
+      const colors = { 
+        success: 'bg-navy-900 border-amber-500 text-white', 
+        warning: 'bg-navy-900 border-rose-500 text-white',
+        info: 'bg-navy-900 border-sky-500 text-white'
+      };
+      const icons = { 
+        success: 'fa-bell text-amber-400', 
+        warning: 'fa-triangle-exclamation text-rose-400',
+        info: 'fa-pen-to-square text-sky-400'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `toast-enter pointer-events-auto rounded-2xl border-l-4 p-4 shadow-2xl flex items-start gap-3 ${colors[type] || colors.success}`;
+      toast.innerHTML = `
+        <i class="fa-solid ${icons[type] || icons.success} mt-0.5 text-lg"></i>
+        <div class="flex-1">
+          <p class="text-xs font-bold tracking-wide uppercase">${title}</p>
+          <p class="text-xs text-slate-200 mt-0.5">${message}</p>
+        </div>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 5000);
+    }
+
+    // Vigilante general de cambios en localStorage (Pedidos e Incidencias)
+    window.addEventListener('DOMContentLoaded', () => {
+      let lastOrdersData = localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]';
+      let lastIncidentsData = localStorage.getItem('rdp_prototipo_incidencias_v1') || '[]';
+
+      setInterval(() => {
+        try {
+          const currentOrdersJSON = localStorage.getItem('rdp_prototipo_pedidos_v1') || '[]';
+          const currentIncidentsJSON = localStorage.getItem('rdp_prototipo_incidencias_v1') || '[]';
+
+          // 1. Verificar cambios en Pedidos (Nuevos, Eliminados o Modificados)
+          if (currentOrdersJSON !== lastOrdersData) {
+            const oldOrders = JSON.parse(lastOrdersData);
+            const newOrders = JSON.parse(currentOrdersJSON);
+
+            if (newOrders.length > oldOrders.length) {
+              // Nuevo pedido registrado
+              const latest = newOrders[newOrders.length - 1];
+              playBeepSound();
+              showNotificationAlert('¡Nuevo Pedido!', `Se registró la comanda ${latest.id} para ${latest.cliente}.`, 'success');
+            } else if (newOrders.length < oldOrders.length) {
+              // Pedido eliminado
+              playBeepSound();
+              showNotificationAlert('Pedido Eliminado', `Se ha borrado una comanda del sistema.`, 'warning');
+            } else {
+              // Posible actualización / edición de datos de un pedido existente
+              playBeepSound();
+              showNotificationAlert('Pedido Actualizado', `Se modificó la información de una comanda.`, 'info');
+            }
+
+            lastOrdersData = currentOrdersJSON;
+          }
+
+          // 2. Verificar cambios en Incidencias
+          if (currentIncidentsJSON !== lastIncidentsData) {
+            const oldInc = JSON.parse(lastIncidentsData);
+            const newInc = JSON.parse(currentIncidentsJSON);
+
+            if (newInc.length > oldInc.length) {
+              const latestInc = newInc[newInc.length - 1];
+              playBeepSound();
+              showNotificationAlert('¡Incidencia Reportada!', `Alerta en ${latestInc.pedidoId || 'Sistema'}: ${latestInc.tipo || 'Nuevo reporte'}.`, 'warning');
+            }
+
+            lastIncidentsData = currentIncidentsJSON;
+          }
+        } catch (e) {}
+      }, 800);
     });
   })();
 </script>
