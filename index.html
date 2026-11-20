@@ -1736,6 +1736,7 @@
         const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
         const incidentsCol = collection(db, 'artifacts', appId, 'public', 'data', 'incidents');
 
+        /*
         onSnapshot(ordersCol, async (snapshot) => {
           const cloudOrders = [];
           snapshot.forEach(docSnap => cloudOrders.push(docSnap.data()));
@@ -1754,6 +1755,26 @@
             refreshActiveModuleUI();
           }
         }, () => updateSyncIndicators(false));
+        */
+        onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'orders'), (snapshot) => {
+          const cloudOrders = [];
+          snapshot.forEach(docSnap => cloudOrders.push(docSnap.data()));
+          
+          if (cloudOrders.length > 0) {
+            // Si el número de pedidos aumentó, evaluamos si vino de otro dispositivo
+            if (state.orders.length > 0 && cloudOrders.length > state.orders.length) {
+              const latest = cloudOrders[cloudOrders.length - 1];
+              // Si el pedido no fue creado por este dispositivo local, suena y alerta
+              if (latest.deviceId && latest.deviceId !== myDeviceId) {
+                playBeepSound();
+                showToast('¡Nuevo Pedido!', `Se registró la comanda ${latest.id} para ${latest.cliente}.`, 'success');
+              }
+            }
+            state.orders = cloudOrders;
+            localStorage.setItem('rdp_prototipo_pedidos_v1', JSON.stringify(state.orders));
+            if (typeof refreshActiveModuleUI === 'function') refreshActiveModuleUI();
+          }
+        });
 
         onSnapshot(incidentsCol, async (snapshot) => {
           const cloudIncidents = [];
